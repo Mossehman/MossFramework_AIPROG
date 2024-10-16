@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{584c867c-e7c3-4bc2-86a6-53be22dc5bc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{8a687cd5-e0f3-4ac9-811a-ebfb4249c524}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameStates">
+      <UniqueIdentifier>{4f4d32ed-fc0b-413a-bb52-a1c4ef9de2f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameStates\Scenes">
+      <UniqueIdentifier>{94a3374e-2aae-4d64-bd17-65f6d940b063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStates">
+      <UniqueIdentifier>{b70b3b68-1247-4d70-ad52-657022a0b250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStates\Scenes">
+      <UniqueIdentifier>{53758c4f-fd99-4c60-b93a-6857beb449f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{dd818138-1a09-4e5e-9110-c57baa637d92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{902150fa-2179-415b-a027-683f720bc925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{b9b20b8d-25da-4947-b7b2-78b55c7da9c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Player">
+      <UniqueIdentifier>{d4934a19-6443-4c34-b2ff-19734fade06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Player\Inventory">
+      <UniqueIdentifier>{b8bb1fd1-b7f7-41ce-9efe-ac74bafefd55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Player\Inventory\Items">
+      <UniqueIdentifier>{ca97e169-903f-4b89-a5ce-b681c6f9aa68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\AI">
+      <UniqueIdentifier>{c37c5982-0a57-4f85-a812-a722e44f4e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{1216f80f-a25c-44f6-a01c-309753f43134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Player">
+      <UniqueIdentifier>{bf62e289-a053-4550-9ba3-b8c7b189a673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Player\Inventory">
+      <UniqueIdentifier>{3c33f954-fcdd-4a7f-8771-3e929c75a5ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Player\Inventory\Items">
+      <UniqueIdentifier>{724b1876-97fc-4fb5-a31d-d0af90080d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\AI">
+      <UniqueIdentifier>{5d8f5a93-7702-4f60-b0be-88a0ab34bcaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Backend">
+      <UniqueIdentifier>{59304ed4-71e9-43f6-8f33-eb54d8a05e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Backend">
+      <UniqueIdentifier>{a1378e37-9c20-4b58-adcb-8d35b8a3784c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Player\InputManager">
+      <UniqueIdentifier>{6cc62a35-8687-4368-b1fc-2275eb132f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Player\InputManager">
+      <UniqueIdentifier>{71c968f2-b484-497a-8974-6581dcbee66b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sounds">
+      <UniqueIdentifier>{ee9b90c6-a9a7-4cc7-af7a-1cbd4ce82aaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sounds">
+      <UniqueIdentifier>{cd55b0d9-f578-4e6d-8387-eb34e3c37445}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map2D.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundManager2D.cpp">
+      <Filter>Source Files\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTilemap.cpp">
+      <Filter>Source Files\GameStates\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManager.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuState.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUImanager.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Minimap.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GunBase.cpp">
+      <Filter>Source Files\Entities\Player\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InventoryManager.cpp">
+      <Filter>Source Files\Entities\Player\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerEntity.cpp">
+      <Filter>Source Files\Entities\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity2D.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Projectile2D.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneCell.cpp">
+      <Filter>Source Files\GameStates\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Source Files\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadTGA.cpp">
+      <Filter>Source Files\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>Source Files\Entities\Player\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BGMManager.cpp">
+      <Filter>Source Files\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundInfo.cpp">
+      <Filter>Source Files\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneAI.cpp">
+      <Filter>Source Files\GameStates\Scenes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map2D.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundManager2D.h">
+      <Filter>Header Files\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneTilemap.h">
+      <Filter>Header Files\GameStates\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Header Files\GameStates\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManager.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuState.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUImanager.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Minimap.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GunBase.h">
+      <Filter>Header Files\Entities\Player\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InventoryManager.h">
+      <Filter>Header Files\Entities\Player\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LevelIDs.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerEntity.h">
+      <Filter>Header Files\Entities\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity2D.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile2D.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneCell.h">
+      <Filter>Header Files\GameStates\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Header Files\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shader.hpp">
+      <Filter>Header Files\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Header Files\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleVar.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Header Files\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadTGA.h">
+      <Filter>Header Files\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
+      <Filter>Header Files\Entities\Player\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BGMManager.h">
+      <Filter>Header Files\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundInfo.h">
+      <Filter>Header Files\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneAI.h">
+      <Filter>Header Files\GameStates\Scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="imGUI">
+      <UniqueIdentifier>{38813d90-9b99-407e-a4ed-c3350cd76588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend">
+      <UniqueIdentifier>{099cfc7f-35ee-49a2-bb16-cbfe45101be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Input">
+      <UniqueIdentifier>{febd8a38-b881-4df2-b81e-f6455dc05868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Math">
+      <UniqueIdentifier>{e23bb230-76e8-49a1-85ca-e1118069db22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Math\Header Files">
+      <UniqueIdentifier>{86ecb6e9-24a0-4a0c-afa4-57cc1749f4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Math\Source Files">
+      <UniqueIdentifier>{3de058a1-a35d-41e4-8beb-579974ec141c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Time">
+      <UniqueIdentifier>{4a02aea6-4f4a-449b-8504-607841a727dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imGUI\Header Files">
+      <UniqueIdentifier>{9e87504c-71db-4c86-ba13-5a7fc50372b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imGUI\Source Files">
+      <UniqueIdentifier>{ffee9201-0b65-4707-acb1-34d8d4cc77b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{8a78fb41-fe66-4847-952d-ce2c40cf1ddb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Backend\Render">
+      <UniqueIdentifier>{8cdf2d97-444e-45bd-8801-43cb8182c628}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\MouseController.cpp">
+      <Filter>Backend\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MatrixStack.cpp">
+      <Filter>Backend\Math\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mtx44.cpp">
+      <Filter>Backend\Math\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Vector3.cpp">
+      <Filter>Backend\Math\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\timer.cpp">
+      <Filter>Backend\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\KeyboardController.cpp" />
+    <ClCompile Include="Source\ImageLoader.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderParameters.cpp">
+      <Filter>Backend\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGUI\imgui_demo.cpp">
+      <Filter>imGUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGUI\imgui_draw.cpp">
+      <Filter>imGUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGUI\backends\imgui_impl_glfw.cpp">
+      <Filter>imGUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGUI\backends\imgui_impl_opengl3.cpp">
+      <Filter>imGUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGUI\imgui_widgets.cpp">
+      <Filter>imGUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGUI\imgui_tables.cpp">
+      <Filter>imGUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGUI\imgui.cpp">
+      <Filter>imGUI\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\MouseController.h">
+      <Filter>Backend\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyMath.h">
+      <Filter>Backend\Math\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MatrixStack.h">
+      <Filter>Backend\Math\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mtx44.h">
+      <Filter>Backend\Math\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vector3.h">
+      <Filter>Backend\Math\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\timer.h">
+      <Filter>Backend\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DesignPatterns\SingletonTemplate.h" />
+    <ClInclude Include="Source\KeyboardController.h" />
+    <ClInclude Include="Source\ImageLoader.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\filesystem.h" />
+    <ClInclude Include="Source\RenderParameters.h">
+      <Filter>Backend\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imGUI\imconfig.h">
+      <Filter>imGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imGUI\imgui.h">
+      <Filter>imGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imGUI\backends\imgui_impl_glfw.h">
+      <Filter>imGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imGUI\backends\imgui_impl_opengl3.h">
+      <Filter>imGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\imGUI\imgui_internal.h">
+      <Filter>imGUI\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
