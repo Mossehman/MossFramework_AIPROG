@@ -11,7 +11,7 @@ Camera::~Camera()
 {
 }
 
-void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
+void Camera::Init(const glm::vec3& pos, const glm::vec3& target, const glm::vec3& up)
 {
 	this->position = pos;
 	this->target = target;
@@ -20,9 +20,9 @@ void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 
 void Camera::Reset()
 {
-	position.Set(1, 0, 0);
-	target.Set(0, 0, 0);
-	up.Set(0, 1, 0);
+	position = glm::vec3(1, 0, 0);
+	target = glm::vec3(0, 0, 0);
+	up = glm::vec3(0, 1, 0);
 }
 
 void Camera::Update(double dt)

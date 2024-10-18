@@ -4,7 +4,7 @@
 class TestEnemy: public CreatureAI
 {
 public:
-	TestEnemy(LevelIDs entityLevel, Entity2D* playerEntity, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
+	TestEnemy(int entityLevel, Entity2D* playerEntity, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
 
 	unsigned int damageValue = 5;
 	float viewRange = 1000.f;

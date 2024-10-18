@@ -4,7 +4,7 @@
 class FlyingEnemy: public CreatureAI
 {
 public:
-	FlyingEnemy(LevelIDs entityLevel, Entity2D* playerEntity, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
+	FlyingEnemy(int entityLevel, Entity2D* playerEntity, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
 
 	GunBase* rangedAttack;
 	std::vector<Entity2D*> playerVector;

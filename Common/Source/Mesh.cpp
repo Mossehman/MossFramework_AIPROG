@@ -3,6 +3,7 @@
 #include "GL\glew.h"
 #include "Vertex.h"
 #include "glm/glm.hpp"
+#include "RenderParameters.h"
 
 /******************************************************************************/
 /*!
@@ -38,7 +39,7 @@ Mesh::~Mesh()
 OpenGL render code
 */
 /******************************************************************************/
-void Mesh::Render()
+void Mesh::Render(float opacityValue)
 {
 	glEnableVertexAttribArray(0); // 1st attribute buffer : positions
 	glEnableVertexAttribArray(1); // 2nd attribute buffer : colors
@@ -53,6 +54,13 @@ void Mesh::Render()
 
 	if (textureID > 0) 
 		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color) + sizeof(Vector3)));
+
+	GLint opacityLocation = glGetUniformLocation(RenderParameters::GetInstance()->m_programID, "opacity");
+	if (opacityLocation != -1)  // Make sure the uniform exists in the shader
+	{
+		glUniform1f(opacityLocation, opacityValue);  // Pass the opacity value to the shader
+	}
+
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	if (mode == DRAW_TRIANGLE_STRIP)

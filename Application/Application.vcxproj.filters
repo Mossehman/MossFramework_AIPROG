@@ -87,37 +87,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MeshBuilder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Map2D.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SoundManager2D.cpp">
-      <Filter>Source Files\Sounds</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneTilemap.cpp">
       <Filter>Source Files\GameStates\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameState.cpp">
-      <Filter>Source Files\GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PlayState.cpp">
-      <Filter>Source Files\GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameStateManager.cpp">
       <Filter>Source Files\GameStates</Filter>
     </ClCompile>
     <ClCompile Include="Source\MenuState.cpp">
@@ -138,69 +114,30 @@
     <ClCompile Include="Source\PlayerEntity.cpp">
       <Filter>Source Files\Entities\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Entity2D.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Projectile2D.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneCell.cpp">
       <Filter>Source Files\GameStates\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Source Files\Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\shader.cpp">
-      <Filter>Source Files\Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LoadTGA.cpp">
-      <Filter>Source Files\Backend</Filter>
-    </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>Source Files\Entities\Player\InputManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\BGMManager.cpp">
-      <Filter>Source Files\Sounds</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SoundInfo.cpp">
-      <Filter>Source Files\Sounds</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneAI.cpp">
       <Filter>Source Files\GameStates\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ApplicationAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MeshBuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Map2D.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SoundManager2D.h">
-      <Filter>Header Files\Sounds</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneTilemap.h">
       <Filter>Header Files\GameStates\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene.h">
       <Filter>Header Files\GameStates\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameState.h">
-      <Filter>Header Files\GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PlayState.h">
-      <Filter>Header Files\GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManager.h">
       <Filter>Header Files\GameStates</Filter>
     </ClInclude>
     <ClInclude Include="Source\MenuState.h">
@@ -224,44 +161,23 @@
     <ClInclude Include="Source\PlayerEntity.h">
       <Filter>Header Files\Entities\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Entity2D.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Projectile2D.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneCell.h">
       <Filter>Header Files\GameStates\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Header Files\Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\shader.hpp">
-      <Filter>Header Files\Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Vertex.h">
-      <Filter>Header Files\Backend</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ParticleVar.h">
       <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Material.h">
-      <Filter>Header Files\Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LoadTGA.h">
-      <Filter>Header Files\Backend</Filter>
     </ClInclude>
     <ClInclude Include="Source\InputManager.h">
       <Filter>Header Files\Entities\Player\InputManager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BGMManager.h">
-      <Filter>Header Files\Sounds</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SoundInfo.h">
-      <Filter>Header Files\Sounds</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneAI.h">
       <Filter>Header Files\GameStates\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ApplicationAI.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

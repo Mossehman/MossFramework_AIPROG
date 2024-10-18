@@ -56,9 +56,6 @@
       <Filter>Backend\Time</Filter>
     </ClCompile>
     <ClCompile Include="Source\KeyboardController.cpp" />
-    <ClCompile Include="Source\ImageLoader.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Source\RenderParameters.cpp">
       <Filter>Backend\Render</Filter>
     </ClCompile>
@@ -83,6 +80,51 @@
     <ClCompile Include="Source\imGUI\imgui.cpp">
       <Filter>imGUI\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Backend\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImageLoader.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadTGA.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManager.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameState.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity2D.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map2D.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BGMManager.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundInfo.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundManager2D.cpp">
+      <Filter>Backend</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\MouseController.h">
@@ -105,9 +147,6 @@
     </ClInclude>
     <ClInclude Include="Source\DesignPatterns\SingletonTemplate.h" />
     <ClInclude Include="Source\KeyboardController.h" />
-    <ClInclude Include="Source\ImageLoader.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Source\filesystem.h" />
     <ClInclude Include="Source\RenderParameters.h">
       <Filter>Backend\Render</Filter>
@@ -126,6 +165,57 @@
     </ClInclude>
     <ClInclude Include="Source\imGUI\imgui_internal.h">
       <Filter>imGUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Backend\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImageLoader.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shader.hpp">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadTGA.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameState.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManager.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity2D.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map2D.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BGMManager.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundInfo.h">
+      <Filter>Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundManager2D.h">
+      <Filter>Backend</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

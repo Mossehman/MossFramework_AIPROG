@@ -62,7 +62,7 @@ void GunBase::Shoot()
 	newProjectile->setMesh(MeshBuilder::GeneratePolygon("Bullet", Color(0, 1, 0.5)));
 	newProjectile->setPosition(shootPos);
 	newProjectile->setScale(glm::vec2(10, 10));
-	newProjectile->Init(Map2D::GetInstance()->getCurrentLevel());
+	//newProjectile->Init(Map2D::GetInstance()->getCurrentLevel());
 
 	bullets.push_back(newProjectile);
 	

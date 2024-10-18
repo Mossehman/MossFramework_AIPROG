@@ -1,7 +1,6 @@
 #include "GameObject.h"
 #include "GL/glew.h"
 #include "ImageLoader.h"
-#include "MeshBuilder.h"
 #include "MyMath.h"
 #include "Map2D.h"
 
@@ -80,14 +79,24 @@ Mesh*& GameObject::getMesh(void)
 	return mesh;
 }
 
-void GameObject::Init(LevelIDs currentLevel)
+void GameObject::setOpacity(float opacityValue)
+{
+	this->opacityValue = opacityValue;
+}
+
+float GameObject::getOpacity(void)
+{
+	return this->opacityValue;
+}
+
+void GameObject::Init(int currentLevel)
 {
 	this->currentLevel = currentLevel;
 }
 
 void GameObject::Render()
 {
-	if (!toRender || currentLevel != Map2D::GetInstance()->getCurrentLevel()) { return; }
+	if (!toRender || currentLevel != Map2D::GetInstance()->GetCurrentLevel()) { return; }
 
 	RenderParameters::GetInstance()->modelStack.PushMatrix();
 	RenderParameters::GetInstance()->modelStack.Translate(position.x, position.y, 0);
@@ -138,7 +147,7 @@ void GameObject::renderMesh()
 		glUniform1i(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_COLOR_TEXTURE_ENABLED], 0);
 	}
 
-		mesh->Render();
+		mesh->Render(opacityValue);
 
 	if (textureID > 0)
 	{

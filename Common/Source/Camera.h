@@ -7,15 +7,15 @@
 class Camera
 {
 public:
-	Vector3 position;
-	Vector3 target;
-	Vector3 up;
+	glm::vec3 position;
+	glm::vec3 target;
+	glm::vec3 up;
 
 	glm::vec2 minPos, maxPos;
 
 	Camera();
 	~Camera();
-	virtual void Init(const Vector3& pos, const Vector3& target, const Vector3& up);
+	virtual void Init(const glm::vec3& pos, const glm::vec3& target, const glm::vec3& up);
 	virtual void Reset();
 	virtual void Update(double dt);
 };

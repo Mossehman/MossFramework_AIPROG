@@ -1,7 +1,7 @@
 #include "TestEnemy.h"
 #include <random>
 
-TestEnemy::TestEnemy(LevelIDs entityLevel, Entity2D* playerEntity, glm::vec2 pos, glm::vec2 rot, glm::vec2 scl) : playerEntity(nullptr)
+TestEnemy::TestEnemy(int entityLevel, Entity2D* playerEntity, glm::vec2 pos, glm::vec2 rot, glm::vec2 scl) : playerEntity(nullptr)
 {
 	nodes = new pathNode[Map2D::GetInstance()->mapSizeX[entityLevel] * Map2D::GetInstance()->mapSizeY[entityLevel]];
 	finiteStateMachine = new StateManager();

@@ -17,8 +17,8 @@ void Minimap::Init()
 
 void Minimap::Update(double dt, glm::vec2 playerPos)
 {
-	this->playerPos.x = (playerPos.x / Map2D::GetInstance()->getTileSize().x) / Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->getCurrentLevel()] - 0.5f;
-	this->playerPos.y = (playerPos.y / Map2D::GetInstance()->getTileSize().y) / (Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->getCurrentLevel()] + 0.5f) + 0.5f;
+	this->playerPos.x = (playerPos.x / Map2D::GetInstance()->GetTileSize().x) / Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()] - 0.5f;
+	this->playerPos.y = (playerPos.y / Map2D::GetInstance()->GetTileSize().y) / (Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()] + 0.5f) + 0.5f;
 }
 
 void Minimap::Render(Camera& camera)
@@ -137,11 +137,11 @@ void Minimap::compoundMinimapMesh()
 	float tileWidth = 1.0f;  // Assume each tile is 1 unit wide
 	float tileHeight = 1.0f; // Assume each tile is 1 unit tall
 
-	for (int i = 0; i < Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->getCurrentLevel()]; i++)
+	for (int i = 0; i < Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()]; i++)
 	{
-		for (int j = 0; j < Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->getCurrentLevel()]; j++)
+		for (int j = 0; j < Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()]; j++)
 		{
-			if (Map2D::GetInstance()->getMapInfo(j, i, Map2D::GetInstance()->getCurrentLevel()) != 0)
+			if (Map2D::GetInstance()->GetMapInfo(j, i, Map2D::GetInstance()->GetCurrentLevel()) != 0)
 			{
 				// Calculate the bottom-left corner of the tile in world coordinates
 				float x = i * tileWidth;
@@ -160,8 +160,8 @@ void Minimap::compoundMinimapMesh()
 
 void Minimap::recalculateMapScale()
 {
-	mapScaleX = 1.0f / (Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->getCurrentLevel()]);
-	mapScaleY = 1.0f / (Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->getCurrentLevel()]);
+	mapScaleX = 1.0f / (Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()]);
+	mapScaleY = 1.0f / (Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()]);
 	mapOffset.x = -0.5f;
 	mapOffset.y = 0.5f;
 }								  

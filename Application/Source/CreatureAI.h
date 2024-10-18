@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity2D.h"
 #include "Map2D.h"
-#include "pathNode.h"
+//#include "pathNode.h"
 #include "StateManager.h"
 
 
@@ -16,9 +16,9 @@ protected:
 	std::vector<glm::vec2> waypointList;
 	int waypointIndex;
 
-	pathNode* nodes = nullptr;
-	pathNode* startNode = nullptr;
-	pathNode* endNode = nullptr;
+	//pathNode* nodes = nullptr;
+	//pathNode* startNode = nullptr;
+	//pathNode* endNode = nullptr;
 
 	StateManager* finiteStateMachine;
 
@@ -29,7 +29,7 @@ protected:
 
 
 public:
-	CreatureAI(LevelIDs entityLevel, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
+	CreatureAI(int entityLevel, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
 	CreatureAI();
 	~CreatureAI();
 
@@ -51,8 +51,8 @@ public:
 	unsigned int getWaypointIndex(void);
 	void setWaypointIndex(unsigned int waypointIndex);
 
-	LevelIDs getCurrentLevel(void);
-	void setCurrentLevel(LevelIDs currentLevel);
+	int getCurrentLevel(void);
+	void setCurrentLevel(int currentLevel);
 	
 	void solveAStar();
 	void getCurrentPath();

@@ -5,7 +5,7 @@
 #include "MyMath.h"
 #include "glm/glm.hpp"
 #include <math.h>
-#include "Map2D.h"
+#include "../Application/Source/Map2D.h"
 /******************************************************************************/
 /*!
 \brief
@@ -161,8 +161,8 @@ Mesh* MeshBuilder::compoundedTileMesh(const std::string& meshName, std::vector<g
 	int i = 0;
 	int numIterations = 0;
 
-	float mapSizeX = Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->getCurrentLevel()];
-	float mapSizeY = Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->getCurrentLevel()];
+	float mapSizeX = Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()];
+	float mapSizeY = Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()];
 
 	// Ensure we don't access out of bounds
 	while (i + 3 < meshCoords.size())

@@ -3,7 +3,11 @@
 #include <sstream>
 #include "ImageLoader.h"
 
+
 #define AIR_ID 0
+#define STONE_ID 1
+#define DIRT_ID 2
+#define GRASS_ID 3
 
 
 int Map2D::GetMapInfo(unsigned int row, unsigned int column, int levelToCheck)
@@ -117,7 +121,7 @@ void Map2D::FindTileID(int tileID, int level)
     }
 }
 
-glm::vec2 Map2D::tileToPos(glm::vec2 tilePosition)
+glm::vec2 Map2D::TileToPos(glm::vec2 tilePosition)
 {
     //since we are rendering the tiles downwards from 0, 0, we need to multiply the y by -1 to accurately get the world space coordinates
     return glm::vec2(tilePosition.x * tileSize.x, tilePosition.y * tileSize.y * -1);
@@ -311,12 +315,12 @@ void Map2D::WriteNoiseMap(const std::vector<std::vector<int>>& tileMap1D, const 
             //{
             //    if (y > 0 && tileMap2D[y - 1][x] != AIR_ID) //if we are not at the top of the map and the tile below is NOT air
             //    {
-            //        Tile* newTile = new Tile(DIRT_ID);
+            //        tile* newTile = new tile(DIRT_ID);
             //        tileMaps[levelID][y][x] = newTile; //generate grass if dirt is exposed to air
             //    }
             //    else
             //    {
-            //        Tile* newTile = new Tile(tileMap2D[y][x]);
+            //        tile* newTile = new tile(tileMap2D[y][x]);
             //        tileMaps[levelID][y][x] = newTile; //else generate the default 2D tilemap
             //    }
             //}
@@ -324,19 +328,19 @@ void Map2D::WriteNoiseMap(const std::vector<std::vector<int>>& tileMap1D, const 
             //{
             //    if (tileMap1D[y][x] == GRASS_ID && (tileMap2D[y][x] != AIR_ID || (y > 0 && tileMap2D[y - 1][x] != AIR_ID))) //if the 2D tilemap is generating over 1D grass
             //    {
-            //        Tile* newTile = new Tile(DIRT_ID);
+            //        tile* newTile = new tile(DIRT_ID);
             //        tileMaps[levelID][y][x] = newTile; //if so, we set the tilemap value to dirt (blends with the 2D perlin tilemap)
             //    }
             //    else
             //    {
             //        if (tileMap1D[y][x] == GRASS_ID && tileMap1D[y - 1][x] == GRASS_ID) //check if multiple layers of grass are being rendered
             //        {
-            //            Tile* newTile = new Tile(DIRT_ID);
+            //            tile* newTile = new tile(DIRT_ID);
             //            tileMaps[levelID][y][x] = newTile; //set the tile to dirt if the tile above is grass and the tile itself is grass
             //        }
             //        else
             //        {
-            //            Tile* newTile = new Tile(tileMap1D[y][x]);
+            //            tile* newTile = new tile(tileMap1D[y][x]);
             //            tileMaps[levelID][y][x] = newTile;
             //        }
             //    }
@@ -446,7 +450,7 @@ int Map2D::GetCurrentLevel(void)
 
 
 
-void Map2D::printMapData(int level)
+void Map2D::PrintMapData(int level)
 {
     std::cout << "printing map..." << std::endl;
 
@@ -487,7 +491,7 @@ void Map2D::SetDangerousTile(unsigned int ID, bool isDangerous)
 }
 
 
-Map2D::Map2D(const int MaxLevels) : maxLevels(MaxLevels)
+Map2D::Map2D(const int MaxLevels) : maxLevels(maxLevels)
 {
     currentLevel = MaxLevels;
 }
@@ -516,7 +520,7 @@ void Map2D::Init(int startLevel) {
     //setTextureToID(0, "Image/boxTransparent.tga");
     SetPassableTile(0, true); //air is passable
 
-    BindTextures(); //Runs the code for assigning a texture to an ID
+    BindTextures();
 
     for (int i = 0; i < maxLevels; i++)
     {

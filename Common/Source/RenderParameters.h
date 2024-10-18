@@ -5,10 +5,10 @@
 
 #include "DesignPatterns/SingletonTemplate.h"
 #include "MatrixStack.h"
-#include "../Application/Source/Mesh.h"
-#include "../Application/Source/MeshBuilder.h"
+#include "Mesh.h"
+#include "MeshBuilder.h"
 #include "glm/glm.hpp"
-#include "../Application/Source/Camera.h"
+#include "Camera.h"
 
 class RenderParameters : public SingletonTemplate<RenderParameters>
 {
@@ -41,6 +41,7 @@ public:
 		U_COLOR_TEXTURE,
 		U_TEXT_ENABLED,
 		U_TEXT_COLOR,
+		U_OPACITY,
 		U_TOTAL,
 	};
 

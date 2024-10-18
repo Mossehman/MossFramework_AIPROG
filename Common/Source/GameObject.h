@@ -5,7 +5,6 @@
 #include <vector>
 #include "Mesh.h"
 #include <map>
-#include "LevelIDs.h"
 
 class GameObject
 {
@@ -51,6 +50,8 @@ protected:
 	glm::vec2 self_rotation;
 	glm::vec2 self_scale;
 
+	float opacityValue = 1.f;
+
 	//for tilemap entities, these 3 are all we basically need, for game entities, we need physics-related code that we'll handle in Entity2D
 
 	RenderParameters* renderParam = RenderParameters::GetInstance();
@@ -77,7 +78,7 @@ protected:
 	bool updateInBackend;
 
 public:
-	LevelIDs currentLevel;
+	int currentLevel;
 	unsigned int textureID;
 
 	GameObject(glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
@@ -96,7 +97,11 @@ public:
 	void setMesh(Mesh* mesh);
 	Mesh*& getMesh(void);
 
-	virtual void Init(LevelIDs currentLevel);
+	void setOpacity(float opacityValue);
+	float getOpacity(void);
+
+
+	virtual void Init(int currentLevel);
 
 	virtual void Update(double dt) {};
 
@@ -124,6 +129,7 @@ public:
 
 	void pauseAnimation();
 	void toggleAnimation();
+
 
 };
 #endif

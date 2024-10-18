@@ -1,5 +1,5 @@
 #include "RenderParameters.h"
-#include "../Application/Source/shader.hpp"
+#include "shader.hpp"
 
 void RenderParameters::Init(glm::vec4 bgColor, const char* vertexShader, const char* fragmentShader)
 {
@@ -25,6 +25,7 @@ void RenderParameters::Init(glm::vec4 bgColor, const char* vertexShader, const c
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID, "textColor");
 	m_parameters[U_LIGHTENABLED] = glGetUniformLocation(m_programID, "lightEnabled");
 	m_parameters[U_COLOR_TEXTURE_ENABLED] = glGetUniformLocation(m_programID, "colorTextureEnabled");
+	m_parameters[U_OPACITY] = glGetUniformLocation(m_programID, "opacity");
 
 	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);

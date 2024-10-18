@@ -28,18 +28,18 @@ void Projectile2D::splashDamage(std::vector<Entity2D*> entities)
 		entities[i]->setForce(glm::normalize(entities[i]->getPosition() - this->position) * explosionForce);
 	}
 
-	unsigned int tileRadiusX = std::ceil(explosionRadius / Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->getCurrentLevel()]);
-	unsigned int tileRadiusY = std::ceil(explosionRadius / Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->getCurrentLevel()]);
+	unsigned int tileRadiusX = std::ceil(explosionRadius / Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()]);
+	unsigned int tileRadiusY = std::ceil(explosionRadius / Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()]);
 	
 
-	for (int y = Map2D::GetInstance()->posToTilePos(this->position).y - tileRadiusY; y < Map2D::GetInstance()->posToTilePos(this->position).y + tileRadiusY * 2; y++)
+	for (int y = Map2D::GetInstance()->PosToTilePos(this->position).y - tileRadiusY; y < Map2D::GetInstance()->PosToTilePos(this->position).y + tileRadiusY * 2; y++)
 	{
 		//std::cout << y << std::endl;
-		for (int x = Map2D::GetInstance()->posToTilePos(this->position).x - tileRadiusX; x < Map2D::GetInstance()->posToTilePos(this->position).x + tileRadiusX * 2; x++)
+		for (int x = Map2D::GetInstance()->PosToTilePos(this->position).x - tileRadiusX; x < Map2D::GetInstance()->PosToTilePos(this->position).x + tileRadiusX * 2; x++)
 		{
-			if (Map2D::GetInstance()->getMapInfo(y, x, Map2D::GetInstance()->getCurrentLevel()) != 0)
+			if (Map2D::GetInstance()->GetMapInfo(y, x, Map2D::GetInstance()->GetCurrentLevel()) != 0)
 			{
-				Map2D::GetInstance()->setMapInfo(y, x, 0, Map2D::GetInstance()->getCurrentLevel());
+				Map2D::GetInstance()->SetMapInfo(y, x, 0, Map2D::GetInstance()->GetCurrentLevel());
 			}
 		}
 	}

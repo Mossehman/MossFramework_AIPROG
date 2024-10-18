@@ -1,7 +1,6 @@
 #pragma once
 #include <map>
 #include "GameState.h"
-#include "PlayState.h"
 #include "DesignPatterns/SingletonTemplate.h"
 class GameStateManager: public SingletonTemplate<GameStateManager>
 {

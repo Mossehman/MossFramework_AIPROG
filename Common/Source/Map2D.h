@@ -141,7 +141,7 @@ public:
 	\param tileMap2D - the 2D tilemap indexes
 	\param levelID - the map level to write the tilemap to
 	*/
-	virtual void WriteNoiseMap(const std::vector<std::vector<int>>& tileMap1D, const std::vector<std::vector<int>>& tileMap2D, int levelID) {}
+	void WriteNoiseMap(const std::vector<std::vector<int>>& tileMap1D, const std::vector<std::vector<int>>& tileMap2D, int levelID);
 	void WriteMapFromCSV(const std::string& filename, int levelID);
 	void SaveMapToCSV(const std::string filename, int levelID);
 
@@ -192,6 +192,7 @@ protected:
 	void SetDangerousTile(unsigned int ID, bool isDangerous); 
 
 	virtual void BindTextures() {}
+
 
 	/*!
 	@brief Wrapper function for specifying Noise Map generation per-project, left blank for overwriting with specific parameters

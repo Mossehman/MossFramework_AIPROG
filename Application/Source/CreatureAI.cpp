@@ -1,7 +1,7 @@
 #include "CreatureAI.h"
 #include <list>
 
-CreatureAI::CreatureAI(LevelIDs entityLevel, glm::vec2 pos, glm::vec2 rot, glm::vec2 scl)
+CreatureAI::CreatureAI(int entityLevel, glm::vec2 pos, glm::vec2 rot, glm::vec2 scl)
 {
     nodes = new pathNode[Map2D::GetInstance()->mapSizeX[entityLevel] * Map2D::GetInstance()->mapSizeY[entityLevel]];
     finiteStateMachine = new StateManager();
@@ -253,12 +253,12 @@ void CreatureAI::setWaypointIndex(unsigned int waypointIndex)
     this->waypointIndex = waypointIndex;
 }
 
-LevelIDs CreatureAI::getCurrentLevel(void)
+int CreatureAI::getCurrentLevel(void)
 {
     return currentLevel;
 }
 
-void CreatureAI::setCurrentLevel(LevelIDs creatureLevel)
+void CreatureAI::setCurrentLevel(int creatureLevel)
 {
     this->currentLevel = creatureLevel;
 }

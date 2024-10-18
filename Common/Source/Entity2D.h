@@ -45,7 +45,7 @@ public:
 
 	Entity2D(glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
 
-	virtual void Init(LevelIDs currentLevel, bool isGravity = true, bool isPhysics = true, bool checkTileCollisions = true, bool entityCollision = true);
+	virtual void Init(int currentLevel, bool isGravity = true, bool isPhysics = true, bool checkTileCollisions = true, bool entityCollision = true);
 	virtual void Update(double dt);
 	
 	//Checks for tilemap collisions and sets the entity's min and max positions accordingly

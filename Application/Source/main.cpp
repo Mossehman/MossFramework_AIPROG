@@ -1,11 +1,10 @@
-
-
-#include "Application.h"
+#include "ApplicationAI.h"
 
 int main( void )
 {
-	Application app;
-	app.Init();
+	ApplicationAI app;
+
+	app.Init("The Galactic War");
 	app.Run();
 	app.Exit();
 }

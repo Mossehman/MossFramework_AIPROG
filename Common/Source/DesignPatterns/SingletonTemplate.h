@@ -3,6 +3,9 @@
  By: Toh Da Jun
  Date: Mar 2020
  */
+
+#include <utility>  // For std::forward
+
 #pragma once
 
 template <typename T>
@@ -17,6 +20,19 @@ public:
 		{
 			// Create a new instance
 			s_mInstance = new T();
+		}
+
+		// Return the instance
+		return s_mInstance;
+	}
+
+	template <typename... Args>
+	static T* GetInstance(Args&&... args)
+	{
+		// If the instance does not exist, create it using the provided parameters
+		if (s_mInstance == nullptr)
+		{
+			s_mInstance = new T(std::forward<Args>(args)...);
 		}
 
 		// Return the instance

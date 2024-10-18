@@ -1,4 +1,3 @@
-
 #include "Application.h"
 
 //Include GLEW
@@ -11,16 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "SceneCell.h"
-#include "SceneTilemap.h"
-#include "SceneAI.h"
-
 #include "MouseController.h"
 #include "KeyboardController.h"
-#include "GameStateManager.h"
-#include "PlayState.h"
-#include "MenuState.h"
-#include "GUImanager.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -101,6 +92,11 @@ bool Application::IsKeyPressed(unsigned short key)
     return ((GetAsyncKeyState(key) & 0x8001) != 0);
 }
 
+void Application::CloseWindow()
+{
+	closeApplication = true;
+}
+
 Application::Application()
 {
 }
@@ -109,7 +105,7 @@ Application::~Application()
 {
 }
 
-void Application::Init()
+void Application::Init(const char* windowName, int windowWidth, int windowHeight)
 {
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
@@ -128,7 +124,7 @@ void Application::Init()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL
 
 	//Create a window and create its OpenGL context
-	m_window = glfwCreateWindow(1200, 800, "Cell Simulator", NULL, NULL);
+	m_window = glfwCreateWindow(windowWidth, windowHeight, windowName, NULL, NULL);
 
 	//If the window couldn't be created
 	if (!m_window)
@@ -169,17 +165,16 @@ void Application::Init()
 		//return -1;
 	}
 
-	GameStateManager::GetInstance()->addNewState("PlayState", new PlayState(new SceneAI(), "PlayState"));
-	GameStateManager::GetInstance()->addNewState("MenuState", new MenuState());
-	GameStateManager::GetInstance()->setCurrentState("MenuState");
+	OnInit();
 }
 
 void Application::Run()
 {
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
-	
-	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE) && GUImanager::GetInstance()->health > 0)
+	closeApplication = false;	// bool to close our application on runtime
+
+	while (!glfwWindowShouldClose(m_window) && !closeApplication)
 	{
 		if (!GameStateManager::GetInstance()->Update(m_timer.getElapsedTime()))
 		{
@@ -204,9 +199,11 @@ void Application::Run()
 
 		UpdateInputDevices();
 
+		OnRun();
+
 	} //Check if the ESC key had been pressed or if the window had been closed
 	GameStateManager::GetInstance()->Destroy();
-	std::cout << "Yeah you died, I had no time for a death screen" << std::endl;
+	std::cout << "Game Loop has ended!" << std::endl;
 }
 
 void Application::Exit()
@@ -215,4 +212,6 @@ void Application::Exit()
 	glfwDestroyWindow(m_window);
 	//Finalize and clean up GLFW
 	glfwTerminate();
+
+	OnExit();
 }

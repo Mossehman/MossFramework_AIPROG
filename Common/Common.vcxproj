@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)glew\include;$(SolutionDir)glfw\include;$(SolutionDir)glm;$(SolutionDir)SOIL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glew\include;$(SolutionDir)glfw\include;$(SolutionDir)glm;$(SolutionDir)SOIL;$(SolutionDir)/irrKlang;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +140,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\BGMManager.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\Entity2D.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\GameState.cpp" />
+    <ClCompile Include="Source\GameStateManager.cpp" />
     <ClCompile Include="Source\ImageLoader.cpp" />
     <ClCompile Include="Source\imGUI\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="Source\imGUI\backends\imgui_impl_opengl3.cpp" />
@@ -149,16 +156,30 @@
     <ClCompile Include="Source\imGUI\imgui_tables.cpp" />
     <ClCompile Include="Source\imGUI\imgui_widgets.cpp" />
     <ClCompile Include="Source\KeyboardController.cpp" />
+    <ClCompile Include="Source\LoadTGA.cpp" />
+    <ClCompile Include="Source\Map2D.cpp" />
     <ClCompile Include="Source\MatrixStack.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\MouseController.cpp" />
     <ClCompile Include="Source\Mtx44.cpp" />
     <ClCompile Include="Source\RenderParameters.cpp" />
+    <ClCompile Include="Source\shader.cpp" />
+    <ClCompile Include="Source\SoundInfo.cpp" />
+    <ClCompile Include="Source\SoundManager2D.cpp" />
     <ClCompile Include="Source\timer.cpp" />
     <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\BGMManager.h" />
+    <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\DesignPatterns\SingletonTemplate.h" />
+    <ClInclude Include="Source\Entity2D.h" />
     <ClInclude Include="Source\filesystem.h" />
+    <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\GameState.h" />
+    <ClInclude Include="Source\GameStateManager.h" />
     <ClInclude Include="Source\ImageLoader.h" />
     <ClInclude Include="Source\imGUI\backends\imgui_impl_glfw.h" />
     <ClInclude Include="Source\imGUI\backends\imgui_impl_opengl3.h" />
@@ -166,13 +187,22 @@
     <ClInclude Include="Source\imGUI\imgui.h" />
     <ClInclude Include="Source\imGUI\imgui_internal.h" />
     <ClInclude Include="Source\KeyboardController.h" />
+    <ClInclude Include="Source\LoadTGA.h" />
+    <ClInclude Include="Source\Map2D.h" />
+    <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MatrixStack.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\MouseController.h" />
     <ClInclude Include="Source\Mtx44.h" />
     <ClInclude Include="Source\MyMath.h" />
     <ClInclude Include="Source\RenderParameters.h" />
+    <ClInclude Include="Source\shader.hpp" />
+    <ClInclude Include="Source\SoundInfo.h" />
+    <ClInclude Include="Source\SoundManager2D.h" />
     <ClInclude Include="Source\timer.h" />
     <ClInclude Include="Source\Vector3.h" />
+    <ClInclude Include="Source\Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
