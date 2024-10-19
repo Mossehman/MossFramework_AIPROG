@@ -21,9 +21,15 @@
     <ClCompile Include="Application_AIPROG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameStateAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application_AIPROG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateAI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

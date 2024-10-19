@@ -8,56 +8,64 @@
     <Filter Include="imGUI">
       <UniqueIdentifier>{38813d90-9b99-407e-a4ed-c3350cd76588}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Backend">
-      <UniqueIdentifier>{099cfc7f-35ee-49a2-bb16-cbfe45101be8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Backend\Input">
-      <UniqueIdentifier>{febd8a38-b881-4df2-b81e-f6455dc05868}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Backend\Math">
-      <UniqueIdentifier>{e23bb230-76e8-49a1-85ca-e1118069db22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Backend\Math\Header Files">
-      <UniqueIdentifier>{86ecb6e9-24a0-4a0c-afa4-57cc1749f4c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Backend\Math\Source Files">
-      <UniqueIdentifier>{3de058a1-a35d-41e4-8beb-579974ec141c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Backend\Time">
-      <UniqueIdentifier>{4a02aea6-4f4a-449b-8504-607841a727dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="imGUI\Header Files">
       <UniqueIdentifier>{9e87504c-71db-4c86-ba13-5a7fc50372b5}</UniqueIdentifier>
     </Filter>
     <Filter Include="imGUI\Source Files">
       <UniqueIdentifier>{ffee9201-0b65-4707-acb1-34d8d4cc77b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Rendering">
-      <UniqueIdentifier>{8a78fb41-fe66-4847-952d-ce2c40cf1ddb}</UniqueIdentifier>
+    <Filter Include="Moss Framework">
+      <UniqueIdentifier>{099cfc7f-35ee-49a2-bb16-cbfe45101be8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Backend\Render">
+    <Filter Include="Moss Framework\Input">
+      <UniqueIdentifier>{febd8a38-b881-4df2-b81e-f6455dc05868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\Math">
+      <UniqueIdentifier>{e23bb230-76e8-49a1-85ca-e1118069db22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\Math\Header Files">
+      <UniqueIdentifier>{86ecb6e9-24a0-4a0c-afa4-57cc1749f4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\Math\Source Files">
+      <UniqueIdentifier>{3de058a1-a35d-41e4-8beb-579974ec141c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\Time">
+      <UniqueIdentifier>{4a02aea6-4f4a-449b-8504-607841a727dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\Render">
       <UniqueIdentifier>{8cdf2d97-444e-45bd-8801-43cb8182c628}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\Sound">
+      <UniqueIdentifier>{440df9e9-3cbb-415e-a0ee-158d96691087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\GameObjects">
+      <UniqueIdentifier>{d27d6992-0b43-4156-8f3a-ab9fef16f2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\GameStates">
+      <UniqueIdentifier>{d39b8007-5b35-4102-a4d8-9daeb46d4aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Moss Framework\Map">
+      <UniqueIdentifier>{35f58f4a-912a-4944-b362-148d32b07775}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MouseController.cpp">
-      <Filter>Backend\Input</Filter>
+      <Filter>Moss Framework\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\MatrixStack.cpp">
-      <Filter>Backend\Math\Source Files</Filter>
+      <Filter>Moss Framework\Math\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mtx44.cpp">
-      <Filter>Backend\Math\Source Files</Filter>
+      <Filter>Moss Framework\Math\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Vector3.cpp">
-      <Filter>Backend\Math\Source Files</Filter>
+      <Filter>Moss Framework\Math\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\timer.cpp">
-      <Filter>Backend\Time</Filter>
+      <Filter>Moss Framework\Time</Filter>
     </ClCompile>
-    <ClCompile Include="Source\KeyboardController.cpp" />
     <ClCompile Include="Source\RenderParameters.cpp">
-      <Filter>Backend\Render</Filter>
+      <Filter>Moss Framework\Render</Filter>
     </ClCompile>
     <ClCompile Include="Source\imGUI\imgui_demo.cpp">
       <Filter>imGUI\Source Files</Filter>
@@ -81,75 +89,77 @@
       <Filter>imGUI\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Application.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject.cpp">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
-      <Filter>Backend\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ImageLoader.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\shader.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LoadTGA.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameStateManager.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameState.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Entity2D.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MeshBuilder.cpp">
-      <Filter>Backend</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Map2D.cpp">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Render</Filter>
     </ClCompile>
     <ClCompile Include="Source\BGMManager.cpp">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Sound</Filter>
     </ClCompile>
     <ClCompile Include="Source\SoundInfo.cpp">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Sound</Filter>
     </ClCompile>
     <ClCompile Include="Source\SoundManager2D.cpp">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Moss Framework\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Entity2D.cpp">
+      <Filter>Moss Framework\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameState.cpp">
+      <Filter>Moss Framework\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStateManager.cpp">
+      <Filter>Moss Framework\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Moss Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Moss Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Moss Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map2D.cpp">
+      <Filter>Moss Framework\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadTGA.cpp">
+      <Filter>Moss Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImageLoader.cpp">
+      <Filter>Moss Framework\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\KeyboardController.cpp">
+      <Filter>Moss Framework\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\MouseController.h">
-      <Filter>Backend\Input</Filter>
+      <Filter>Moss Framework\Input</Filter>
     </ClInclude>
     <ClInclude Include="Source\MyMath.h">
-      <Filter>Backend\Math\Header Files</Filter>
+      <Filter>Moss Framework\Math\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\MatrixStack.h">
-      <Filter>Backend\Math\Header Files</Filter>
+      <Filter>Moss Framework\Math\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mtx44.h">
-      <Filter>Backend\Math\Header Files</Filter>
+      <Filter>Moss Framework\Math\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vector3.h">
-      <Filter>Backend\Math\Header Files</Filter>
+      <Filter>Moss Framework\Math\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\timer.h">
-      <Filter>Backend\Time</Filter>
+      <Filter>Moss Framework\Time</Filter>
     </ClInclude>
     <ClInclude Include="Source\DesignPatterns\SingletonTemplate.h" />
-    <ClInclude Include="Source\KeyboardController.h" />
     <ClInclude Include="Source\filesystem.h" />
     <ClInclude Include="Source\RenderParameters.h">
-      <Filter>Backend\Render</Filter>
+      <Filter>Moss Framework\Render</Filter>
     </ClInclude>
     <ClInclude Include="Source\imGUI\imconfig.h">
       <Filter>imGUI\Header Files</Filter>
@@ -167,55 +177,58 @@
       <Filter>imGUI\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Application.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera.h">
-      <Filter>Backend\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ImageLoader.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\shader.hpp">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Vertex.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LoadTGA.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Material.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameState.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameStateManager.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entity2D.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MeshBuilder.h">
-      <Filter>Backend</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Map2D.h">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Render</Filter>
     </ClInclude>
     <ClInclude Include="Source\BGMManager.h">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Source\SoundInfo.h">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Source\SoundManager2D.h">
-      <Filter>Backend</Filter>
+      <Filter>Moss Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Moss Framework\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Entity2D.h">
+      <Filter>Moss Framework\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameState.h">
+      <Filter>Moss Framework\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStateManager.h">
+      <Filter>Moss Framework\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Moss Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Moss Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Moss Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shader.hpp">
+      <Filter>Moss Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Moss Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map2D.h">
+      <Filter>Moss Framework\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadTGA.h">
+      <Filter>Moss Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImageLoader.h">
+      <Filter>Moss Framework\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\KeyboardController.h">
+      <Filter>Moss Framework\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,15 +1,17 @@
 #include "Application_AIPROG.h"
+#include "GameStateAI.h"
 
 void Application_AIPROG::OnInit()
 {
 	std::cout << "Init is running!" << std::endl;
+	GameStateManager::GetInstance()->addNewState("NewState", new GameStateAI());
+	GameStateManager::GetInstance()->setCurrentState("NewState");
 }
 
 void Application_AIPROG::OnRun()
 {
 	std::cout << "Run is running!" << std::endl;
 
-	//CloseWindow();
 }
 
 void Application_AIPROG::OnExit()

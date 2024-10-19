@@ -96,7 +96,7 @@ void GameObject::Init(int currentLevel)
 
 void GameObject::Render()
 {
-	if (!toRender || currentLevel != Map2D::GetInstance()->GetCurrentLevel()) { return; }
+	if (!toRender /*|| currentLevel != Map2D::GetInstance()->GetCurrentLevel()*/) { return; }
 
 	RenderParameters::GetInstance()->modelStack.PushMatrix();
 	RenderParameters::GetInstance()->modelStack.Translate(position.x, position.y, 0);
@@ -120,7 +120,6 @@ void GameObject::Render()
 	RenderParameters::GetInstance()->modelStack.Rotate(self_rotation.y, 0, 1, 0);
 	RenderParameters::GetInstance()->modelStack.Scale(self_scale.x, self_scale.y, 1);
 	
-
 
 	renderMesh();
 
@@ -146,8 +145,8 @@ void GameObject::renderMesh()
 	{
 		glUniform1i(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_COLOR_TEXTURE_ENABLED], 0);
 	}
+	mesh->Render(opacityValue);
 
-		mesh->Render(opacityValue);
 
 	if (textureID > 0)
 	{
