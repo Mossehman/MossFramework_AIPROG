@@ -23,7 +23,7 @@ bool MenuState::Update(double dt)
 
     if (CKeyboardController::GetInstance()->IsKeyPressed(GLFW_KEY_SPACE))
     {
-        GameStateManager::GetInstance()->setCurrentState("PlayState");
+        GameStateManager::GetInstance()->SetCurrentState("PlayState");
     }
 
     return true;

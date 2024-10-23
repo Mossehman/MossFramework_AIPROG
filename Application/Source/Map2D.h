@@ -32,12 +32,6 @@ struct Tile : public GameObject
 	}
 };
 
-struct PathNode {
-	glm::vec2 position;
-	bool isPassable;
-	std::vector<PathNode> neighbouringNodes;
-};
-
 //we use enums for ease of tracking our levels, to avoid magic numbers and to avoid accidentally generating a new level
 
 class Map2D : public SingletonTemplate<Map2D>
@@ -132,7 +126,7 @@ public:
 	*/
 	void GenerateRandomSeed(std::vector<float> seed, unsigned int width);
 
-	void GeneratePerlinMap(int levelID);
+	virtual void GeneratePerlinMap(int levelID);
 
 	/*!
 	@brief Blends the 1D and 2D tilemap and writes it to the map level at the specified level ID

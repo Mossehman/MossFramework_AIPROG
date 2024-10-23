@@ -140,10 +140,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AIMessageBroadcast.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\AStar.cpp" />
     <ClCompile Include="Source\BGMManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Entity2D.cpp" />
+    <ClCompile Include="Source\EntityAI2D.cpp" />
+    <ClCompile Include="Source\FiniteState.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GameState.cpp" />
     <ClCompile Include="Source\GameStateManager.cpp" />
@@ -171,12 +175,16 @@
     <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AIMessageBroadcast.h" />
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\AStar.h" />
     <ClInclude Include="Source\BGMManager.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\DesignPatterns\SingletonTemplate.h" />
     <ClInclude Include="Source\Entity2D.h" />
+    <ClInclude Include="Source\EntityAI2D.h" />
     <ClInclude Include="Source\filesystem.h" />
+    <ClInclude Include="Source\FiniteState.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\GameStateManager.h" />

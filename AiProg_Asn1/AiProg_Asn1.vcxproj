@@ -26,6 +26,7 @@
   <ItemGroup>
     <ClInclude Include="Application_AIPROG.h" />
     <ClInclude Include="GameStateAI.h" />
+    <ClInclude Include="LevelsAI.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

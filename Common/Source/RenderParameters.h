@@ -41,7 +41,6 @@ public:
 		U_COLOR_TEXTURE,
 		U_TEXT_ENABLED,
 		U_TEXT_COLOR,
-		U_OPACITY,
 		U_TOTAL,
 	};
 

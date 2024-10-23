@@ -5,12 +5,12 @@ GameState::GameState(std::string gameStateName)
     this->gameStateName = gameStateName;
 }
 
-void GameState::setName(std::string newName)
+void GameState::SetName(std::string newName)
 {
     newName = this->gameStateName;
 }
 
-std::string GameState::getName(void) const
+std::string GameState::GetName(void) const
 {
     return gameStateName;
 }

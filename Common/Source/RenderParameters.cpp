@@ -6,7 +6,7 @@ void RenderParameters::Init(glm::vec4 bgColor, const char* vertexShader, const c
 	glClearColor(bgColor.x, bgColor.y, bgColor.z, bgColor.w); //set our background color
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE); 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -25,7 +25,7 @@ void RenderParameters::Init(glm::vec4 bgColor, const char* vertexShader, const c
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID, "textColor");
 	m_parameters[U_LIGHTENABLED] = glGetUniformLocation(m_programID, "lightEnabled");
 	m_parameters[U_COLOR_TEXTURE_ENABLED] = glGetUniformLocation(m_programID, "colorTextureEnabled");
-	m_parameters[U_OPACITY] = glGetUniformLocation(m_programID, "opacity");
+	//m_parameters[U_OPACITY] = glGetUniformLocation(m_programID, "opacity");
 
 	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);

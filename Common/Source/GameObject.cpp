@@ -121,13 +121,13 @@ void GameObject::Render()
 	RenderParameters::GetInstance()->modelStack.Scale(self_scale.x, self_scale.y, 1);
 	
 
-	renderMesh();
+	RenderMesh();
 
 	RenderParameters::GetInstance()->modelStack.PopMatrix();
 	RenderParameters::GetInstance()->modelStack.PopMatrix();
 }
 
-void GameObject::renderMesh()
+void GameObject::RenderMesh()
 {
 	Mtx44 MVP;
 	MVP = RenderParameters::GetInstance()->projectionStack.Top() * RenderParameters::GetInstance()->viewStack.Top() * RenderParameters::GetInstance()->modelStack.Top();
@@ -155,7 +155,7 @@ void GameObject::renderMesh()
 	
 }
 
-void GameObject::setTexture(const char* texture)
+void GameObject::SetTexture(const char* texture)
 {
 	textureID = ImageLoader::GetInstance()->LoadTextureGetID(texture, true);
 	mesh->textureID = textureID;

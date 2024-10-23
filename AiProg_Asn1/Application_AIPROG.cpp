@@ -4,8 +4,8 @@
 void Application_AIPROG::OnInit()
 {
 	std::cout << "Init is running!" << std::endl;
-	GameStateManager::GetInstance()->addNewState("NewState", new GameStateAI());
-	GameStateManager::GetInstance()->setCurrentState("NewState");
+	GameStateManager::GetInstance()->AddNewState("NewState", new GameStateAI());
+	GameStateManager::GetInstance()->SetCurrentState("NewState");
 }
 
 void Application_AIPROG::OnRun()

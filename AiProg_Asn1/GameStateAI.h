@@ -2,6 +2,12 @@
 #include <GameState.h>
 #include <Camera.h>
 #include <GameObject.h>
+#include <EntityAI2D.h>
+#include <FiniteState.h>
+
+#include <Map2D.h>
+
+#include "LevelsAI.h"
 
 class GameStateAI : public GameState
 {
@@ -17,5 +23,7 @@ protected:
 
 	float timer = 0.f;
 	Camera camera;
+
+	Map2D* map = Map2D::GetInstance(NUM_LEVELS);
 };
 

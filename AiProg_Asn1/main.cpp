@@ -6,4 +6,6 @@ int main(void)
 	app.Init("Hello World");
 	app.Run();
 	app.Exit();
+
+	return 0;
 }

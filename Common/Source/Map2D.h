@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "LoadTGA.h"
 #include "Mesh.h"
+#include "AStar.h"
 
 #pragma warning(push)
 #pragma warning(disable:6385)
@@ -12,6 +13,7 @@
 #include <map>
 #include <vector>
 #include <string>
+
 //#include "LevelIDs.h"
 
 
@@ -30,12 +32,6 @@ struct Tile : public GameObject
 		isPassable = false;
 		isDangerous = false;
 	}
-};
-
-struct PathNode {
-	glm::vec2 position;
-	bool isPassable;
-	std::vector<PathNode> neighbouringNodes;
 };
 
 //we use enums for ease of tracking our levels, to avoid magic numbers and to avoid accidentally generating a new level
@@ -193,6 +189,8 @@ protected:
 
 	virtual void BindTextures() {}
 
+	virtual void GenerateNodes();
+
 
 	/*!
 	@brief Wrapper function for specifying Noise Map generation per-project, left blank for overwriting with specific parameters
@@ -219,6 +217,8 @@ protected:
 
 	std::vector<float> fOutput1D; //the output 1D perlin noise
 	std::vector<float> fOutput2D; //the output 2D perlin noise
+
+	std::vector<AStar*> AStarNodes;
 	
 	Map2D(const int MaxLevels = 1);
 	~Map2D(void);

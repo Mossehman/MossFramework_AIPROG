@@ -45,14 +45,14 @@ bool GameStateManager::Update(double dt)
 		currentState = nextState;
 		nextState = nullptr;
 
-		std::cout << "Transitioning to game state: " << currentState->getName() << " . . ." << std::endl;
+		std::cout << "Transitioning to game state: " << currentState->GetName() << " . . ." << std::endl;
 		if (currentState->Init())
 		{ 
 			std::cout << "Successful Transition!" << std::endl;
 		}
 		else
 		{
-			std::cout << "Error, unable to transition to game state: " << currentState->getName() << ", Init failed to run!" << std::endl;
+			std::cout << "Error, unable to transition to game state: " << currentState->GetName() << ", Init failed to run!" << std::endl;
 			return false;
 		}
 	}
@@ -79,7 +79,7 @@ void GameStateManager::Render()
 	}
 }
 
-void GameStateManager::addNewState(const std::string gameStateName, GameState* newState)
+void GameStateManager::AddNewState(const std::string gameStateName, GameState* newState)
 {
 	if (gameStateMap.count(gameStateName) > 0)
 	{
@@ -92,11 +92,11 @@ void GameStateManager::addNewState(const std::string gameStateName, GameState* n
 		return;
 	}
 
-	newState->setName(gameStateName);
+	newState->SetName(gameStateName);
 	gameStateMap.insert(std::pair<std::string, GameState*>(gameStateName, newState));
 }
 
-bool GameStateManager::setCurrentState(const std::string gameStateName)
+bool GameStateManager::SetCurrentState(const std::string gameStateName)
 {
 	if (gameStateMap.count(gameStateName) == 0) 
 	{
@@ -110,7 +110,7 @@ bool GameStateManager::setCurrentState(const std::string gameStateName)
 	return true;
 }
 
-bool GameStateManager::setPausedState(const std::string pausedStateName)
+bool GameStateManager::SetPausedState(const std::string pausedStateName)
 {
 
 	if (pausedState)
@@ -131,13 +131,13 @@ bool GameStateManager::setPausedState(const std::string pausedStateName)
 	return true;
 }
 
-void GameStateManager::unPause()
+void GameStateManager::UnPause()
 {
 	if (!pausedState) { return; }
 	pausedState = nullptr;
 }
 
-bool GameStateManager::removeState(const std::string gameStateName)
+bool GameStateManager::RemoveState(const std::string gameStateName)
 {
 	if (gameStateMap.count(gameStateName) == 0) { return false; }
 	GameState* stateToDelete = gameStateMap.at(gameStateName);

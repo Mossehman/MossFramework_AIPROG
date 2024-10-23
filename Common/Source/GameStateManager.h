@@ -18,11 +18,11 @@ public:
 	bool Update(double dt);
 	void Render();
 
-	void addNewState(const std::string gameStateName, GameState* newState);
-	bool setCurrentState(const std::string gameStateName);
-	bool setPausedState(const std::string pausedStateName);
-	void unPause();
-	bool removeState(const std::string gameStateName);
+	void AddNewState(const std::string gameStateName, GameState* newState);
+	bool SetCurrentState(const std::string gameStateName);
+	bool SetPausedState(const std::string pausedStateName);
+	void UnPause();
+	bool RemoveState(const std::string gameStateName);
 
 };
 

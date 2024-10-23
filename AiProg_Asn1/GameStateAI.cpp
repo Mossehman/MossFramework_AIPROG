@@ -7,6 +7,7 @@ bool GameStateAI::Init()
     RenderParameters::GetInstance()->Init(glm::vec4(0.f, 0.f, 1.f, 0.8f), "Shader//comg.vertexshader", "Shader//comg.fragmentshader");
     camera.Init(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
+
     go1 = new GameObject();
     go1->setMesh(MeshBuilder::GenerateQuad("quad", Color(1, 0, 1)));
     //go1->setTexture("Image/grass.tga");
@@ -21,7 +22,7 @@ bool GameStateAI::Init()
 
     go2->setPosition(glm::vec2(30, 30));
     go2->setScale(glm::vec2(80, 80));
-    go2->setOpacity(0.7f);
+    go2->setOpacity(0.4f);
 
     return true;
 }
@@ -34,8 +35,12 @@ bool GameStateAI::Update(double dt)
 void GameStateAI::Render()
 {
     RenderParameters::GetInstance()->Render(camera, 1200, 800);
+
+    glDepthMask(GL_FALSE);
     go1->Render();
     go2->Render();
+    glDepthMask(GL_TRUE);
+
 }
 
 void GameStateAI::Destroy()

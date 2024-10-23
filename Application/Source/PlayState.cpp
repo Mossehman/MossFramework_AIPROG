@@ -35,8 +35,8 @@ bool PlayState::Update(double dt)
 
 	if (!currentScene->Update(dt))
 	{
-		GameStateManager::GetInstance()->setCurrentState("MenuState");
-		GameStateManager::GetInstance()->unPause();
+		GameStateManager::GetInstance()->SetCurrentState("MenuState");
+		GameStateManager::GetInstance()->UnPause();
 		return true;
 	}
 	Map2D::GetInstance()->Update();

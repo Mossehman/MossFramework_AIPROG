@@ -17,7 +17,7 @@ public:
 	virtual void Render() = 0;
 	virtual void Destroy() = 0;
 
-	void setName(std::string newName);
-	std::string getName(void) const;
+	void SetName(std::string newName);
+	std::string GetName(void) const;
 };
 

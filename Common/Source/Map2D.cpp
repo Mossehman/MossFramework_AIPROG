@@ -490,6 +490,16 @@ void Map2D::SetDangerousTile(unsigned int ID, bool isDangerous)
     dangerousTiles.insert(std::pair<int, bool>(ID, isDangerous));
 }
 
+void Map2D::GenerateNodes()
+{
+    for (int i = 0; i < maxLevels; i++) //iterate through each level
+    {
+        AStar* newAStar = new AStar(tileSize);
+        newAStar->Init(mapSizeX[i], mapSizeY[i]); // call the AStar init function for each level
+        AStarNodes.push_back(newAStar); // add the new AStar ptr to the list
+    }
+}
+
 
 Map2D::Map2D(const int MaxLevels) : maxLevels(maxLevels)
 {

@@ -10,4 +10,3 @@ private:
 	void OnRun() override;
 	void OnExit() override;
 };
-

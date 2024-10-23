@@ -107,9 +107,9 @@ public:
 
 	virtual void Render();
 
-	virtual void renderMesh();
+	virtual void RenderMesh();
 
-	virtual void setTexture(const char* texture);
+	virtual void SetTexture(const char* texture);
 
 	/*!
 	@brief Determines the size of each sprite texture for the animated sprite renderer to reference 
