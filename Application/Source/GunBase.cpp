@@ -59,7 +59,7 @@ void GunBase::Shoot()
 	newProjectile->setExplosionRadius(damageRadius);
 	newProjectile->setHitboxSize(glm::vec2(8, 8));
 	newProjectile->setHitboxOffset(glm::vec2(0, 0));
-	newProjectile->setMesh(MeshBuilder::GeneratePolygon("Bullet", Color(0, 1, 0.5)));
+	newProjectile->SetMesh(MeshBuilder::GeneratePolygon("Bullet", Color(0, 1, 0.5)));
 	newProjectile->setPosition(shootPos);
 	newProjectile->setScale(glm::vec2(10, 10));
 	//newProjectile->Init(Map2D::GetInstance()->getCurrentLevel());

@@ -28,7 +28,7 @@ bool SceneTilemap::Init()
 	minimap->Init();
 
 	entity = new Entity2D();
-	entity->setMesh(MeshBuilder::GenerateQuad("quad", Color(1, 1, 1)));
+	entity->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 1, 1)));
 	entity->SetTexture("Image/grass.tga");
 	entity->setPosition(glm::vec2(100, -70));
 	entity->setScale(glm::vec2(30, 100));

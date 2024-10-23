@@ -51,7 +51,6 @@ public:
 	//defines our rows for each level in our map
 	std::vector<unsigned int> mapSizeX;
 
-
 	//defines our columns for each level in our map
 	std::vector<unsigned int> mapSizeY;
 
@@ -173,6 +172,8 @@ public:
 
 	void PrintMapData(int level);
 
+	virtual void GenerateNodes();
+	void RenderNodes();
 
 protected:
 	std::map<int, int> textureMaps;
@@ -189,7 +190,6 @@ protected:
 
 	virtual void BindTextures() {}
 
-	virtual void GenerateNodes();
 
 
 	/*!

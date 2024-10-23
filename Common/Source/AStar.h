@@ -24,13 +24,13 @@ public:
 
 	virtual void Init(int xEnd, int yEnd, int xStart = 0, int yStart = 0);
 
-	PathNode*& GetNodes(void);
+	std::vector<PathNode*>& GetNodes(void);
 
 	int GetNodeCount(void);
 
 
 private:
-	PathNode* Nodes = nullptr;
+	std::vector<PathNode*> Nodes;
 	glm::vec2 tileSize;
 	int nodeCount;
 

@@ -500,10 +500,32 @@ void Map2D::GenerateNodes()
     }
 }
 
+void Map2D::RenderNodes()
+{
+    std::vector<GameObject*> nodeGOList;
+    for (int i = 0; i < AStarNodes[currentLevel]->GetNodes().size(); i++)
+    {
+        GameObject* nodeGO = new GameObject(AStarNodes[currentLevel]->GetNodes()[i]->Position);
+        nodeGO->setScale(glm::vec2(20, 20));
+        nodeGO->SetMesh(MeshBuilder::GenerateQuad("Node mesh", Color(1, 0, 0)));
+        nodeGO->Render();
+        nodeGOList.push_back(nodeGO);
+    }
 
-Map2D::Map2D(const int MaxLevels) : maxLevels(maxLevels)
+    for (int i = 0; i < nodeGOList.size(); i++)
+    {
+        delete nodeGOList[i];
+    }
+    nodeGOList.clear();
+}
+
+
+Map2D::Map2D(const int MaxLevels) : maxLevels(MaxLevels)
 {
     currentLevel = MaxLevels;
+    mapSizeX.resize(maxLevels);
+    mapSizeY.resize(maxLevels);
+    tileMaps.resize(maxLevels);
 }
 
 Map2D::~Map2D(void)
@@ -527,10 +549,17 @@ Map2D::~Map2D(void)
 void Map2D::Init(int startLevel) {
     currentLevel = startLevel;
 
+    mapSizeX.resize(maxLevels);
+    mapSizeY.resize(maxLevels);
+
+    std::cout << mapSizeX.size() << std::endl;
+
     //setTextureToID(0, "Image/boxTransparent.tga");
     SetPassableTile(0, true); //air is passable
+    SetTextureToID(1, "Image/stone.tga");
 
     BindTextures();
+
 
     for (int i = 0; i < maxLevels; i++)
     {
@@ -560,7 +589,7 @@ void Map2D::Init(int startLevel) {
 
                 tileMaps[i][y][x]->currentLevel = i;
 
-                tileMaps[i][y][x]->setMesh(tileMesh);
+                tileMaps[i][y][x]->SetMesh(tileMesh);
                 tileMaps[i][y][x]->textureID = textureMaps.at(tileMaps[currentLevel][y][x]->tileID);
             }
         }

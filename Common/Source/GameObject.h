@@ -94,7 +94,7 @@ public:
 	glm::vec2 getScale();
 
 
-	void setMesh(Mesh* mesh);
+	void SetMesh(Mesh* mesh);
 	Mesh*& getMesh(void);
 
 	void setOpacity(float opacityValue);

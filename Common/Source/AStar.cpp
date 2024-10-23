@@ -17,13 +17,16 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
         {
             int index = y * (xEnd + xStart) + x;
 
-            Nodes[index].Position.x = x * tileSize.x;
-            Nodes[index].Position.y = y * tileSize.y * -1;
-            Nodes[index].Passability = 0;
+            PathNode* newNode = new PathNode();
+
+            newNode->Position.x = x * tileSize.x;
+            newNode->Position.y = y * tileSize.y * -1;
+            newNode->Passability = 0;
 
 
-            Nodes[index].ParentNode = nullptr;
-            nodeCount++; // Arbitrary value to keep track of the number of nodes in the pointer
+            newNode->ParentNode = nullptr;
+
+            Nodes.push_back(newNode);
         }
     }
 
@@ -33,29 +36,29 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
         {
             if (y > 0)
             {
-                Nodes[y * (xEnd + xStart) + x].NeighbouringNodes.push_back(&Nodes[(y - 1) * (xEnd + xStart) + x]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[(y - 1) * (xEnd + xStart) + x]);
             }
 
             if (y < (yEnd + yStart) - 1)
             {
-                Nodes[y * (xEnd + xStart) + x].NeighbouringNodes.push_back(&Nodes[(y + 1) * (xEnd + xStart) + x]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[(y + 1) * (xEnd + xStart) + x]);
             }
 
             if (x > 0)
             {
-                Nodes[y * (xEnd + xStart) + x].NeighbouringNodes.push_back(&Nodes[y * (xEnd + xStart) + (x - 1)]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[y * (xEnd + xStart) + (x - 1)]);
             }
 
             if (x < (xEnd + xStart) - 1)
             {
-                Nodes[y * (xEnd + xStart) + x].NeighbouringNodes.push_back(&Nodes[y * (xEnd + xStart) + (x + 1)]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[y * (xEnd + xStart) + (x + 1)]);
             }
         }
     }
 
 }
 
-PathNode*& AStar::GetNodes(void)
+std::vector<PathNode*>& AStar::GetNodes(void)
 {
     return Nodes;
 }

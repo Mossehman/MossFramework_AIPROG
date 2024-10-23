@@ -9,7 +9,7 @@ bool SceneAI::Init()
     camera.Init(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
     go = new GameObject();
-    go->setMesh(MeshBuilder::GenerateQuad("GO", Color(1, 1, 1)));
+    go->SetMesh(MeshBuilder::GenerateQuad("GO", Color(1, 1, 1)));
 
     return true;
 }

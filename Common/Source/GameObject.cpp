@@ -68,7 +68,7 @@ glm::vec2 GameObject::getScale()
 	return scale;
 }
 
-void GameObject::setMesh(Mesh* newMesh)
+void GameObject::SetMesh(Mesh* newMesh)
 {
 	mesh = newMesh;
 	//if (mesh) { mesh->textureID = 0; }
