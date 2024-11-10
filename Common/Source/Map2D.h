@@ -4,6 +4,7 @@
 #include "LoadTGA.h"
 #include "Mesh.h"
 #include "AStar.h"
+#include "Tile.h"
 
 #pragma warning(push)
 #pragma warning(disable:6385)
@@ -14,25 +15,8 @@
 #include <vector>
 #include <string>
 
+
 //#include "LevelIDs.h"
-
-
-struct Tile : public GameObject
-{
-	unsigned int tileID;
-	bool isPassable = false;
-	bool isDangerous = false;
-
-	Tile(int tileIndex, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(0, 0))
-	{
-		tileID = tileIndex;
-		position = pos;
-		rotation = rot;
-		scale = scl;
-		isPassable = false;
-		isDangerous = false;
-	}
-};
 
 //we use enums for ease of tracking our levels, to avoid magic numbers and to avoid accidentally generating a new level
 
@@ -174,6 +158,7 @@ public:
 
 	virtual void GenerateNodes();
 	void RenderNodes();
+	AStar* GetAStar();
 
 protected:
 	std::map<int, int> textureMaps;
@@ -218,7 +203,7 @@ protected:
 	std::vector<float> fOutput1D; //the output 1D perlin noise
 	std::vector<float> fOutput2D; //the output 2D perlin noise
 
-	std::vector<AStar*> AStarNodes;
+	AStar* AStarNodes;
 	
 	Map2D(const int MaxLevels = 1);
 	~Map2D(void);

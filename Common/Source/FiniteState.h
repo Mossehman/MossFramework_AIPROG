@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <vector>
+
+
 class EntityAI2D;
 
 class FiniteState
@@ -12,6 +15,7 @@ public:
 	virtual void Update() {}
 	virtual void OnExit() {}
 
+	void SwitchStateRand(std::vector<std::string> stateNames);
 	void SwitchState(std::string stateName);
 
 	FiniteState(std::string stateName);

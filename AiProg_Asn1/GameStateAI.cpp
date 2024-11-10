@@ -1,6 +1,8 @@
 #include "GameStateAI.h"
 #include <RenderParameters.h>
 #include <Map2D.h>
+#include <KeyboardController.h>
+
 
 bool GameStateAI::Init()
 {
@@ -11,22 +13,28 @@ bool GameStateAI::Init()
     map->GetInstance()->SetTileSize(glm::vec2(30, 30));
     map->GetInstance()->mapSizeX[LEVEL1] = 30;
     map->GetInstance()->mapSizeY[LEVEL1] = 30;
+
+    map->GetInstance()->mapSizeX[LEVEL2] = 30;
+    map->GetInstance()->mapSizeY[LEVEL2] = 30;
     //map->::GetInstance()->generatePerlinMap(LevelIDs::SUPERDESTROYER);
     map->GetInstance()->WriteMapFromCSV("Maps/tilemap1.csv", LEVEL1);
+    map->GetInstance()->WriteMapFromCSV("Maps/tilemap2.csv", LEVEL2);
     map->GetInstance()->Init(LEVEL1);
-    map->GetInstance()->GenerateNodes();
 
     go1 = new GameObject();
+    go1->currentLevel = LEVEL1;
     go1->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 0, 1)));
-    go1->SetTexture("Image/grass.tga");
+    //go1->SetTexture("Image/grass.tga");
 
     go1->setPosition(glm::vec2(-30, 0));
     go1->setScale(glm::vec2(80, 80));
     go1->setOpacity(0.7f);
 
     go2 = new GameObject();
+    go2->currentLevel = LEVEL1;
+
     go2->SetMesh(MeshBuilder::GenerateQuad("quad", Color(0, 1, 1)));
-    go2->SetTexture("Image/dirt.tga");
+    //go2->SetTexture("Image/dirt.tga");
 
     go2->setPosition(glm::vec2(30, 30));
     go2->setScale(glm::vec2(80, 80));
@@ -37,6 +45,16 @@ bool GameStateAI::Init()
 
 bool GameStateAI::Update(double dt)
 {
+    if (CKeyboardController::GetInstance()->IsKeyDown('X'))
+    {
+        Map2D::GetInstance()->ChangeLevel(LEVEL2);
+    }
+
+    if (CKeyboardController::GetInstance()->IsKeyDown('V'))
+    {
+        Map2D::GetInstance()->ChangeLevel(LEVEL1);
+    }
+
     return true;
 }
 

@@ -96,7 +96,7 @@ void GameObject::Init(int currentLevel)
 
 void GameObject::Render()
 {
-	if (!toRender /*|| currentLevel != Map2D::GetInstance()->GetCurrentLevel()*/) { return; }
+	if (!toRender || currentLevel != Map2D::GetInstance()->GetCurrentLevel()) { return; }
 
 	RenderParameters::GetInstance()->modelStack.PushMatrix();
 	RenderParameters::GetInstance()->modelStack.Translate(position.x, position.y, 0);

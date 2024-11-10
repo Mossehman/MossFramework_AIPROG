@@ -133,9 +133,6 @@
     <ClCompile Include="Source\FiniteState.cpp">
       <Filter>Moss Framework\AI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AIMessageBroadcast.cpp">
-      <Filter>Moss Framework\AI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Vector3.cpp">
       <Filter>Moss Framework\Math</Filter>
     </ClCompile>
@@ -144,6 +141,15 @@
     </ClCompile>
     <ClCompile Include="Source\Mtx44.cpp">
       <Filter>Moss Framework\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MessageHub.cpp">
+      <Filter>Moss Framework\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BaseMessage.cpp">
+      <Filter>Moss Framework\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BaseLevel.cpp">
+      <Filter>Moss Framework\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,9 +242,6 @@
     <ClInclude Include="Source\FiniteState.h">
       <Filter>Moss Framework\AI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AIMessageBroadcast.h">
-      <Filter>Moss Framework\AI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Vector3.h">
       <Filter>Moss Framework\Math</Filter>
     </ClInclude>
@@ -250,6 +253,21 @@
     </ClInclude>
     <ClInclude Include="Source\MyMath.h">
       <Filter>Moss Framework\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IMessageReciever.h">
+      <Filter>Moss Framework\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MessageHub.h">
+      <Filter>Moss Framework\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BaseMessage.h">
+      <Filter>Moss Framework\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BaseLevel.h">
+      <Filter>Moss Framework\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tile.h">
+      <Filter>Moss Framework\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

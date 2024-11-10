@@ -6,6 +6,15 @@ AStar::AStar(glm::vec2 tileSize)
     this->tileSize = tileSize;
 }
 
+AStar::~AStar()
+{
+    for (int i = 0; i < Nodes.size(); i++)
+    {
+        delete Nodes[i]; //free up data from the nodes
+    }
+    Nodes.clear();
+}
+
 void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
 {
     nodeCount = 0;
@@ -23,9 +32,6 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
             newNode->Position.y = y * tileSize.y * -1;
             newNode->Passability = 0;
 
-
-            newNode->ParentNode = nullptr;
-
             Nodes.push_back(newNode);
         }
     }
@@ -36,22 +42,22 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
         {
             if (y > 0)
             {
-                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[(y - 1) * (xEnd + xStart) + x]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodesIndex.push_back((y - 1) * (xEnd + xStart) + x);
             }
 
             if (y < (yEnd + yStart) - 1)
             {
-                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[(y + 1) * (xEnd + xStart) + x]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodesIndex.push_back((y + 1) * (xEnd + xStart) + x);
             }
 
             if (x > 0)
             {
-                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[y * (xEnd + xStart) + (x - 1)]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodesIndex.push_back(y * (xEnd + xStart) + (x - 1));
             }
 
             if (x < (xEnd + xStart) - 1)
             {
-                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodes.push_back(Nodes[y * (xEnd + xStart) + (x + 1)]);
+                Nodes[y * (xEnd + xStart) + x]->NeighbouringNodesIndex.push_back(y * (xEnd + xStart) + (x + 1));
             }
         }
     }

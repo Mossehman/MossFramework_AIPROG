@@ -140,9 +140,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\AIMessageBroadcast.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\AStar.cpp" />
+    <ClCompile Include="Source\BaseLevel.cpp" />
+    <ClCompile Include="Source\BaseMessage.cpp" />
     <ClCompile Include="Source\BGMManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Entity2D.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Source\MatrixStack.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\MessageHub.cpp" />
     <ClCompile Include="Source\MouseController.cpp" />
     <ClCompile Include="Source\Mtx44.cpp" />
     <ClCompile Include="Source\RenderParameters.cpp" />
@@ -175,9 +177,10 @@
     <ClCompile Include="Source\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\AIMessageBroadcast.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AStar.h" />
+    <ClInclude Include="Source\BaseLevel.h" />
+    <ClInclude Include="Source\BaseMessage.h" />
     <ClInclude Include="Source\BGMManager.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\DesignPatterns\SingletonTemplate.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\GameStateManager.h" />
     <ClInclude Include="Source\ImageLoader.h" />
+    <ClInclude Include="Source\IMessageReciever.h" />
     <ClInclude Include="Source\imGUI\backends\imgui_impl_glfw.h" />
     <ClInclude Include="Source\imGUI\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="Source\imGUI\imconfig.h" />
@@ -201,6 +205,7 @@
     <ClInclude Include="Source\MatrixStack.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
+    <ClInclude Include="Source\MessageHub.h" />
     <ClInclude Include="Source\MouseController.h" />
     <ClInclude Include="Source\Mtx44.h" />
     <ClInclude Include="Source\MyMath.h" />
@@ -208,6 +213,7 @@
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\SoundInfo.h" />
     <ClInclude Include="Source\SoundManager2D.h" />
+    <ClInclude Include="Source\Tile.h" />
     <ClInclude Include="Source\timer.h" />
     <ClInclude Include="Source\Vector3.h" />
     <ClInclude Include="Source\Vertex.h" />

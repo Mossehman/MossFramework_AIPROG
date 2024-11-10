@@ -439,8 +439,8 @@ void Map2D::SaveMapToCSV(const std::string filename, int levelID)
 void Map2D::ChangeLevel(int newLevel)
 {
     if (currentLevel != maxLevels && currentLevel == newLevel) { return; } //ensure we do not re-render the map if we try to change to the same map
-
     currentLevel = newLevel;
+    this->GenerateNodes();
 }
 
 int Map2D::GetCurrentLevel(void)
@@ -492,22 +492,20 @@ void Map2D::SetDangerousTile(unsigned int ID, bool isDangerous)
 
 void Map2D::GenerateNodes()
 {
-    for (int i = 0; i < maxLevels; i++) //iterate through each level
-    {
-        AStar* newAStar = new AStar(tileSize);
-        newAStar->Init(mapSizeX[i], mapSizeY[i]); // call the AStar init function for each level
-        AStarNodes.push_back(newAStar); // add the new AStar ptr to the list
-    }
+    if (AStarNodes) { delete AStarNodes; }
+    AStarNodes = new AStar(tileSize);
+    AStarNodes->Init(mapSizeX[currentLevel], mapSizeY[currentLevel]); // call the AStar init function for each level
 }
 
 void Map2D::RenderNodes()
 {
     std::vector<GameObject*> nodeGOList;
-    for (int i = 0; i < AStarNodes[currentLevel]->GetNodes().size(); i++)
+    for (int i = 0; i < AStarNodes->GetNodes().size(); i++)
     {
-        GameObject* nodeGO = new GameObject(AStarNodes[currentLevel]->GetNodes()[i]->Position);
+        GameObject* nodeGO = new GameObject(AStarNodes->GetNodes()[i]->Position);
         nodeGO->setScale(glm::vec2(20, 20));
-        nodeGO->SetMesh(MeshBuilder::GenerateQuad("Node mesh", Color(1, 0, 0)));
+        nodeGO->SetMesh(MeshBuilder::GenerateQuad("Node Mesh", Color(1, 0, 0)));
+        nodeGO->setOpacity(0.4f);
         nodeGO->Render();
         nodeGOList.push_back(nodeGO);
     }
@@ -517,6 +515,11 @@ void Map2D::RenderNodes()
         delete nodeGOList[i];
     }
     nodeGOList.clear();
+}
+
+AStar* Map2D::GetAStar()
+{
+    return AStarNodes;
 }
 
 
@@ -559,6 +562,7 @@ void Map2D::Init(int startLevel) {
     SetTextureToID(1, "Image/stone.tga");
 
     BindTextures();
+    GenerateNodes();
 
 
     for (int i = 0; i < maxLevels; i++)
@@ -590,7 +594,7 @@ void Map2D::Init(int startLevel) {
                 tileMaps[i][y][x]->currentLevel = i;
 
                 tileMaps[i][y][x]->SetMesh(tileMesh);
-                tileMaps[i][y][x]->textureID = textureMaps.at(tileMaps[currentLevel][y][x]->tileID);
+                tileMaps[i][y][x]->textureID = textureMaps.at(tileMaps[i][y][x]->tileID);
             }
         }
     }

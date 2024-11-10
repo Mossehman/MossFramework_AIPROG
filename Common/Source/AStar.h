@@ -4,16 +4,23 @@
 
 struct PathNode {
 	glm::vec2 Position;
-	std::vector<PathNode*> NeighbouringNodes;
-	PathNode* ParentNode;
+	std::vector<int> NeighbouringNodesIndex;
+
 	int Passability; // Use an ENUM for this as opposed to actual numerical values
 
 };
 
 struct EntityPathData {
-	float localGoal;
+	float localGoal = 0.0f;
 	float globalGoal;
 	bool hasChecked;
+	int ParentIndex;
+	PathNode* currNode;
+
+	EntityPathData() {
+		ParentIndex = -1;
+		currNode = nullptr;
+	}
 };
 
 class AStar
@@ -21,6 +28,7 @@ class AStar
 public:
 	
 	AStar(glm::vec2 tileSize);
+	~AStar();
 
 	virtual void Init(int xEnd, int yEnd, int xStart = 0, int yStart = 0);
 
