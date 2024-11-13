@@ -25,7 +25,7 @@ Entity2D::Entity2D(glm::vec2 pos, glm::vec2 rot, glm::vec2 scl)
 	textureID = 0;
 }
 
-void Entity2D::Init(int currentLevel, bool isGravity, bool isPhysics, bool checkTileCollisions, bool entityCollision)
+void Entity2D::Init(std::vector<GameObject*>& objList, int currentLevel, bool isGravity, bool isPhysics, bool checkTileCollisions, bool entityCollision)
 {
 	//defines the current level the entity resides on
 	this->currentLevel = currentLevel;
@@ -36,15 +36,16 @@ void Entity2D::Init(int currentLevel, bool isGravity, bool isPhysics, bool check
 	this->entityCollision = entityCollision;
 
 	//cache the min and max pos to avoid recalculating the values with each frame
-	this->cachedMaxPos.x = (Map2D::GetInstance()->TileToPos(glm::vec2(Map2D::GetInstance()->mapSizeX[currentLevel] - 1, 0)) + (Map2D::GetInstance()->GetTileSize() * 0.5f)).x;
-	this->cachedMinPos.x = (Map2D::GetInstance()->TileToPos(glm::vec2(0, Map2D::GetInstance()->mapSizeY[currentLevel])) - (Map2D::GetInstance()->GetTileSize() * 0.5f)).x;
+	this->cachedMaxPos.x = (Map2D::GetInstance()->TileToPos(glm::vec2(Map2D::GetInstance()->GetLevel()->GetMapX() - 1, 0)) + (Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f)).x;
+	this->cachedMinPos.x = (Map2D::GetInstance()->TileToPos(glm::vec2(0, Map2D::GetInstance()->GetLevel()->GetMapY())) - (Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f)).x;
 
-	this->cachedMaxPos.y = (Map2D::GetInstance()->TileToPos(glm::vec2(Map2D::GetInstance()->mapSizeX[currentLevel], 0)) + (Map2D::GetInstance()->GetTileSize() * 0.5f)).y;
-	this->cachedMinPos.y = (Map2D::GetInstance()->TileToPos(glm::vec2(0, Map2D::GetInstance()->mapSizeY[currentLevel] - 1)) - (Map2D::GetInstance()->GetTileSize() * 0.5f)).y;
+	this->cachedMaxPos.y = (Map2D::GetInstance()->TileToPos(glm::vec2(Map2D::GetInstance()->GetLevel()->GetMapX(), 0)) + (Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f)).y;
+	this->cachedMinPos.y = (Map2D::GetInstance()->TileToPos(glm::vec2(0, Map2D::GetInstance()->GetLevel()->GetMapY() - 1)) - (Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f)).y;
 
 
 	this->minPos = cachedMinPos;
 	this->maxPos = cachedMaxPos;
+	objList.push_back(this);
 }
 
 void Entity2D::Update(double dt)
@@ -86,8 +87,8 @@ void Entity2D::checkBorderX()
 
 	//we want to check in the left and right dir, so we need to get the y coordinates of the hitbox to determine the hitbox height in tiles (rounded up)
 
-	int minHitboxY = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset + hitboxSize * 0.5f - (Map2D::GetInstance()->GetTileSize() * 0.5f) - 1.f, 0).y; //get the minimum hitbox Y value and check the tile it is on
-	int maxHitboxY = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset - hitboxSize * 0.5f - (Map2D::GetInstance()->GetTileSize() * 0.5f) + 1.f, 0).y; //get the maximum hitbox Y value and check the tile it is on
+	int minHitboxY = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset + hitboxSize * 0.5f - (Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f) - 1.f, 0).y; //get the minimum hitbox Y value and check the tile it is on
+	int maxHitboxY = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset - hitboxSize * 0.5f - (Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f) + 1.f, 0).y; //get the maximum hitbox Y value and check the tile it is on
 
 	/*
 		X - hitboxPos
@@ -115,7 +116,7 @@ void Entity2D::checkBorderX()
 		//check the current row of tiles that i is on, stop when either a tile is hit or we hit the max iteration count
 
 		//check right
-		for (int x = hitboxTile.x + 1; x < Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()]; x++)
+		for (int x = hitboxTile.x + 1; x < Map2D::GetInstance()->GetLevel()->GetMapX(); x++)
 		{
 			//std::cout << Map2D::GetInstance()->getMapInfo(x, y, Map2D::GetInstance()->getCurrentLevel()) << std::endl;
 			//TODO: change this to check if the tile is solid rather than just air
@@ -124,7 +125,7 @@ void Entity2D::checkBorderX()
 				std::cout << "Tile ID of impassable tile: " << Map2D::GetInstance()->GetMapInfo(y, x, Map2D::GetInstance()->GetCurrentLevel()) << std::endl;
 
 				//get the x coordinates of the far left tile border
-				float tileXmax = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).x - Map2D::GetInstance()->GetTileSize().x * 0.5f;
+				float tileXmax = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).x - Map2D::GetInstance()->GetLevel()->GetTileSize().x * 0.5f;
 				
 				//if the calculated max X is smaller than the current max X, set that as the current max X
 				if (tileXmax < maxPos.x) { maxPos.x = tileXmax; }
@@ -143,7 +144,7 @@ void Entity2D::checkBorderX()
 			if (!Map2D::GetInstance()->GetMapPassable(y, x, Map2D::GetInstance()->GetCurrentLevel()))
 			{
 				//get the x coordinates of the far right tile border
-				float tileXmin = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).x + Map2D::GetInstance()->GetTileSize().x * 0.5f;
+				float tileXmin = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).x + Map2D::GetInstance()->GetLevel()->GetTileSize().x * 0.5f;
 
 				//if the calculated min x is larger than the current min x, set that as our current min X
 				if (tileXmin > minPos.x) { minPos.x = tileXmin; }
@@ -165,8 +166,8 @@ void Entity2D::checkBorderY()
 	resetBorderY(); // reset our X coordinate borders when the y value updates
 
 	// Calculate the tile positions where the hitbox edges lie
-	int minHitboxX = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset - hitboxSize * 0.5f + Map2D::GetInstance()->GetTileSize() * 0.5f + 1.f, 0).x; // floor
-	int maxHitboxX = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset + hitboxSize * 0.5f + Map2D::GetInstance()->GetTileSize() * 0.5f - 1.f, 0).x;  // ceil
+	int minHitboxX = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset - hitboxSize * 0.5f + Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f + 1.f, 0).x; // floor
+	int maxHitboxX = Map2D::GetInstance()->PosToTilePos(position + hitboxOffset + hitboxSize * 0.5f + Map2D::GetInstance()->GetLevel()->GetTileSize() * 0.5f - 1.f, 0).x;  // ceil
 
 	// Iterate over the columns the hitbox overlaps
 	for (int x = minHitboxX; x <= maxHitboxX; x++)
@@ -178,7 +179,7 @@ void Entity2D::checkBorderY()
 			if (!Map2D::GetInstance()->GetMapPassable(y, x, Map2D::GetInstance()->GetCurrentLevel()))
 			{
 				// Get the y coordinates of the bottom side of the tile
-				float tileYmax = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).y - Map2D::GetInstance()->GetTileSize().y * 0.5f;
+				float tileYmax = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).y - Map2D::GetInstance()->GetLevel()->GetTileSize().y * 0.5f;
 
 				// If the calculated max Y is smaller than the current max Y, set that as the current max Y
 				if (tileYmax < maxPos.y) { maxPos.y = tileYmax; }
@@ -187,12 +188,12 @@ void Entity2D::checkBorderY()
 		}
 
 		// Check down
-		for (int y = hitboxTile.y + 1; y < Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()]; y++)
+		for (int y = hitboxTile.y + 1; y < Map2D::GetInstance()->GetLevel()->GetMapY(); y++)
 		{
 			if (!Map2D::GetInstance()->GetMapPassable(y, x, Map2D::GetInstance()->GetCurrentLevel()))
 			{
 				// Get the y coordinates of the top side of the tile
-				float tileYmin = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).y + Map2D::GetInstance()->GetTileSize().y * 0.5f;
+				float tileYmin = Map2D::GetInstance()->TileToPos(glm::vec2(x, y)).y + Map2D::GetInstance()->GetLevel()->GetTileSize().y * 0.5f;
 
 				// If the calculated min Y is larger than the current min Y, set that as the current min Y
 				if (tileYmin > minPos.y) { minPos.y = tileYmin; }

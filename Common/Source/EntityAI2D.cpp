@@ -20,12 +20,12 @@ void EntityAI2D::SolveAStar()
 {
 	AStar* AStarNodes = Map2D::GetInstance()->GetAStar();
 
-    for (int x = 0; x < Map2D::GetInstance()->mapSizeX[currentLevel]; x++)
+    for (int y = 0; y < Map2D::GetInstance()->GetLevel()->GetMapY(); y++)
     {
-        for (int y = 0; y < Map2D::GetInstance()->mapSizeY[currentLevel]; y++)
+        for (int x = 0; x < Map2D::GetInstance()->GetLevel()->GetMapX(); x++)
         {
             //convert the 2 dimensional array indexes into an index in 1 dimension
-            int index = Map2D::GetInstance()->mapSizeX[currentLevel] * y + x;
+            int index = Map2D::GetInstance()->GetLevel()->GetMapX() * y + x;
 
             //reset the pathdata and node values
             pathData[index]->hasChecked = false;
@@ -35,8 +35,8 @@ void EntityAI2D::SolveAStar()
         }
     }
 
-	int startIndex = (int)Map2D::GetInstance()->PosToTilePos(position).y * Map2D::GetInstance()->mapSizeY[currentLevel] + (int)Map2D::GetInstance()->PosToTilePos(position).x;
-	int endIndex = (int)Map2D::GetInstance()->PosToTilePos(targetPos).y * Map2D::GetInstance()->mapSizeY[currentLevel] + (int)Map2D::GetInstance()->PosToTilePos(targetPos).x;
+	int startIndex = (int)Map2D::GetInstance()->PosToTilePos(position).y * Map2D::GetInstance()->GetLevel()->GetMapY() + (int)Map2D::GetInstance()->PosToTilePos(position).x;
+	int endIndex = (int)Map2D::GetInstance()->PosToTilePos(targetPos).y * Map2D::GetInstance()->GetLevel()->GetMapY() + (int)Map2D::GetInstance()->PosToTilePos(targetPos).x;
 
 	//calculate the start and end nodes (can use as local variables since we just need to cache the waypoint list and then delete them after)
 	PathNode* startNode = AStarNodes->GetNodes()[startIndex];

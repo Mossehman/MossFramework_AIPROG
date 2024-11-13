@@ -101,7 +101,7 @@ public:
 	float getOpacity(void);
 
 
-	virtual void Init(int currentLevel);
+	virtual void Init(std::vector<GameObject*>& objList, int currentLevel);
 
 	virtual void Update(double dt) {};
 

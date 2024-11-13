@@ -26,18 +26,18 @@ public:
 		return s_mInstance;
 	}
 
-	template <typename... Args>
-	static T* GetInstance(Args&&... args)
-	{
-		// If the instance does not exist, create it using the provided parameters
-		if (s_mInstance == nullptr)
-		{
-			s_mInstance = new T(std::forward<Args>(args)...);
-		}
+	//template <typename... Args>
+	//static T* GetInstance(Args&&... args)
+	//{
+	//	// If the instance does not exist, create it using the provided parameters
+	//	if (s_mInstance == nullptr)
+	//	{
+	//		s_mInstance = new T(std::forward<Args>(args)...);
+	//	}
 
-		// Return the instance
-		return s_mInstance;
-	}
+	//	// Return the instance
+	//	return s_mInstance;
+	//}
 
 	// Destroy this singleton instance
 	static void Destroy()

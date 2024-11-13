@@ -6,6 +6,20 @@
 
 #define AIR_ID 0 //define our Air ID for skipping on rendering and collision checks
 
+struct PerlinNoiseConfig
+{
+	int HeightOffset;
+	int Octaves;
+	float ScalingBias;
+
+	PerlinNoiseConfig(int Octaves, float ScalingBias, int HeightOffset = 0)
+	{
+		this->Octaves = Octaves;
+		this->ScalingBias = ScalingBias;
+		this->HeightOffset = HeightOffset;
+	}
+};
+
 /// <summary>
 /// Abstract class, levels should derive and overwrite from this class
 /// </summary>
@@ -70,7 +84,7 @@ protected:
 	/// <param name="heightOffset"> - The ground offset (higher value = lower max height)</param>
 	/// <param name="Input"> - The noise values for generating the tilemap</param>
 	/// <param name="noiseMap"> - The output tilemap ID values</param>
-	virtual void GenerateTileMap1D(int width, int height, int heightOffset, const float* Input, std::vector<std::vector<int>>& noiseMap) = 0;
+	virtual void NoiseToTiles1D(int width, int height, int heightOffset, const float* Input, std::vector<std::vector<int>>& noiseMap) {}
 
 	/// <summary>
 	/// Generates the tileIDs for the 2-Dimensional tilemap, left abstract for specification in derived classes
@@ -79,7 +93,7 @@ protected:
 	/// <param name="height"> - The height of our map</param>
 	/// <param name="Input"> - The noise values for generating the tilemap</param>
 	/// <param name="noiseMap"> - The output tilemap ID values</param>
-	virtual void GenerateTileMap2D(int width, int height, const float* Input, std::vector<std::vector<int>>& noiseMap) = 0;
+	virtual void NoiseToTiles2D(int width, int height, const float* Input, std::vector<std::vector<int>>& noiseMap) {}
 
 	/// <summary>
 	/// Generates a random seed for our noise values
@@ -91,21 +105,21 @@ protected:
 	/// <summary>
 	/// Generates the tilemap based on 1D and 2D perlin noise (modifable in derived classes)
 	/// </summary>
-	virtual void GeneratePerlinMap();
+	virtual void GeneratePerlinMap(std::vector<std::vector<int>> firstMap, std::vector<std::vector<int>> otherMap);
+
+	std::vector<std::vector<int>> Generate1DPerlinMap(PerlinNoiseConfig* noiseParameters);	
+	std::vector<std::vector<int>> Generate2DPerlinMap(PerlinNoiseConfig* noiseParameters);
+	
+	void WriteMapFromCSV(const std::string& filename);
+	void SaveMapToCSV(const std::string& filename);
 
 public:
-	
-	struct PerlinNoiseConfig
-	{
-		int HeightOffset;
-		int Octaves;
-		float ScalingBias;
-		float ScalingBias2D;
-	};
+	BaseLevel(unsigned int MapX, unsigned int MapY, glm::vec2 TileSize, const std::string& filename);
+	BaseLevel(unsigned int MapX, unsigned int MapY, glm::vec2 TileSize, PerlinNoiseConfig* Config1D, PerlinNoiseConfig* Config2D);
 
 	virtual void Init();
 	virtual void Update(float dt);
-	virtual void Render();
+	virtual void Render(glm::ivec2 CameraPos, glm::ivec2 RenderDistance);
 
 
 	void SetTileSize(glm::vec2 tileSize);
@@ -113,6 +127,13 @@ public:
 
 	void SetTileMesh(Mesh* mesh);
 	Mesh* GetTileMesh(void);
+
+	int GetMapX(void);
+	int GetMapY(void);
+
+	std::vector<std::vector<Tile*>>& GetTilemap(void);
+
+	void ClearMap();
 
 };
 

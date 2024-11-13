@@ -7,9 +7,9 @@
 
 void ApplicationAI::OnInit()
 {
-	GameStateManager::GetInstance()->AddNewState("PlayState", new PlayState(new SceneTilemap(), "PlayState"));
-	GameStateManager::GetInstance()->AddNewState("MenuState", new MenuState());
-	GameStateManager::GetInstance()->SetCurrentState("MenuState");
+	//GameStateManager::GetInstance()->AddNewState("PlayState", new PlayState(new SceneTilemap(), "PlayState"));
+	//GameStateManager::GetInstance()->AddNewState("MenuState", new MenuState());
+	//GameStateManager::GetInstance()->SetCurrentState("MenuState");
 }
 
 void ApplicationAI::OnRun()

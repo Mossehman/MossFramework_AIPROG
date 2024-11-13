@@ -154,7 +154,7 @@ public:
 	\param mode - to round down, use automatic truncation or round up (-1, 0 and 1)
 
 	*/
-	glm::vec2 PosToTilePos(glm::vec2 position, int mode = 0);
+	glm::ivec2 PosToTilePos(glm::vec2 position, int mode = 0);
 
 	void FindTileID(int tileID, int level = -1);
 	
@@ -167,7 +167,7 @@ public:
 	
 	virtual void Init(int startLevel);
 	virtual void Update();
-	void Render(glm::vec2 cameraPos, glm::vec2 renderDistance);
+	void Render(glm::vec2 cameraPos, glm::ivec2 renderDistance);
 
 	void PrintMapData(int level);
 

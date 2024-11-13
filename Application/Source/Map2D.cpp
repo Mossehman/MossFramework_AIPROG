@@ -486,12 +486,6 @@ void Map2D::SetDangerousTile(unsigned int ID, bool isDangerous)
     dangerousTiles.insert(std::pair<int, bool>(ID, isDangerous));
 }
 
-
-Map2D::Map2D(const int MaxLevels) : maxLevels(MaxLevels)
-{
-    currentLevel = MaxLevels;
-}
-
 Map2D::~Map2D(void)
 {
     for (int i = 0; i < maxLevels; i++)

@@ -23,7 +23,5 @@ protected:
 
 	float timer = 0.f;
 	Camera camera;
-
-	Map2D* map = Map2D::GetInstance(NUM_LEVELS);
 };
 

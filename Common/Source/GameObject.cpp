@@ -89,9 +89,10 @@ float GameObject::getOpacity(void)
 	return this->opacityValue;
 }
 
-void GameObject::Init(int currentLevel)
+void GameObject::Init(std::vector<GameObject*>& objList, int currentLevel)
 {
 	this->currentLevel = currentLevel;
+	objList.push_back(this);
 }
 
 void GameObject::Render()

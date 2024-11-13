@@ -154,62 +154,63 @@ Mesh* MeshBuilder::animatedMesh(const std::string& meshName, unsigned int row, u
 
 Mesh* MeshBuilder::compoundedTileMesh(const std::string& meshName, std::vector<glm::vec2> meshCoords)
 {
-	Vertex v;
-	std::vector<Vertex> vertex_buffer_data;
-	std::vector<GLuint> index_buffer_data;
+	//Vertex v;
+	//std::vector<Vertex> vertex_buffer_data;
+	//std::vector<GLuint> index_buffer_data;
 
-	int i = 0;
-	int numIterations = 0;
+	//int i = 0;
+	//int numIterations = 0;
 
-	float mapSizeX = Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()];
-	float mapSizeY = Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()];
+	//float mapSizeX = Map2D::GetInstance()->mapSizeX[Map2D::GetInstance()->GetCurrentLevel()];
+	//float mapSizeY = Map2D::GetInstance()->mapSizeY[Map2D::GetInstance()->GetCurrentLevel()];
 
-	// Ensure we don't access out of bounds
-	while (i + 3 < meshCoords.size())
-	{
+	//// Ensure we don't access out of bounds
+	//while (i + 3 < meshCoords.size())
+	//{
 
-		// Access elements safely within bounds
-		v.pos.Set(meshCoords[i].x, meshCoords[i].y, 0.f);
-		vertex_buffer_data.push_back(v);
+	//	// Access elements safely within bounds
+	//	v.pos.Set(meshCoords[i].x, meshCoords[i].y, 0.f);
+	//	vertex_buffer_data.push_back(v);
 
-		v.pos.Set(meshCoords[i + 1].x, meshCoords[i + 1].y, 0.f);
-		vertex_buffer_data.push_back(v);
+	//	v.pos.Set(meshCoords[i + 1].x, meshCoords[i + 1].y, 0.f);
+	//	vertex_buffer_data.push_back(v);
 
-		v.pos.Set(meshCoords[i + 2].x, meshCoords[i + 2].y, 0.f);
-		vertex_buffer_data.push_back(v);
+	//	v.pos.Set(meshCoords[i + 2].x, meshCoords[i + 2].y, 0.f);
+	//	vertex_buffer_data.push_back(v);
 
-		v.pos.Set(meshCoords[i + 3].x, meshCoords[i + 3].y, 0.f);
-		vertex_buffer_data.push_back(v);
+	//	v.pos.Set(meshCoords[i + 3].x, meshCoords[i + 3].y, 0.f);
+	//	vertex_buffer_data.push_back(v);
 
-		i += 4;
-		numIterations++;
-	}
+	//	i += 4;
+	//	numIterations++;
+	//}
 
-	for (int j = 0; j < numIterations; j++)
-	{
-		// tri1
-		index_buffer_data.push_back(0 + (j * 4));
-		index_buffer_data.push_back(1 + (j * 4));
-		index_buffer_data.push_back(2 + (j * 4));
+	//for (int j = 0; j < numIterations; j++)
+	//{
+	//	// tri1
+	//	index_buffer_data.push_back(0 + (j * 4));
+	//	index_buffer_data.push_back(1 + (j * 4));
+	//	index_buffer_data.push_back(2 + (j * 4));
 
-		// tri2
-		index_buffer_data.push_back(0 + (j * 4));
-		index_buffer_data.push_back(2 + (j * 4));
-		index_buffer_data.push_back(3 + (j * 4));
-	}
+	//	// tri2
+	//	index_buffer_data.push_back(0 + (j * 4));
+	//	index_buffer_data.push_back(2 + (j * 4));
+	//	index_buffer_data.push_back(3 + (j * 4));
+	//}
 
-	// Create the new mesh
-	Mesh* mesh = new Mesh(meshName);
+	//// Create the new mesh
+	//Mesh* mesh = new Mesh(meshName);
 
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+	//glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
+	//glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
 
-	mesh->indexSize = index_buffer_data.size();
-	mesh->mode = Mesh::DRAW_TRIANGLES;
+	//mesh->indexSize = index_buffer_data.size();
+	//mesh->mode = Mesh::DRAW_TRIANGLES;
 
-	return mesh;
+	//return mesh;
+	return nullptr;
 
 }
 

@@ -1,10 +1,13 @@
 #pragma once
 #include <string>
+#include "GameObject.h"
+#include <vector>
 
 class GameState
 {
 protected:
 	std::string gameStateName;
+	std::vector<GameObject*> GameObjectList;
 
 public:
 

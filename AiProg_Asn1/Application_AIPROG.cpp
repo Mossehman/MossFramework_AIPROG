@@ -10,7 +10,7 @@ void Application_AIPROG::OnInit()
 
 void Application_AIPROG::OnRun()
 {
-	std::cout << "Run is running!" << std::endl;
+	//std::cout << "Run is running!" << std::endl;
 
 }
 
