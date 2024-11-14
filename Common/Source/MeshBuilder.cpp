@@ -110,31 +110,28 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName, Color color, float 
 	return mesh;
 }
 
-Mesh* MeshBuilder::animatedMesh(const std::string& meshName, unsigned int row, unsigned int column, float spriteSizeX, float spriteSizeY)
+Mesh* MeshBuilder::GenerateAnimatedQuad(const std::string& meshName, glm::ivec2 CurrentAnimationPos, glm::vec2 SpriteSize)
 {
 	Vertex v;
 	std::vector<Vertex> vertex_buffer_data;
 	std::vector<GLuint> index_buffer_data;
 
 	//use std::min to ensure values remain within the confines (0 -> 1) for texture coordinates
-	float texMinX = std::max(0.f, row * spriteSizeX);
-	float texMaxX = std::min(1.f, texMinX + spriteSizeX);
+	float texMinY = std::max(0.f, (CurrentAnimationPos.y - 1) * SpriteSize.y);
+	float texMaxY = std::min(1.f, texMinY + SpriteSize.y);
 
-	float texMinY = std::max(0.f, column * spriteSizeY);
-	float texMaxY = std::min(1.f, texMinY + spriteSizeY);
+	float texMinX = std::max(0.f, (CurrentAnimationPos.x - 1) * SpriteSize.x);
+	float texMaxX = std::min(1.f, texMinX + SpriteSize.x);
 
 	// Add the vertices here
 	v.pos.Set(0.5f, -0.5f , 0.f);	v.texCoord.Set(texMaxX, texMinY); vertex_buffer_data.push_back(v); //v3
 	v.pos.Set(0.5f, 0.5f, 0.f);		v.texCoord.Set(texMaxX, texMaxY); vertex_buffer_data.push_back(v); //v0
-	v.pos.Set(-0.5f, 0.5f, 0.f);	v.texCoord.Set(texMinX, texMaxY); vertex_buffer_data.push_back(v); //v1
 	v.pos.Set(-0.5f, -0.5f, 0.f);	v.texCoord.Set(texMinX, texMinY); vertex_buffer_data.push_back(v); //v2
+	v.pos.Set(-0.5f, 0.5f, 0.f);	v.texCoord.Set(texMinX, texMaxY); vertex_buffer_data.push_back(v); //v1
 
 	//tri1
 	index_buffer_data.push_back(0);
 	index_buffer_data.push_back(1);
-	index_buffer_data.push_back(2);
-	//tri2
-	index_buffer_data.push_back(0);
 	index_buffer_data.push_back(2);
 	index_buffer_data.push_back(3);
 
@@ -147,7 +144,7 @@ Mesh* MeshBuilder::animatedMesh(const std::string& meshName, unsigned int row, u
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
 
 	mesh->indexSize = index_buffer_data.size();
-	mesh->mode = Mesh::DRAW_TRIANGLES;
+	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
 
 	return mesh;
 }
@@ -240,7 +237,7 @@ Mesh* MeshBuilder::GenerateLine(const std::string& meshName, Color color, float 
 	return mesh;
 }
 
-Mesh* MeshBuilder::GenerateLineToLine(const std::string& meshName, Color color, glm::vec2 startPos, glm::vec2 endPos)
+Mesh* MeshBuilder::GenerateLineDir(const std::string& meshName, Color color, glm::vec2 startPos, glm::vec2 endPos)
 {
 	Vertex v; 
 	std::vector<Vertex> vertex_buffer_data; 

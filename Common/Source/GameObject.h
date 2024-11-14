@@ -6,41 +6,25 @@
 #include "Mesh.h"
 #include <map>
 
+struct AnimatedSpriteParam {
+	unsigned int StartIndex;
+	unsigned int EndIndex;
+
+	float frameDelay;
+	unsigned int iterations;
+
+	AnimatedSpriteParam(unsigned int StartIndex, unsigned int EndIndex, float frameDelay = 0.1f, unsigned int iterations = 0)
+	{
+		this->StartIndex = StartIndex;
+		this->EndIndex = EndIndex;
+		this->frameDelay = frameDelay;
+		this->iterations = iterations;
+	}
+};
+
 class GameObject
 {
 protected:
-
-	//struct for determining the start and end of our sprite animations
-	struct spriteAnimation {
-	private:
-		unsigned int animStartX;
-		unsigned int animStartY;
-		unsigned int animEndX;
-		unsigned int animEndY;
-		
-	public:
-		//constructor for our sprite animator
-		spriteAnimation(unsigned int animStartX, unsigned int animStartY, unsigned int animEndX, unsigned int animEndY)
-		{
-			this->animStartX = animStartX;
-			this->animEndX = animEndX;
-			this->animStartY = animStartY;
-			this->animEndY = animEndY;
-		}
-		spriteAnimation() 
-		{
-			this->animStartX = 0;
-			this->animStartY = 0;
-			this->animEndX = 0;
-			this->animEndY = 0;
-		};
-
-		unsigned int getAnimStartX(void) { return animStartX; }
-		unsigned int getAnimStartY(void) { return animStartY; }
-		unsigned int getAnimEndX(void) { return animEndX; }
-		unsigned int getAnimEndY(void) { return animEndY; }
-	};
-
 	//each gameObject must have these 3 parameters
 	glm::vec2 position;
 	glm::vec2 rotation;
@@ -60,22 +44,24 @@ protected:
 
 	Mesh* mesh;
 
-	//the value for our animated sprite sheet
-	glm::vec2 animatedSpriteSize;
-
-	//the name of our current animation string being played
-	spriteAnimation* currentAnimation;
-
-	//links our sprite animations to a name
-	std::map<const char*, spriteAnimation*> spriteAnimationMap;
-
-	float animationFrameTimer;
-	bool isPlayingAnimation;
-
-	unsigned int animationFrameX, animationFrameY;
-
 	bool toRender = true;
 	bool updateInBackend;
+
+
+	unsigned int SpriteColumns = 1;
+	unsigned int SpriteRows = 1;
+	glm::vec2 SpriteTextureSize; 
+	std::string CurrentAnimationID;
+
+	int CurrentFrameIndex = 0; 
+	float SpriteFrameTimer = 0.f; 
+	AnimatedSpriteParam* CurrentAnimationParam = nullptr; 
+	bool isPlayingAnimation = false; 
+	
+	std::map<std::string, AnimatedSpriteParam*> Animations; 
+	int GetFrameIndex(int Column, int Row);
+	glm::ivec2 GetColRow(int FrameIndex);
+
 
 public:
 	int currentLevel;
@@ -104,31 +90,22 @@ public:
 	virtual void Init(std::vector<GameObject*>& objList, int currentLevel);
 
 	virtual void Update(double dt) {};
+	void UpdateAnimations(double dt);
 
 	virtual void Render();
 
 	virtual void RenderMesh();
 
-	virtual void SetTexture(const char* texture);
+	virtual void SetTexture(const char* texture, unsigned int NumColumns = 1, unsigned int NumRows = 1);
 
-	/*!
-	@brief Determines the size of each sprite texture for the animated sprite renderer to reference 
+	void AddAnimation(std::string animName, AnimatedSpriteParam* newAnimation);
 
-	\param numRows - the number of rows within the sprite sheet
-	\param numCol - the number of columns within the sprite sheet
-	*/
-	void sliceTexture(const unsigned int numRows, const unsigned int numCol);
-	
-	void createNewAnimation(const char* animationString, unsigned int animationStart, unsigned int animationEnd);
+	void SetCurrentAnimation(std::string animName);
 
-	void setCurrentAnimation(const char* animationString);
+	int GetCurrentAnimationFrame(void);
 
-	void playAnimation(float frameDelay, float dt);
-	//void playAnimation(float frameDelay, float dt, unsigned int iterationCount = 0);
-	//void playAnimation(float frameDelay, float dt, float animationDuration);
+	AnimatedSpriteParam* GetCurrentAnimationParam(void);
 
-	void pauseAnimation();
-	void toggleAnimation();
 
 
 };

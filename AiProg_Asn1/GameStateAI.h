@@ -20,6 +20,8 @@ public:
 protected:
 	GameObject* go1;
 	GameObject* go2;
+	EntityAI2D* newEntity;
+	EntityAI2D* newEntity2;
 
 	float timer = 0.f;
 	Camera camera;

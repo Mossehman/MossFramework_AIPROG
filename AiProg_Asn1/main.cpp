@@ -3,7 +3,7 @@
 int main(void)
 {
 	Application_AIPROG app;
-	app.Init("Hello World");
+	app.Init("The Galactic War");
 	app.Run();
 	app.Exit();
 

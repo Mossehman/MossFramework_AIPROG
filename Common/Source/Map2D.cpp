@@ -77,6 +77,9 @@ glm::ivec2 Map2D::PosToTilePos(glm::vec2 position, int mode)
         returnValue.y = -1 * std::ceil(position.y / GetLevel()->GetTileSize().y);
     }
 
+    returnValue.x = glm::clamp(returnValue.x, 0, GetLevel()->GetMapX() - 1);
+    returnValue.y = glm::clamp(returnValue.y, 0, GetLevel()->GetMapY() - 1);
+
     return returnValue;
 }
 

@@ -20,9 +20,9 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
     nodeCount = 0;
     if (xEnd <= xStart || yEnd <= yStart) { std::cout << "AStar Init For Loop values cannot run, start is greater than target end value!" << std::endl; return; }
 
-    for (int x = xStart; x < xEnd; x++)
+    for (int y = yStart; y < yEnd; y++)
     {
-        for (int y = yStart; y < yEnd; y++)
+        for (int x = xStart; x < xEnd; x++)
         {
             int index = y * (xEnd + xStart) + x;
 

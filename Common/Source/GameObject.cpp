@@ -5,6 +5,47 @@
 #include "Map2D.h"
 
 
+void GameObject::UpdateAnimations(double dt)
+{
+	if (Animations.size() <= 0 || CurrentAnimationParam == nullptr || !isPlayingAnimation) 
+	{
+		SpriteFrameTimer = 0;
+		return; 
+	}
+
+	mesh = MeshBuilder::GenerateAnimatedQuad("Animated Quad", GetColRow(CurrentFrameIndex), SpriteTextureSize);
+	mesh->textureID = textureID;
+	
+	SpriteFrameTimer += dt;
+	if (SpriteFrameTimer >= CurrentAnimationParam->frameDelay)
+	{
+		SpriteFrameTimer = 0;
+		CurrentFrameIndex++;
+
+		if (CurrentFrameIndex > CurrentAnimationParam->EndIndex) { CurrentFrameIndex = CurrentAnimationParam->StartIndex; }
+	}
+
+}
+
+int GameObject::GetFrameIndex(int Column, int Row)
+{
+	int colClamped = glm::clamp(Column, 1, (int)SpriteColumns);
+	int rowClamped = glm::clamp(Row, 1, (int)SpriteRows);
+
+	return (rowClamped - 1) * SpriteColumns + colClamped - 1;
+
+}
+
+glm::ivec2 GameObject::GetColRow(int FrameIndex)
+{
+	int frameIndexClamped = glm::clamp(FrameIndex, 0, (int)SpriteRows * (int)SpriteColumns - 1);
+	int y = frameIndexClamped  / SpriteColumns + 1;
+	int x = frameIndexClamped % SpriteColumns + 1;
+
+	return glm::ivec2(x, y);
+
+}
+
 GameObject::GameObject(glm::vec2 pos, glm::vec2 rot, glm::vec2 scl)
 {
 	position = pos;
@@ -17,11 +58,6 @@ GameObject::GameObject(glm::vec2 pos, glm::vec2 rot, glm::vec2 scl)
 	self_scale = glm::vec2(1, 1);
 
 	textureID = 0; //set the default texture ID
-	//this->mesh = MeshBuilder::GenerateQuad("quad mesh", Color(1.f, 1.f, 1.f)); //set the default mesh on initalisation to be a quad mesh
-	currentAnimation = nullptr;
-	animationFrameTimer = 0.f;
-	animatedSpriteSize = glm::vec2(0, 0);
-	isPlayingAnimation = false;
 
 }
 
@@ -30,11 +66,6 @@ GameObject::~GameObject()
 	if (this->mesh)
 	{
 		delete this->mesh;
-	}
-
-	if (this->currentAnimation != nullptr)
-	{
-		delete currentAnimation;
 	}
 }
 
@@ -71,7 +102,6 @@ glm::vec2 GameObject::getScale()
 void GameObject::SetMesh(Mesh* newMesh)
 {
 	mesh = newMesh;
-	//if (mesh) { mesh->textureID = 0; }
 }
 
 Mesh*& GameObject::getMesh(void)
@@ -156,121 +186,40 @@ void GameObject::RenderMesh()
 	
 }
 
-void GameObject::SetTexture(const char* texture)
+void GameObject::SetTexture(const char* texture, unsigned int NumColumns, unsigned int NumRows)
 {
 	textureID = ImageLoader::GetInstance()->LoadTextureGetID(texture, true);
 	mesh->textureID = textureID;
-	std::cout << textureID << std::endl;
+	//std::cout << textureID << std::endl;
+	if (NumColumns < 1 || NumRows < 1) { return; }
+	if (NumColumns == 1 && NumRows == 1) { return; }
+
+	isPlayingAnimation = true;
+	SpriteRows = NumRows;
+	SpriteColumns = NumColumns;
+	SpriteTextureSize = glm::vec2(1 / (float)NumColumns, 1 / (float)NumRows);
 }
 
-void GameObject::sliceTexture(const unsigned int numRows, const unsigned int numCol)
+void GameObject::AddAnimation(std::string animName, AnimatedSpriteParam* newAnimation)
 {
-	// Check if numRows and numCol are greater than zero to prevent division by zero
-	if (numRows == 0 || numCol == 0) {
-		std::cerr << "Error: Number of rows and columns must be greater than zero." << std::endl;
-		return;
-	}
-
-	// Use float division to correctly calculate sprite size
-	this->animatedSpriteSize.x = 1.0f / numCol;
-	this->animatedSpriteSize.y = 1.0f / numRows;
+	if (Animations.count(animName) > 0 || newAnimation == nullptr) { return; }
+	Animations.insert(std::pair<std::string, AnimatedSpriteParam*>(animName, newAnimation));
 }
 
-
-void GameObject::createNewAnimation(const char* animationString, unsigned int animationStart, unsigned int animationEnd)
+void GameObject::SetCurrentAnimation(std::string animName)
 {
-	// Check if sprite has been sliced before creating an animation
-	if (animatedSpriteSize.x == 1.0f && animatedSpriteSize.y == 1.0f) {
-		std::cout << "Sprite has not been sliced yet, unable to create a new animation!" << std::endl;
-		return;
-	}
-
-	// Calculate number of rows and columns
-	unsigned int numRows = static_cast<unsigned int>(1.0f / animatedSpriteSize.y);
-	unsigned int numColumns = static_cast<unsigned int>(1.0f / animatedSpriteSize.x);
-
-	// Ensure that numRows and numColumns are not zero to prevent division errors
-	if (numRows == 0 || numColumns == 0) {
-		std::cerr << "Error: Invalid number of rows or columns after slicing." << std::endl;
-		return;
-	}
-
-	// Clamp the animation start and end indices
-	animationStart = Math::Clamp(animationStart, 0u, numRows * numColumns - 1);
-	animationEnd = Math::Clamp(animationEnd, 0u, numRows * numColumns - 1);
-
-	// Calculate sprite positions
-	int spriteStartX = animationStart % numColumns;
-	int spriteStartY = animationStart / numColumns;
-
-	int spriteEndX = animationEnd % numColumns;
-	int spriteEndY = animationEnd / numColumns;
-
-	// Insert the sprite animation into the map
-	spriteAnimationMap.insert(std::make_pair(animationString, new spriteAnimation(spriteStartX, spriteStartY, spriteEndX, spriteEndY)));
+	if (Animations.count(animName) <= 0) { return; }
+	std::cout << "Animation set to: " << animName << std::endl;
+	CurrentAnimationParam = Animations.at(animName);
+	CurrentAnimationID = animName;
 }
 
-
-void GameObject::setCurrentAnimation(const char* animationString)
+int GameObject::GetCurrentAnimationFrame(void)
 {
-	//run a check to see if the animation string exists using std::map.find() (returns std::map.end() if not found)
-	std::map<const char*, spriteAnimation*>::iterator it = spriteAnimationMap.find(animationString);
-	if (it == spriteAnimationMap.end()) 
-	{
-		//if not found, log error and end program
-		std::cout << "unable to loacate animation name: " << animationString << std::endl;
-		return;
-	}
-
-	currentAnimation = spriteAnimationMap.at(animationString);
-	isPlayingAnimation = false;
+	return this->CurrentFrameIndex;
 }
 
-void GameObject::playAnimation(float frameDelay, float dt)
+AnimatedSpriteParam* GameObject::GetCurrentAnimationParam(void)
 {
-	if (currentAnimation == nullptr) 
-	{ 
-		std::cout << "Unable to play animation, no animation has been defined!" << std::endl;
-		return; 
-	}
-
-	if (!isPlayingAnimation)
-	{
-		isPlayingAnimation = true;
-		this->mesh = MeshBuilder::animatedMesh("animated sprite", currentAnimation->getAnimStartX(), currentAnimation->getAnimStartY());
-		animationFrameTimer = 0.f;
-		animationFrameX = currentAnimation->getAnimStartX();
-		animationFrameY = currentAnimation->getAnimStartY();
-		return;
-	}
-
-	animationFrameTimer += dt;
-
-
-	if (animationFrameTimer > frameDelay)
-	{
-		animationFrameX++;
-		if (animationFrameX > 1 / this->animatedSpriteSize.x) //our sprite animation on the x axis has exceeded the maximum column count
-		{
-			animationFrameX = 0;
-			animationFrameY++;
-		}
-
-		this->mesh = MeshBuilder::animatedMesh("animated sprite", animationFrameX, animationFrameY);
-
-		if (animationFrameX == currentAnimation->getAnimEndX() && animationFrameY == currentAnimation->getAnimEndY())
-		{
-			animationFrameX = currentAnimation->getAnimStartX();
-			animationFrameY = currentAnimation->getAnimStartY();
-		}
-	}
-
+	return this->CurrentAnimationParam;
 }
-//
-//void GameObject::playAnimation(float frameDelay, float dt, unsigned int iterationCount)
-//{
-//}
-//
-//void GameObject::playAnimation(float frameDelay, float dt, float animationDuration)
-//{
-//}

@@ -24,7 +24,13 @@ public:
 	int GetMessagePriority(void);
 	std::string GetMessageData(void);
 
+	bool RenderPath;
+
+	void RenderNodePath(Color PathColor); 
+	glm::vec2 targetPos;
+
 protected:
+
 	std::vector<FiniteState*> finiteStates;
 	std::vector<int> messagesRead;
 
@@ -33,7 +39,6 @@ protected:
 
 	FiniteState* currentState;
 
-	glm::vec2 targetPos;
 
 	std::vector<glm::vec2> pathWaypoints; //the list of target positions for the Entity to move towards in sequence
 	int currWaypointIndex = 0; //the index of the target waypoint (ensure this resets to 0 everytime the path is re-calculated

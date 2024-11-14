@@ -12,7 +12,9 @@ void EntityAI2D::InitAStar()
 
 	for (int i = 0; i < AStarNodes->GetNodes().size(); i++)
 	{
-		pathData[i]->currNode = AStarNodes->GetNodes()[i];
+		EntityPathData* newData = new EntityPathData();
+		newData->currNode = AStarNodes->GetNodes()[i];
+		pathData[i] = newData;
 	}
 }
 
@@ -35,8 +37,12 @@ void EntityAI2D::SolveAStar()
         }
     }
 
-	int startIndex = (int)Map2D::GetInstance()->PosToTilePos(position).y * Map2D::GetInstance()->GetLevel()->GetMapY() + (int)Map2D::GetInstance()->PosToTilePos(position).x;
-	int endIndex = (int)Map2D::GetInstance()->PosToTilePos(targetPos).y * Map2D::GetInstance()->GetLevel()->GetMapY() + (int)Map2D::GetInstance()->PosToTilePos(targetPos).x;
+	int mapWidth = Map2D::GetInstance()->GetLevel()->GetMapX(); // Number of columns in the map
+	int startIndex = (int)Map2D::GetInstance()->PosToTilePos(position).y * mapWidth + (int)Map2D::GetInstance()->PosToTilePos(position).x;
+	int endIndex = (int)Map2D::GetInstance()->PosToTilePos(targetPos).y * mapWidth + (int)Map2D::GetInstance()->PosToTilePos(targetPos).x;
+
+
+	std::cout << (int)Map2D::GetInstance()->PosToTilePos(targetPos).y << std::endl;
 
 	//calculate the start and end nodes (can use as local variables since we just need to cache the waypoint list and then delete them after)
 	PathNode* startNode = AStarNodes->GetNodes()[startIndex];
@@ -87,7 +93,7 @@ void EntityAI2D::SolveAStar()
 			if (lowerGoalCheck < pathData[checkIndex]->localGoal)
 			{
 				//set a reference to the neighbouring node
-				pathData[checkIndex]->ParentIndex = checkIndex;
+				pathData[checkIndex]->ParentIndex = currentCheckIndex;
 				pathData[checkIndex]->localGoal = lowerGoalCheck;
 				pathData[checkIndex]->globalGoal = pathData[checkIndex]->globalGoal + heuristic(AStarNodes->GetNodes()[checkIndex], endNode);
 			}
@@ -101,7 +107,7 @@ void EntityAI2D::SolveAStar()
 		pathWaypoints.clear();
 		int dat = endIndex;
 
-		while (AStarNodes->GetNodes()[pathData[dat]->ParentIndex] != nullptr)
+		while (pathData[dat]->ParentIndex != -1 && AStarNodes->GetNodes()[pathData[dat]->ParentIndex] != nullptr)
 		{
 			pathWaypoints.push_back(glm::vec2(pathData[dat]->currNode->Position.x, pathData[dat]->currNode->Position.y));
 			dat = pathData[dat]->ParentIndex;
@@ -109,8 +115,6 @@ void EntityAI2D::SolveAStar()
 
 		currWaypointIndex = pathWaypoints.size() - 1;
 	}
-
-
 }
 
 void EntityAI2D::Notify(std::string messageData, int priority)
@@ -184,4 +188,24 @@ int EntityAI2D::GetMessagePriority(void)
 std::string EntityAI2D::GetMessageData(void)
 {
 	return currentMsg;
+}
+
+void EntityAI2D::RenderNodePath(Color PathColor)
+{
+	if (pathWaypoints.size() <= 0) { return; }
+
+	for (int i = 0; i < pathWaypoints.size(); i++)
+	{
+		if (i == pathWaypoints.size() - 1) { break; }
+
+		GameObject* lineObj = new GameObject();
+		lineObj->SetMesh(MeshBuilder::GenerateLineDir("Line", PathColor, pathWaypoints[i], pathWaypoints[i + 1]));
+		lineObj->Render();
+		delete lineObj;
+	}
+
+	GameObject* lineObj = new GameObject();
+	lineObj->SetMesh(MeshBuilder::GenerateLineDir("Line", PathColor, pathWaypoints[pathWaypoints.size() - 1], position));
+	lineObj->Render();
+	delete lineObj;
 }

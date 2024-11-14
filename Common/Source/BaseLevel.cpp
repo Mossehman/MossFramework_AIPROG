@@ -283,8 +283,6 @@ void BaseLevel::Init()
 	{
 		for (int x = 0; x < MapSizeX; x++)
 		{
-			std::cout << x << std::endl;
-
 			if (passabilityMap.size() > 0)
 			{
 				if (passabilityMap.count(tilemap[y][x]->tileID) > 0)

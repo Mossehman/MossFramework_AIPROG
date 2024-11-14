@@ -1,5 +1,5 @@
 #pragma once
-#include "Application.h"
+#include <Application.h>
 
 class Application_AIPROG : public Application
 {
