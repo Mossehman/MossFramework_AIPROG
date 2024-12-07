@@ -1,5 +1,6 @@
 #include "AStar.h"
 #include <iostream>
+#include "Map2D.h"
 
 AStar::AStar(glm::vec2 tileSize)
 {
@@ -30,10 +31,13 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
 
             newNode->Position.x = x * tileSize.x;
             newNode->Position.y = y * tileSize.y * -1;
-            newNode->Passability = 0;
+            newNode->Passability = Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->Passability;
+            std::cout << Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->Passability;
 
             Nodes.push_back(newNode);
         }
+
+        std::cout << std::endl;
     }
 
     for (int x = xStart; x < xEnd; x++)

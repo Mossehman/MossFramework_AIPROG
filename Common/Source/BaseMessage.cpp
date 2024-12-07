@@ -1,7 +1,12 @@
 #include "BaseMessage.h"
 #include "IMessageReciever.h"
 
-BaseMessage::BaseMessage(std::string, int MessageType, bool deleteImmediate)
+int BaseMessage::GetMessageType(void)
+{
+	return MessageType;
+}
+
+BaseMessage::BaseMessage(std::string TargetID, int MessageType, bool deleteImmediate)
 {
 	this->TargetID = TargetID;
 	this->MessageType = MessageType;

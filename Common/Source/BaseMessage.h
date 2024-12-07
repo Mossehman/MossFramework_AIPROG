@@ -16,6 +16,7 @@ protected:
 
 public:
 	BaseMessage(std::string TargetID, int MessageType, bool deleteImmediate = true);
+	int GetMessageType();
 
 	BaseMessage(std::vector<IMessageReciever*> specificRecievers, int MessageType, bool deleteImmediate = true);
 	std::string GetTargetID(void);

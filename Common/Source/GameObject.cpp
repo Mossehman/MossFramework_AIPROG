@@ -223,3 +223,8 @@ AnimatedSpriteParam* GameObject::GetCurrentAnimationParam(void)
 {
 	return this->CurrentAnimationParam;
 }
+
+int GameObject::HandleMessage(BaseMessage* msg)
+{
+	return 0;
+}

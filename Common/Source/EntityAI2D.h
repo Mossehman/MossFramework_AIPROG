@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity2D.h"
-#include "FiniteState.h"
 #include "AStar.h"
+#include "FiniteStateMachine.h"
 
 class EntityAI2D : public Entity2D
 {
@@ -10,35 +10,15 @@ public:
 	void SolveAStar();
 	virtual void MoveAlongPath() {}
 
-	void Notify(std::string messageData, int priority);
-	
-	void InitialiseStates(); //Call this after Init to ensure that all the states are initialised
-
-	void AddState(FiniteState* newState);
-	void RemoveState(std::string stateName);
-
-	std::vector<FiniteState*> GetStates(void);
-	FiniteState* GetCurrentState(void);
-	void SetCurrentState(FiniteState* newCurrentState);
-
-	int GetMessagePriority(void);
-	std::string GetMessageData(void);
-
 	bool RenderPath;
 
 	void RenderNodePath(Color PathColor); 
 	glm::vec2 targetPos;
 
+	EntityAI2D(glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
+	FiniteStateMachine* GetFSM();
+
 protected:
-
-	std::vector<FiniteState*> finiteStates;
-	std::vector<int> messagesRead;
-
-	std::string currentMsg;
-	int currentMsgPriority;
-
-	FiniteState* currentState;
-
 
 	std::vector<glm::vec2> pathWaypoints; //the list of target positions for the Entity to move towards in sequence
 	int currWaypointIndex = 0; //the index of the target waypoint (ensure this resets to 0 everytime the path is re-calculated
@@ -47,6 +27,8 @@ protected:
 	EntityPathData* destinationData;
 
 	float moveSpeed = 1.0f; //the move speed of the AI entity along it's path
+
+	FiniteStateMachine* stateMachine;
 
 };
 

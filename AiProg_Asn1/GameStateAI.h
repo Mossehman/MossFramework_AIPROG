@@ -4,10 +4,12 @@
 #include <GameObject.h>
 #include <EntityAI2D.h>
 #include <FiniteState.h>
+#include "TestEntity.h"
 
 #include <Map2D.h>
 
 #include "LevelsAI.h"
+#include "MessageHub.h"
 
 class GameStateAI : public GameState
 {
@@ -20,7 +22,7 @@ public:
 protected:
 	GameObject* go1;
 	GameObject* go2;
-	EntityAI2D* newEntity;
+	TestEntity* newEntity;
 	EntityAI2D* newEntity2;
 
 	float timer = 0.f;

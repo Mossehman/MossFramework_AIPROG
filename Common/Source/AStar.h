@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <vector>
+#include "BaseLevel.h"
 
 struct PathNode {
 	glm::vec2 Position;

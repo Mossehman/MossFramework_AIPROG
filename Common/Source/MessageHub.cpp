@@ -1,12 +1,14 @@
 #include "MessageHub.h"
+#include <iostream>
 
 void MessageHub::AddReciever(std::string GroupID, IMessageReciever* reciever)
 {
 	if (!reciever) { return; }
 	MessageRecievers.insert(std::pair<std::string, IMessageReciever*>(GroupID, reciever));
+	std::cout << "Added reciever" << std::endl;
 }
 
-void MessageHub::SendMessage(BaseMessage* newMessage)
+void MessageHub::SendMsg(BaseMessage* newMessage)
 {
 	if (!newMessage) { return; } //Message is null, do not proceed further
 	cachedMessages.push_back(newMessage);
@@ -20,7 +22,7 @@ void MessageHub::Update()
 	{
 		if (!msg) { continue; }
 
-		if (msg->GetRecievers().size() > 0)
+		if (msg->GetRecievers().size() <= 0)
 		{
 			for (auto it = MessageRecievers.begin(); it != MessageRecievers.end(); ++it)
 			{
@@ -28,6 +30,7 @@ void MessageHub::Update()
 				IMessageReciever* Reciever = it->second;
 
 				if (!Reciever || RecieverGroup != msg->GetTargetID()) { continue; }
+				std::cout << RecieverGroup << ", " << msg->GetTargetID() << std::endl;
 				Reciever->HandleMessage(msg);
 			}
 		}

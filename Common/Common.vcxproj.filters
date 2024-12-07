@@ -44,6 +44,9 @@
     <Filter Include="Moss Framework\AI">
       <UniqueIdentifier>{5d511a8f-5b65-459f-b136-dfc9c51c2658}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Moss Framework\AI\FSM">
+      <UniqueIdentifier>{bff876bc-d9f3-445a-add9-3fb21f44260c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\MouseController.cpp">
@@ -130,9 +133,6 @@
     <ClCompile Include="Source\EntityAI2D.cpp">
       <Filter>Moss Framework\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FiniteState.cpp">
-      <Filter>Moss Framework\AI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Vector3.cpp">
       <Filter>Moss Framework\Math</Filter>
     </ClCompile>
@@ -150,6 +150,12 @@
     </ClCompile>
     <ClCompile Include="Source\BaseLevel.cpp">
       <Filter>Moss Framework\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FiniteState.cpp">
+      <Filter>Moss Framework\AI\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FiniteStateMachine.cpp">
+      <Filter>Moss Framework\AI\FSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,9 +245,6 @@
     <ClInclude Include="Source\EntityAI2D.h">
       <Filter>Moss Framework\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FiniteState.h">
-      <Filter>Moss Framework\AI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Vector3.h">
       <Filter>Moss Framework\Math</Filter>
     </ClInclude>
@@ -268,6 +271,12 @@
     </ClInclude>
     <ClInclude Include="Source\Tile.h">
       <Filter>Moss Framework\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FiniteState.h">
+      <Filter>Moss Framework\AI\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FiniteStateMachine.h">
+      <Filter>Moss Framework\AI\FSM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

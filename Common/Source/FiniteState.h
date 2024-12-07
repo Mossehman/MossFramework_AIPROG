@@ -2,30 +2,22 @@
 #include <string>
 #include <vector>
 
-
-class EntityAI2D;
+class FiniteStateMachine;
 
 class FiniteState
 {
 public:
-	void Init(EntityAI2D* entity);
-	std::string GetName(void);
+	void Init(FiniteStateMachine* stateMachine);
 
 	virtual void OnEnter() {}
-	virtual void Update() {}
+	virtual void Update(float dt) = 0;
 	virtual void OnExit() {}
-
-	void SwitchStateRand(std::vector<std::string> stateNames);
-	void SwitchState(std::string stateName);
-
-	FiniteState(std::string stateName);
+	
 	~FiniteState() {}
 
 protected:
+	FiniteStateMachine* stateMachine = nullptr;
+	bool SwitchState(std::string stateName);
 
-private:
-	//kept private as we do not want to modify the logic when creating derived classes
-	std::string stateName;
-	EntityAI2D* entity = nullptr;
 };
 

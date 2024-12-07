@@ -3,6 +3,7 @@
 #include <Map2D.h>
 #include <KeyboardController.h>
 #include "TestLevel.h"
+#include "TestMessage.h"
 
 
 bool GameStateAI::Init()
@@ -10,7 +11,7 @@ bool GameStateAI::Init()
     RenderParameters::GetInstance()->Init(glm::vec4(0.f, 0.f, 1.f, 0.8f), "Shader//comg.vertexshader", "Shader//comg.fragmentshader");
     camera.Init(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
      
-    Map2D::GetInstance()->AddLevel(LEVEL1, new TestLevel(30, 30, glm::vec2(20, 20), "Maps/tilemap1.csv"));
+    Map2D::GetInstance()->AddLevel(LEVEL1, new TestLevel(60, 55, glm::vec2(20, 20), "Maps/LeagueMap.csv"));
     Map2D::GetInstance()->GetInstance()->Init(LEVEL1);
 
     go1 = new GameObject();
@@ -33,7 +34,7 @@ bool GameStateAI::Init()
     go2->AddAnimation("Test", new AnimatedSpriteParam(0, 29));
     go2->SetCurrentAnimation("Test");
 
-    newEntity = new EntityAI2D();
+    newEntity = new TestEntity();
     newEntity->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 0, 1)));
     newEntity->SetTexture("Image/grass.tga");
     newEntity->setPosition(glm::vec2(0, 0));
@@ -61,6 +62,11 @@ bool GameStateAI::Init()
     newEntity2->InitAStar();
     newEntity2->SolveAStar();
 
+
+    MessageHub::GetInstance()->AddReciever("EntityTest", newEntity);
+    MessageHub::GetInstance()->AddReciever("EntityTest2", newEntity2);
+    MessageHub::GetInstance()->SendMsg(new BaseMessage("EntityTest", 1)); 
+
     return true;
 }
 
@@ -82,6 +88,8 @@ bool GameStateAI::Update(double dt)
         GameObjectList[i]->UpdateAnimations(dt);
     }
 
+    MessageHub::GetInstance()->Update();
+
     return true;
 }
 
@@ -95,7 +103,7 @@ void GameStateAI::Render()
         GameObjectList[i]->Render();
     }
 
-    Map2D::GetInstance()->Render(camera.position, glm::vec2(30, 30));
+    Map2D::GetInstance()->Render(camera.position, glm::vec2(100, 100));
     //Map2D::GetInstance()->RenderNodes();
 
     newEntity->RenderNodePath(Color(1, 0, 0));

@@ -2,8 +2,9 @@
 #include <string>
 #include "GameObject.h"
 #include <vector>
+#include "IMessageReciever.h"
 
-class GameState
+class GameState : public IMessageReciever
 {
 protected:
 	std::string gameStateName;
@@ -22,5 +23,8 @@ public:
 
 	void SetName(std::string newName);
 	std::string GetName(void) const;
+
+	// Inherited via IMessageReciever
+	virtual int HandleMessage(BaseMessage* msg) override;
 };
 

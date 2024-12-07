@@ -2,6 +2,7 @@
 #define GAME_OBJECT_H
 #include <glm\glm.hpp>
 #include "RenderParameters.h"
+#include "IMessageReciever.h"
 #include <vector>
 #include "Mesh.h"
 #include <map>
@@ -22,7 +23,7 @@ struct AnimatedSpriteParam {
 	}
 };
 
-class GameObject
+class GameObject : public IMessageReciever
 {
 protected:
 	//each gameObject must have these 3 parameters
@@ -107,6 +108,10 @@ public:
 	AnimatedSpriteParam* GetCurrentAnimationParam(void);
 
 
+
+
+	// Inherited via IMessageReciever
+	virtual int HandleMessage(BaseMessage* msg) override;
 
 };
 #endif

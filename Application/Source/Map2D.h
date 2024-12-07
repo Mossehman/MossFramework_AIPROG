@@ -18,7 +18,7 @@
 struct Tile : public GameObject
 {
 	unsigned int tileID;
-	bool isPassable = false;
+	bool Passability = false;
 	bool isDangerous = false;
 
 	Tile(int tileIndex, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(0, 0))
@@ -27,7 +27,7 @@ struct Tile : public GameObject
 		position = pos;
 		rotation = rot;
 		scale = scl;
-		isPassable = false;
+		Passability = false;
 		isDangerous = false;
 	}
 };

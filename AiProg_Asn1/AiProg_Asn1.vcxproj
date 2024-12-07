@@ -19,16 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\Source\TestMessage.cpp" />
     <ClCompile Include="Application_AIPROG.cpp" />
     <ClCompile Include="GameStateAI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestEntity.cpp" />
     <ClCompile Include="TestLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\Source\TestMessage.h" />
     <ClInclude Include="Application_AIPROG.h" />
     <ClInclude Include="GameStateAI.h" />
     <ClInclude Include="LevelsAI.h" />
     <ClInclude Include="NodePassabilityAI.h" />
+    <ClInclude Include="TestEntity.h" />
     <ClInclude Include="TestLevel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

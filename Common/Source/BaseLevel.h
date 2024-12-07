@@ -53,7 +53,7 @@ protected:
 	/// </summary>
 	/// <param name="ID"> - The tileID we want to modify the passability of</param>
 	/// <param name="isPassable"> - Determines if the tile can be passed or not</param>
-	void BindPassability(unsigned int ID, bool isPassable);
+	void BindPassability(unsigned int ID, int isPassable);
 
 	/// <summary>
 	/// Generates the raw noise values for 1-Dimensional noise

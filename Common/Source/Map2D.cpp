@@ -31,7 +31,7 @@ bool Map2D::GetMapPassable(unsigned int row, unsigned int column, int levelToChe
         return false;
     }
 
-    return GetLevel()->GetTilemap()[row][column]->isPassable;
+    return GetLevel()->GetTilemap()[row][column]->Passability;
 }
 
 

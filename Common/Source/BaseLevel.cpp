@@ -16,7 +16,7 @@ void BaseLevel::BindTexture(unsigned int ID, const char* textureFile)
 	textureMap.insert(std::pair<int, int>(ID, TextureID));
 }
 
-void BaseLevel::BindPassability(unsigned int ID, bool isPassable)
+void BaseLevel::BindPassability(unsigned int ID, int isPassable)
 {
 	passabilityMap.insert(std::pair<int, int>(ID, isPassable));
 }
@@ -277,18 +277,19 @@ BaseLevel::BaseLevel(unsigned int MapX, unsigned int MapY, glm::vec2 TileSize, P
 void BaseLevel::Init()
 {
 	InitTiles();
-	BindPassability(0, true);
+	//BindPassability(0, true);
 
 	for (int y = 0; y < MapSizeY; y++)
 	{
 		for (int x = 0; x < MapSizeX; x++)
 		{
-			if (passabilityMap.size() > 0)
+			if (passabilityMap.size() > 0 && passabilityMap.count(tilemap[y][x]->tileID) > 0)
 			{
-				if (passabilityMap.count(tilemap[y][x]->tileID) > 0)
-				{
-					tilemap[y][x]->isPassable = passabilityMap.at(tilemap[y][x]->tileID);
-				}
+				tilemap[y][x]->Passability = passabilityMap.at(tilemap[y][x]->tileID);
+			}
+			else
+			{
+				tilemap[y][x]->Passability = 0;
 			}
 		
 			tilemap[y][x]->setPosition(glm::vec2(x * tileSize.x, -y * tileSize.y));

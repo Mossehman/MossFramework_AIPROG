@@ -14,3 +14,8 @@ std::string GameState::GetName(void) const
 {
     return gameStateName;
 }
+
+int GameState::HandleMessage(BaseMessage* msg)
+{
+    return 0;
+}

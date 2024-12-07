@@ -149,6 +149,7 @@
     <ClCompile Include="Source\Entity2D.cpp" />
     <ClCompile Include="Source\EntityAI2D.cpp" />
     <ClCompile Include="Source\FiniteState.cpp" />
+    <ClCompile Include="Source\FiniteStateMachine.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GameState.cpp" />
     <ClCompile Include="Source\GameStateManager.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Source\EntityAI2D.h" />
     <ClInclude Include="Source\filesystem.h" />
     <ClInclude Include="Source\FiniteState.h" />
+    <ClInclude Include="Source\FiniteStateMachine.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GameState.h" />
     <ClInclude Include="Source\GameStateManager.h" />
