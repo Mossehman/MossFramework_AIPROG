@@ -92,6 +92,7 @@ glm::vec2 GameObject::getRotation()
 void GameObject::setScale(glm::vec2 newScl)
 {
 	scale = newScl;
+	cachedScale = newScl;
 }
 
 glm::vec2 GameObject::getScale()
@@ -139,6 +140,7 @@ void GameObject::Render()
 	{
 		for (int i = 0; i < child.size(); i++)
 		{
+			if (child[i] == nullptr) { continue; }
 			child[i]->Render();
 		}
 	}

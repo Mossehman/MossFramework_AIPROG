@@ -6,6 +6,7 @@
 
 #include "DesignPatterns/SingletonTemplate.h"
 #include "glm/glm.hpp"
+#include "Camera.h"
 
 #ifndef MOUSE_H
 #define MOUSE_H
@@ -56,7 +57,7 @@ public:
 	inline bool GetKeepMouseCentered() const { return bKeepMouseCentered; };
 	inline void SetKeepMouseCentered(bool _value){ bKeepMouseCentered = _value; };
 
-	glm::vec2 MouseToWorldPos(float windowWidth, float windowHeight, glm::vec2 cameraPos) const;
+	glm::vec2 MouseToWorldPos(float width, float height, Camera cam) const;
 
 protected:
 	// Constructor

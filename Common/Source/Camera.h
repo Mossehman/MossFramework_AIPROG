@@ -13,6 +13,9 @@ public:
 
 	glm::vec2 minPos, maxPos;
 
+	float zoomVal = 1.0f;
+	bool ToClamp = true;
+
 	Camera();
 	~Camera();
 	virtual void Init(const glm::vec3& pos, const glm::vec3& target, const glm::vec3& up);

@@ -6,7 +6,7 @@ void RenderParameters::Init(glm::vec4 bgColor, const char* vertexShader, const c
 	glClearColor(bgColor.x, bgColor.y, bgColor.z, bgColor.w); //set our background color
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE); 
+	glDisable(GL_CULL_FACE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -36,7 +36,8 @@ void RenderParameters::Render(Camera& camera, float width, float height)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	Mtx44 projection;
-	projection.SetToOrtho(-width / 2, width / 2, -height / 2, height / 2, -10, 10);
+	projection.SetToOrtho(-width / 2 * (camera.zoomVal), width / 2 * (camera.zoomVal), -height / 2 * (camera.zoomVal), height / 2 * (camera.zoomVal), -10, 10);
+
 	projectionStack.LoadMatrix(projection);
 
 	// Camera matrix

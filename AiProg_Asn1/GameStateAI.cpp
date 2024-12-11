@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "GameStateAI.h"
 #include <RenderParameters.h>
 #include <Map2D.h>
@@ -5,81 +7,89 @@
 #include "TestLevel.h"
 #include "TestMessage.h"
 
+#include "MouseController.h"
+#include "Application.h"
+
+#include "TestState.h"
+#include "TestState2.h"
+
+#include "MsgLane.h"
+#include "MsgSpawn.h"
+#include "MsgGameOver.h"
+#include "MsgDied.h"
+#include "MsgGetRespawnTime.h"
+#include "MsgDestroy.h"
+#include "MsgGetEntityCount.h"
+
+#include "ChaseState.h"
+#include "RetreatState.h"
+#include "MoveState.h"
+#include "AttackTurretState.h"
+#include "AttackState.h"
+#include "ChaseState.h"
+#include "InitLaneState.h"
+#include "TurretIdleState.h"
+#include "SpawnState.h"
+#include "TurretDamagedState.h"
+#include "InhibitorTurretDeadState.h"
+#include "StunnedState.h"
+#include "NPCDeadState.h"
+#include "DeadState.h"
+
+#include "ProjectileSkill.h"
+#include "DashSkill.h"
+
+#include "GameManager.h"
+
+#include "EntityTypes.h"
+#include <random>
+
 
 bool GameStateAI::Init()
 {
     RenderParameters::GetInstance()->Init(glm::vec4(0.f, 0.f, 1.f, 0.8f), "Shader//comg.vertexshader", "Shader//comg.fragmentshader");
     camera.Init(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    camera.ToClamp = false;
      
-    Map2D::GetInstance()->AddLevel(LEVEL1, new TestLevel(60, 55, glm::vec2(20, 20), "Maps/LeagueMap.csv"));
+    Map2D::GetInstance()->AddLevel(LEVEL1, new TestLevel(60, 55, glm::vec2(45, 30), "Maps/LeagueMap.csv"));
     Map2D::GetInstance()->GetInstance()->Init(LEVEL1);
 
-    go1 = new GameObject();
-    go1->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 0, 1)));
-    //go1->SetTexture("Image/grass.tga");
+    this->TurretsInit();
+    this->EntitiesInit();
 
-    go1->setPosition(glm::vec2(-30, 0));
-    go1->setScale(glm::vec2(80, 80));
-    go1->setOpacity(0.7f);
-
-    go2 = new GameObject();
-
-    go2->SetMesh(MeshBuilder::GenerateQuad("quad", Color(0, 1, 1)));
-    go2->SetTexture("Image/dirt.tga", 30, 1);
-
-    go2->setPosition(glm::vec2(30, 30));
-    go2->setScale(glm::vec2(80, 80));
-    //go2->setOpacity(0.4f);
-
-    go2->AddAnimation("Test", new AnimatedSpriteParam(0, 29));
-    go2->SetCurrentAnimation("Test");
-
-    newEntity = new TestEntity();
-    newEntity->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 0, 1)));
-    newEntity->SetTexture("Image/grass.tga");
-    newEntity->setPosition(glm::vec2(0, 0));
-    newEntity->setScale(glm::vec2(80, 80));
-    newEntity->setOpacity(0.7f);
-
-    newEntity2 = new EntityAI2D();
-    newEntity2->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 0, 1)));
-    newEntity2->SetTexture("Image/stone.tga");
-    newEntity2->setPosition(glm::vec2(0, 0));
-    newEntity2->setScale(glm::vec2(80, 80));
-    newEntity2->setOpacity(0.7f);
-
-    go1->Init(GameObjectList, LEVEL1);
-    go2->Init(GameObjectList, LEVEL1);
-    newEntity->Init(GameObjectList, LEVEL1, false, false, false, false);
-    newEntity2->Init(GameObjectList, LEVEL1, false, false, false, false);
-
-
-    newEntity->targetPos = glm::vec2(300, -80);
-    newEntity->InitAStar();
-    newEntity->SolveAStar();
-
-    newEntity2->targetPos = glm::vec2(600, -150);
-    newEntity2->InitAStar();
-    newEntity2->SolveAStar();
-
-
-    MessageHub::GetInstance()->AddReciever("EntityTest", newEntity);
-    MessageHub::GetInstance()->AddReciever("EntityTest2", newEntity2);
-    MessageHub::GetInstance()->SendMsg(new BaseMessage("EntityTest", 1)); 
+    MessageHub::GetInstance()->AddReciever("GameScene", this);
+    textMesh->textureID = LoadTGA("Image//calibri.tga"); 
 
     return true;
 }
 
 bool GameStateAI::Update(double dt)
 {
-    if (CKeyboardController::GetInstance()->IsKeyDown('X'))
+    if (pauseSim) { return true; }
+
+    timeElapsed += dt;
+    CameraControls(4.0f);
+    camera.Update(dt);
+
+    FPS = 1 / dt;
+    NumRed = 0;
+    MsgGetEntityCount* newMsg = new MsgGetEntityCount({ "Unit" }, UNIT, 1);
+
+    //for (GameObject* obj : GameObjectList)
+    //{
+    //    NumRed += obj->HandleMessage(newMsg);
+    //}
+
+    respawnTimer += dt;
+    if (respawnTimer >= TIME_BEFORE_RESPAWN_INCREASE)
     {
-        Map2D::GetInstance()->ChangeLevel(LEVEL2);
+        respawnTimer = 0.0f;
+        respawnTime += 15.0f;
     }
 
-    if (CKeyboardController::GetInstance()->IsKeyDown('V'))
+    if (timeElapsed > 360)
     {
-        Map2D::GetInstance()->ChangeLevel(LEVEL1);
+        MessageHub::GetInstance()->SendMsg(new MsgDestroy({ "TowersTop", "TowersMid", "TowersBot" }));
     }
 
     for (int i = 0; i < GameObjectList.size(); i++)
@@ -90,28 +100,370 @@ bool GameStateAI::Update(double dt)
 
     MessageHub::GetInstance()->Update();
 
+    if (CKeyboardController::GetInstance()->IsKeyDown('C'))
+    {
+        speedMultiplier += 0.1f;
+    }
+    else if (CKeyboardController::GetInstance()->IsKeyDown('V'))
+    {
+        speedMultiplier -= 0.1f;
+    }
+
+    if (speedMultiplier > 10) { speedMultiplier = 10; }
+    else if (speedMultiplier < 1) { speedMultiplier = 1; }
+
     return true;
 }
 
 void GameStateAI::Render()
 {
+    std::ostringstream ss;
+
     RenderParameters::GetInstance()->Render(camera, 1200, 800);
 
     glDepthMask(GL_FALSE);
+    Map2D::GetInstance()->Render(camera.position, glm::vec2(100, 100));
     for (int i = 0; i < GameObjectList.size(); i++)
     {
         GameObjectList[i]->Render();
     }
-
-    Map2D::GetInstance()->Render(camera.position, glm::vec2(100, 100));
-    //Map2D::GetInstance()->RenderNodes();
-
-    newEntity->RenderNodePath(Color(1, 0, 0));
-    newEntity2->RenderNodePath(Color(0, 1, 1));
     glDepthMask(GL_TRUE);
+
+    ss.str("");
+    ss.precision(5);
+    ss << "FPS:" << FPS;
+    RenderTextOnScreen(textMesh, ss.str(), Color(0, 1, 0), 3, 50, 6);
+
+    ss.str("");
+    ss << "Winner: " << winner;
+    RenderTextOnScreen(textMesh, ss.str(), Color(0, 1, 0), 3, 50, 10);
+
+    ss.str("");
+    ss << "SpeedMul: " << speedMultiplier;
+    RenderTextOnScreen(textMesh, ss.str(), Color(0, 1, 0), 3, 50, 14);
 
 }
 
 void GameStateAI::Destroy()
 {
+    for (int i = 0; i < GameObjectList.size(); i++)
+    {
+        delete GameObjectList[i];
+    }
+    GameObjectList.clear();
 }
+
+void GameStateAI::GenerateTurrets(int tileID, std::string laneID, int team)
+{
+    std::vector<glm::vec2> TurretTeamPos;
+
+    TurretTeamPos = Map2D::GetInstance()->GetLevel()->GetTilesWithID(tileID);
+    if (TurretTeamPos.empty()) { return; }
+
+    for (int i = 0; i < TurretTeamPos.size(); i++)
+    {
+        LOLEntity* Turret = new LOLEntity(TURRET);
+        Turret->setPosition(TurretTeamPos[i]);
+        Turret->Team = team;
+        Turret->setScale(glm::vec2(Map2D::GetInstance()->GetLevel()->GetTileSize().x * 1.5f, Map2D::GetInstance()->GetLevel()->GetTileSize().y * 2.2f));
+        Turret->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 1, 1)));
+        if (team == 1)
+        {
+            Turret->SetTexture("Image/Turret_Red.png");
+        }
+        else
+        {
+            Turret->SetTexture("Image/Turret_Blue.png");
+        }
+        MessageHub::GetInstance()->AddReciever(laneID, Turret);
+        MessageHub::GetInstance()->AddReciever("Towers", Turret);
+
+        Turret->MaxHealth = 200;
+        Turret->health = 200;
+
+        Turret->GetFSM()->AddState("Move", new TurretIdleState());
+        Turret->GetFSM()->AddState("Attack", new AttackState());
+        Turret->GetFSM()->AddState("Damaged", new TurretDamagedState());
+        Turret->GetFSM()->AddState("Dead", new NPCDeadState());
+        Turret->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
+
+        Turret->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
+    }
+}
+
+void GameStateAI::TurretsInit()
+{
+    std::vector<glm::vec2> InhibitorTurretsPos;
+    InhibitorTurretsPos = Map2D::GetInstance()->GetLevel()->GetTilesWithID(INHIBITOR_INDEX);
+    if (InhibitorTurretsPos.size() < 2) { return; }
+    for (int i = 0; i < InhibitorTurretsPos.size(); i++)
+    {
+        LOLEntity* InhibitorTurret = new LOLEntity(MAIN_TURRET);
+        InhibitorTurret->setPosition(InhibitorTurretsPos[i]);
+        InhibitorTurret->Team = i + 1;
+        InhibitorTurret->setScale(glm::vec2(Map2D::GetInstance()->GetLevel()->GetTileSize().x * 3.0f, Map2D::GetInstance()->GetLevel()->GetTileSize().y * 4.5f));
+        InhibitorTurret->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 1, 1)));
+        if (InhibitorTurret->Team == 1)
+        {
+            InhibitorTurret->SetTexture("Image/Turret_Red.png");
+        }
+        else
+        {
+            InhibitorTurret->SetTexture("Image/Turret_Blue.png");
+        }
+
+        InhibitorTurret->GetFSM()->AddState("Move", new TurretIdleState());
+        InhibitorTurret->GetFSM()->AddState("Attack", new AttackState());
+        InhibitorTurret->GetFSM()->AddState("Spawn", new SpawnState());
+        InhibitorTurret->GetFSM()->AddState("Damaged", new TurretDamagedState());
+        InhibitorTurret->GetFSM()->AddState("Dead", new InhibitorTurretDeadState());
+        InhibitorTurret->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
+
+        InhibitorTurret->TeamStrengthModifier = 1.5f;
+        InhibitorTurret->MaxHealth = 500;
+        InhibitorTurret->health = 500;
+
+        InhibitorTurret->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
+        MessageHub::GetInstance()->AddReciever("Towers", InhibitorTurret);
+        MessageHub::GetInstance()->AddReciever("InhibitorTower", InhibitorTurret);
+    }
+    this->Team1SpawnPos = InhibitorTurretsPos[0];
+    this->Team2SpawnPos = InhibitorTurretsPos[1];
+
+
+    this->GenerateTurrets(TEAM_ONE_TURRET_INDEX_T, "TowersTop", 1);
+    this->GenerateTurrets(TEAM_ONE_TURRET_INDEX_M, "TowersMid", 1);
+    this->GenerateTurrets(TEAM_ONE_TURRET_INDEX_B, "TowersBot", 1);
+
+    this->GenerateTurrets(TEAM_TWO_TURRET_INDEX_T, "TowersTop", 2);
+    this->GenerateTurrets(TEAM_TWO_TURRET_INDEX_M, "TowersMid", 2);
+    this->GenerateTurrets(TEAM_TWO_TURRET_INDEX_B, "TowersBot", 2);
+
+}
+
+void GameStateAI::EntitiesInit()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(-YSpawnRandomRange, YSpawnRandomRange);
+
+    std::vector<int> cachedOffsets;
+    for (int i = 0; i < MAX_TEAM_COUNT; i++)
+    {
+        int yOffset = dis(gen);
+        bool closeCheck = false;
+
+        while (!closeCheck && !cachedOffsets.empty())
+        {
+            closeCheck = true;
+            for (int offsets : cachedOffsets)
+            {
+                if (abs(yOffset - offsets) <= 2) {
+                    closeCheck = false;
+                    yOffset = dis(gen);
+                    break;
+                }
+            }
+        }
+
+        cachedOffsets.push_back(yOffset);
+
+
+        float randomYOffset = yOffset * Map2D::GetInstance()->GetLevel()->GetTileSize().y;
+        LOLEntity* Champion = new LOLEntity(UNIT);
+
+        Champion->Team = 1;
+        Champion->spawnPos = glm::vec2(Team1SpawnPos.x, Team1SpawnPos.y + randomYOffset);
+        Champion->setPosition(glm::vec2(Team1SpawnPos.x, Team1SpawnPos.y + randomYOffset));
+        Champion->setScale(glm::vec2(Map2D::GetInstance()->GetLevel()->GetTileSize().x, Map2D::GetInstance()->GetLevel()->GetTileSize().y));
+        Champion->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 1, 1)));
+        Champion->SetTexture("Image/Minion_Red.png");
+        MessageHub::GetInstance()->AddReciever("Units", Champion);
+
+        Champion->GetFSM()->AddState("Move", new MoveState());
+        Champion->GetFSM()->AddState("InitLane", new InitLaneState());
+        Champion->GetFSM()->AddState("AttackTurret", new AttackTurretState());
+        Champion->GetFSM()->AddState("Attack", new AttackState());
+        Champion->GetFSM()->AddState("Chase", new ChaseState());
+        Champion->GetFSM()->AddState("Retreat", new RetreatState());
+        Champion->GetFSM()->AddState("Damaged", new StunnedState());
+        Champion->GetFSM()->AddState("Dead", new DeadState());
+        Champion->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
+        //Champion->AddSkill(new DashSkill({ MOVEMENT }));
+
+        Champion->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
+        Champion->InitAStar();
+
+        int lane = 0;
+        if (yOffset > YSpawnRandomRange * 0.4f)
+        {
+            lane = 1;
+        }
+        else if (yOffset < -YSpawnRandomRange * 0.4f)
+        {
+            lane = -1;
+        }
+
+        std::vector<IMessageReciever*> entityToSend = { Champion };
+        MessageHub::GetInstance()->SendMsg(new MsgLane(entityToSend, lane));
+    }
+
+    cachedOffsets.clear();
+
+    for (int i = 0; i < MAX_TEAM_COUNT; i++)
+    {
+        int yOffset = dis(gen);
+        bool closeCheck = false;
+
+        while (!closeCheck && !cachedOffsets.empty())
+        {
+            closeCheck = true;
+            for (int offsets : cachedOffsets)
+            {
+                if (abs(yOffset - offsets) <= 2) {
+                    closeCheck = false;
+                    yOffset = dis(gen);
+                    break;
+                }
+            }
+        }
+        cachedOffsets.push_back(yOffset);
+
+        float randomYOffset = yOffset * Map2D::GetInstance()->GetLevel()->GetTileSize().y;
+
+        LOLEntity* Champion = new LOLEntity(UNIT);
+
+        Champion->Team = 2;
+        Champion->setPosition(glm::vec2(Team2SpawnPos.x, Team2SpawnPos.y + randomYOffset));
+        Champion->spawnPos = glm::vec2(Team2SpawnPos.x, Team2SpawnPos.y + randomYOffset);
+        Champion->setScale(glm::vec2(Map2D::GetInstance()->GetLevel()->GetTileSize().x, Map2D::GetInstance()->GetLevel()->GetTileSize().y));
+        Champion->SetMesh(MeshBuilder::GenerateQuad("quad", Color(1, 1, 1)));
+        Champion->SetTexture("Image/Minion_Blue.png");
+
+        MessageHub::GetInstance()->AddReciever("Units", Champion);
+
+        Champion->GetFSM()->AddState("Move", new MoveState());
+        Champion->GetFSM()->AddState("InitLane", new InitLaneState());
+        Champion->GetFSM()->AddState("AttackTurret", new AttackTurretState());
+        Champion->GetFSM()->AddState("Attack", new AttackState());
+        Champion->GetFSM()->AddState("Chase", new ChaseState());
+        Champion->GetFSM()->AddState("Retreat", new RetreatState());
+        Champion->GetFSM()->AddState("Damaged", new StunnedState());
+        Champion->GetFSM()->AddState("Dead", new DeadState());
+        Champion->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
+
+        Champion->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
+        Champion->InitAStar();
+
+        int lane = 0;
+        if (yOffset > YSpawnRandomRange * 0.4f)
+        {
+            lane = 1;
+        }
+        else if (yOffset < -YSpawnRandomRange * 0.4f)
+        {
+            lane = -1;
+        }
+
+        std::vector<IMessageReciever*> entityToSend = { Champion };
+        MessageHub::GetInstance()->SendMsg(new MsgLane(entityToSend, lane));
+    }
+
+    cachedOffsets.clear();
+
+}
+
+int GameStateAI::HandleMessage(BaseMessage* message)
+{
+    if (message->GetMessageType() == GAME_OVER)
+    {
+        MsgGameOver* gameOver = dynamic_cast<MsgGameOver*>(message);
+        if (gameOver->losingTeam == 1)
+        {
+            winner = "Blue";
+        }
+        else
+        {
+            winner = "Red";
+        }
+
+        pauseSim = true;
+
+    }
+    else if (message->GetMessageType() == SPAWN_ENTITY)
+    {
+        MsgSpawn* msgSpawn = dynamic_cast<MsgSpawn*>(message);
+        if (!msgSpawn || !msgSpawn->entityToSpawn) { return -1; }
+        msgSpawn->entityToSpawn->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
+    }
+    else if (message->GetMessageType() == MSG_DIED)
+    {
+        MsgDied* msgDied = dynamic_cast<MsgDied*>(message);
+        if (!msgDied || !msgDied->sender) { return -1; }
+        
+        std::vector<IMessageReciever*> sender = { msgDied->sender };
+        MessageHub::GetInstance()->SendMsg(new MsgGetRespawnTime(sender, respawnTime));
+    }
+
+    return 0;
+}
+
+void GameStateAI::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
+{
+    if (!mesh || mesh->textureID <= 0)
+        return;
+    
+    glDisable(GL_DEPTH_TEST);
+    Mtx44 ortho;
+    ortho.SetToOrtho(0, 80, 0, 60, -10, 10);
+    
+    RenderParameters::GetInstance()->projectionStack.PushMatrix();
+    RenderParameters::GetInstance()->projectionStack.LoadMatrix(ortho);
+    RenderParameters::GetInstance()->viewStack.PushMatrix();
+    RenderParameters::GetInstance()->viewStack.LoadIdentity();
+    RenderParameters::GetInstance()->modelStack.PushMatrix();
+    RenderParameters::GetInstance()->modelStack.LoadIdentity();
+    RenderParameters::GetInstance()->modelStack.Translate(x, y, 0);
+    RenderParameters::GetInstance()->modelStack.Scale(size, size, size);
+    glUniform1i(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_TEXT_ENABLED], 1);
+    glUniform3fv(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_TEXT_COLOR], 1, &color.r);
+    glUniform1i(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_LIGHTENABLED], 0);
+    glUniform1i(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_COLOR_TEXTURE_ENABLED], 1);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, mesh->textureID);
+    glUniform1i(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_COLOR_TEXTURE], 0);
+    float accum = 0;
+    for (unsigned i = 0; i < text.length(); ++i)
+    {
+        Mtx44 characterSpacing;
+        characterSpacing.SetToTranslation(accum + 0.5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
+        Mtx44 MVP = RenderParameters::GetInstance()->projectionStack.Top() * RenderParameters::GetInstance()->viewStack.Top() * RenderParameters::GetInstance()->modelStack.Top() * characterSpacing;
+        glUniformMatrix4fv(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_MVP], 1, GL_FALSE, &MVP.a[0]);
+    
+        mesh->Render((unsigned)text[i] * 6, 6);
+    
+        accum += (float)fontWidth[(unsigned)text[i]] / 64;
+    }
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glUniform1i(RenderParameters::GetInstance()->m_parameters[RenderParameters::GetInstance()->U_TEXT_ENABLED], 0);
+    RenderParameters::GetInstance()->modelStack.PopMatrix();
+    RenderParameters::GetInstance()->viewStack.PopMatrix();
+    RenderParameters::GetInstance()->projectionStack.PopMatrix();
+    glEnable(GL_DEPTH_TEST);
+
+}
+
+void GameStateAI::CameraControls(float sensitivity)
+{
+    if (CMouseController::GetInstance()->IsButtonPressed(0))
+    {
+        camera.position.x -= CMouseController::GetInstance()->GetMouseDeltaX() * sensitivity;
+        camera.target.x -= CMouseController::GetInstance()->GetMouseDeltaX() * sensitivity;
+        camera.position.y -= CMouseController::GetInstance()->GetMouseDeltaY() * sensitivity;
+        camera.target.y -= CMouseController::GetInstance()->GetMouseDeltaY() * sensitivity;
+    }
+
+    camera.zoomVal -= CMouseController::GetInstance()->GetMouseScrollStatus(CMouseController::GetInstance()->SCROLL_TYPE_YOFFSET) * 0.1f;
+}
+
+

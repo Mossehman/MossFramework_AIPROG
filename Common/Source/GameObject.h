@@ -63,6 +63,8 @@ protected:
 	int GetFrameIndex(int Column, int Row);
 	glm::ivec2 GetColRow(int FrameIndex);
 
+	glm::vec2 cachedScale;
+
 
 public:
 	int currentLevel;

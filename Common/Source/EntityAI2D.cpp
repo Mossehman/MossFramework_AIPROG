@@ -1,7 +1,9 @@
 #include "EntityAI2D.h"
+#include "EntityAI2D.h"
 #include "Map2D.h"
 
 #include <list>
+#include <glm/gtx/norm.hpp>
 
 void EntityAI2D::InitAStar()
 {
@@ -42,8 +44,6 @@ void EntityAI2D::SolveAStar()
 	int endIndex = (int)Map2D::GetInstance()->PosToTilePos(targetPos).y * mapWidth + (int)Map2D::GetInstance()->PosToTilePos(targetPos).x;
 
 
-	std::cout << (int)Map2D::GetInstance()->PosToTilePos(targetPos).y << std::endl;
-
 	//calculate the start and end nodes (can use as local variables since we just need to cache the waypoint list and then delete them after)
 	PathNode* startNode = AStarNodes->GetNodes()[startIndex];
 	PathNode* endNode = AStarNodes->GetNodes()[endIndex];
@@ -51,19 +51,19 @@ void EntityAI2D::SolveAStar()
 	destinationData->currNode = endNode;
 
 	//lambda functions to calculate the distance between 2 nodes and return the heuristic for calculating weightage
-	auto distanceBetweenNodes = [](PathNode* a, PathNode* b)
+	auto distanceBetweenNodes = [](PathNode* a, PathNode* b, float nextNodeWeight)
 	{
-		return sqrtf((a->Position.x - b->Position.x) * (a->Position.x - b->Position.x) + (a->Position.y - b->Position.y) * (a->Position.y - b->Position.y));
+		return ((a->Position.x - b->Position.x) * (a->Position.x - b->Position.x) + (a->Position.y - b->Position.y) * (a->Position.y - b->Position.y)) * nextNodeWeight; 
 	};
 
-	auto heuristic = [distanceBetweenNodes](PathNode* a, PathNode* b)
+	auto heuristic = [distanceBetweenNodes](PathNode* a, PathNode* b, float nextNodeWeight)
 	{
-		return distanceBetweenNodes(a, b);
+		return distanceBetweenNodes(a, b, nextNodeWeight);
 	};
 
 	int currentCheckIndex = startIndex;
 	pathData[currentCheckIndex]->localGoal = 0.0f;
-	pathData[currentCheckIndex]->globalGoal = heuristic(startNode, endNode);
+	pathData[currentCheckIndex]->globalGoal = heuristic(startNode, endNode, destinationData->NodeWeight);
 
 	std::list<int> uncheckedPathIndexes;
 	uncheckedPathIndexes.push_back(currentCheckIndex);
@@ -88,14 +88,17 @@ void EntityAI2D::SolveAStar()
 				uncheckedPathIndexes.push_back(checkIndex);
 			}
 
-			float lowerGoalCheck = pathData[currentCheckIndex]->localGoal + distanceBetweenNodes(AStarNodes->GetNodes()[currentCheckIndex], AStarNodes->GetNodes()[checkIndex]);
+			float lowerGoalCheck = pathData[currentCheckIndex]->localGoal +
+				distanceBetweenNodes(AStarNodes->GetNodes()[currentCheckIndex],
+					AStarNodes->GetNodes()[checkIndex], pathData[checkIndex]->NodeWeight) +
+				pathData[checkIndex]->NodeWeight;
 
 			if (lowerGoalCheck < pathData[checkIndex]->localGoal)
 			{
 				//set a reference to the neighbouring node
 				pathData[checkIndex]->ParentIndex = currentCheckIndex;
 				pathData[checkIndex]->localGoal = lowerGoalCheck;
-				pathData[checkIndex]->globalGoal = pathData[checkIndex]->globalGoal + heuristic(AStarNodes->GetNodes()[checkIndex], endNode);
+				pathData[checkIndex]->globalGoal = pathData[checkIndex]->globalGoal + heuristic(AStarNodes->GetNodes()[checkIndex], endNode, pathData[checkIndex]->NodeWeight);
 			}
 
 		}
@@ -115,6 +118,40 @@ void EntityAI2D::SolveAStar()
 
 		currWaypointIndex = pathWaypoints.size() - 1;
 	}
+}
+
+void EntityAI2D::MoveAlongPath(float dt)
+{
+	if (pathWaypoints.size() == 1)
+	{ 
+		pathWaypoints.pop_back();
+		return;
+	}
+	else if (pathWaypoints.size() == 0)
+	{
+		return;
+	}
+
+	float Movement = moveSpeed * MoveSpeedMultiplier * dt;
+	if (glm::distance2(position, pathWaypoints[pathWaypoints.size() - 1]) < Movement * Movement)
+	{
+		position = pathWaypoints[pathWaypoints.size() - 1];
+		pathWaypoints.pop_back();
+		return;
+	}
+
+	glm::vec2 dir = glm::normalize(pathWaypoints[pathWaypoints.size() - 1] - position);
+
+	if (pathWaypoints[pathWaypoints.size() - 1].x < position.x)
+	{
+		this->scale.x = -1 * cachedScale.x;
+	}
+	else
+	{
+		this->scale.x = cachedScale.x;
+	}
+
+	position += dir * Movement;
 }
 
 void EntityAI2D::RenderNodePath(Color PathColor)
@@ -142,7 +179,29 @@ EntityAI2D::EntityAI2D(glm::vec2 pos, glm::vec2 rot, glm::vec2 scl) : Entity2D(p
 	stateMachine = new FiniteStateMachine(this);
 }
 
-FiniteStateMachine* EntityAI2D::GetFSM()
+FiniteStateMachine*& EntityAI2D::GetFSM()
 {
 	return this->stateMachine;
+}
+
+void EntityAI2D::ResetPathWeight()
+{
+	for (EntityPathData* entityPathDat : pathData)
+	{
+		entityPathDat->NodeWeight = 1.0f;
+	}
+}
+
+void EntityAI2D::SetPathWeightage(float newWeight, int x, int y)
+{
+	int mapWidth = Map2D::GetInstance()->GetLevel()->GetMapX();
+	int index = y * mapWidth + x;
+
+	if (index >= pathData.size() || index < 0) { return; }
+	pathData[index]->NodeWeight = newWeight;
+}
+
+int EntityAI2D::GetPathSize()
+{
+	return pathWaypoints.size();
 }

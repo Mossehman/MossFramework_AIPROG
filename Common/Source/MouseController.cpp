@@ -5,7 +5,7 @@ using namespace std;
 
 CMouseController* CMouseController::m_instance = nullptr;
 
-glm::vec2 CMouseController::MouseToWorldPos(float width, float height, glm::vec2 cameraPos) const
+glm::vec2 CMouseController::MouseToWorldPos(float width, float height, Camera cam) const
 {
 	int windowWidth = RenderParameters::GetInstance()->getWindowSizeX();
 	int windowHeight = RenderParameters::GetInstance()->getWindowSizeY();
@@ -14,17 +14,20 @@ glm::vec2 CMouseController::MouseToWorldPos(float width, float height, glm::vec2
 	float mouseScreenX = curr_posX;
 	float mouseScreenY = curr_posY;
 
-	// Convert mouse position from screen space to normalized device coordinates (NDC)
-	// NDC ranges from -1 to 1 for both x and y axes
+	// Convert mouse position to Normalized Device Coordinates (NDC)
 	float mouseNDC_X = (2.0f * mouseScreenX) / windowWidth - 1.0f;
 	float mouseNDC_Y = 1.0f - (2.0f * mouseScreenY) / windowHeight;
 
-	// Convert NDC to world space
-	float mouseWorldX = mouseNDC_X * (width / 2.0f) + cameraPos.x;
-	float mouseWorldY = mouseNDC_Y * (height / 2.0f) + cameraPos.y;
+	// Map NDC to world space
+	float halfWidth = (width / 2.0f) * cam.zoomVal;
+	float halfHeight = (height / 2.0f) * cam.zoomVal;
+
+	float mouseWorldX = mouseNDC_X * halfWidth + cam.position.x;
+	float mouseWorldY = mouseNDC_Y * halfHeight + cam.position.y;
 
 	return glm::vec2(mouseWorldX, mouseWorldY);
 }
+
 
 /**
  @brief Constructor

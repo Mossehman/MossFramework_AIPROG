@@ -133,6 +133,8 @@ public:
 
 	std::vector<std::vector<Tile*>>& GetTilemap(void);
 
+	std::vector<glm::vec2> GetTilesWithID(int IDToFind);
+
 	void ClearMap();
 
 };

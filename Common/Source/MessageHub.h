@@ -31,6 +31,8 @@ private:
 	std::multimap<std::string, IMessageReciever*> MessageRecievers;
 	std::vector<BaseMessage*> cachedMessages;
 
+	std::vector<BaseMessage*> queuedMessages;
+
 	
 	
 

@@ -176,30 +176,34 @@ void Application::Run()
 
 	while (!glfwWindowShouldClose(m_window) && !closeApplication)
 	{
-		if (!GameStateManager::GetInstance()->Update(m_timer.getElapsedTime()))
+		for (int i = 0; i < speedMultiplier; i++)
 		{
-			break;
+			if (!GameStateManager::GetInstance()->Update(m_timer.getElapsedTime() * speedMultiplier))
+			{
+				break;
+			}
+			GameStateManager::GetInstance()->Render();
+
+
+			//Swap buffers
+			glfwSwapBuffers(m_window);
+			CMouseController::GetInstance()->PostUpdate();
+
+			double mouse_x, mouse_y;
+			glfwGetCursorPos(m_window, &mouse_x, &mouse_y);
+			CMouseController::GetInstance()->UpdateMousePosition(mouse_x, mouse_y);
+
+			//Get and organize events, like keyboard and mouse input, window resizing, etc...
+			PostUpdateInputDevices();
+
+			glfwPollEvents();
+			m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
+
+
+			UpdateInputDevices();
+
+			OnRun();
 		}
-		GameStateManager::GetInstance()->Render();
-
-		//Swap buffers
-		glfwSwapBuffers(m_window);
-		CMouseController::GetInstance()->PostUpdate();
-
-		double mouse_x, mouse_y;
-		glfwGetCursorPos(m_window, &mouse_x, &mouse_y);
-		CMouseController::GetInstance()->UpdateMousePosition(mouse_x, mouse_y);
-
-		//Get and organize events, like keyboard and mouse input, window resizing, etc...
-		PostUpdateInputDevices();
-
-		glfwPollEvents();
-        m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
-
-
-		UpdateInputDevices();
-
-		OnRun();
 
 	} //Check if the ESC key had been pressed or if the window had been closed
 	GameStateManager::GetInstance()->Destroy();

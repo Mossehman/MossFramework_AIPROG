@@ -16,6 +16,9 @@ struct EntityPathData {
 	float globalGoal;
 	bool hasChecked;
 	int ParentIndex;
+
+	float NodeWeight = 1.0f;
+
 	PathNode* currNode;
 
 	EntityPathData() {

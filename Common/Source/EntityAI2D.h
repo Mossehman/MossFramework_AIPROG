@@ -5,10 +5,11 @@
 
 class EntityAI2D : public Entity2D
 {
+
 public:
 	void InitAStar();
 	void SolveAStar();
-	virtual void MoveAlongPath() {}
+	virtual void MoveAlongPath(float dt);
 
 	bool RenderPath;
 
@@ -16,7 +17,15 @@ public:
 	glm::vec2 targetPos;
 
 	EntityAI2D(glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(1, 1));
-	FiniteStateMachine* GetFSM();
+	FiniteStateMachine*& GetFSM();
+	
+	float MoveSpeedMultiplier = 1;
+
+	void ResetPathWeight();
+	void SetPathWeightage(float newWeight, int x, int y);
+
+	int GetPathSize();
+	float moveSpeed = 150.0f; //the move speed of the AI entity along it's path
 
 protected:
 
@@ -26,7 +35,6 @@ protected:
 	std::vector<EntityPathData*> pathData;
 	EntityPathData* destinationData;
 
-	float moveSpeed = 1.0f; //the move speed of the AI entity along it's path
 
 	FiniteStateMachine* stateMachine;
 

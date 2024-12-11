@@ -7,6 +7,8 @@
 #include "RenderParameters.h"
 #include "GameStateManager.h"
 
+static float speedMultiplier = 1;
+
 class Application
 {
 public:
@@ -25,6 +27,7 @@ protected:
 	virtual void OnExit() {}
 
 private:
+
 	void UpdateInputDevices(void);
 	void PostUpdateInputDevices(void);
 	//Declare a window object

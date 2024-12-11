@@ -7,7 +7,7 @@ class IMessageReciever;
 class BaseMessage
 {
 protected:
-	std::string TargetID;
+	std::vector<std::string> TargetIDs;
 	int MessageType = 0;
 	std::vector<IMessageReciever*> specificRecievers;
 	bool deleteImmediate;
@@ -15,13 +15,15 @@ protected:
 
 
 public:
-	BaseMessage(std::string TargetID, int MessageType, bool deleteImmediate = true);
+	BaseMessage(std::initializer_list<std::string> TargetID, int MessageType, bool deleteImmediate = true);
 	int GetMessageType();
 
 	BaseMessage(std::vector<IMessageReciever*> specificRecievers, int MessageType, bool deleteImmediate = true);
-	std::string GetTargetID(void);
 
-	std::vector<IMessageReciever*>& GetRecievers();
+	virtual ~BaseMessage() {}
+	std::vector<std::string> GetTargetIDs(void); 
+
+	std::vector<IMessageReciever*> GetRecievers();
 
 };
 

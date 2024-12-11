@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "Application.h"
 #include "Mtx44.h"
+#include "MyMath.h"
 
 Camera::Camera()
 {
@@ -27,6 +28,9 @@ void Camera::Reset()
 
 void Camera::Update(double dt)
 {
+	zoomVal = glm::clamp(zoomVal, 0.1f, 10.0f);
+
+	if (!ToClamp) { return; }
 	if (position.x < minPos.x)
 	{
 		position.x = minPos.x;

@@ -1,6 +1,6 @@
 #include "TestEntity.h"
 
-void TestEntity::MoveAlongPath()
+void TestEntity::MoveAlongPath(float dt)
 {
 
 	if (currWaypointIndex < 0) { return; }

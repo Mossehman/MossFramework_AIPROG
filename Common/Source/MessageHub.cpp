@@ -5,33 +5,39 @@ void MessageHub::AddReciever(std::string GroupID, IMessageReciever* reciever)
 {
 	if (!reciever) { return; }
 	MessageRecievers.insert(std::pair<std::string, IMessageReciever*>(GroupID, reciever));
-	std::cout << "Added reciever" << std::endl;
 }
 
 void MessageHub::SendMsg(BaseMessage* newMessage)
 {
 	if (!newMessage) { return; } //Message is null, do not proceed further
-	cachedMessages.push_back(newMessage);
+	queuedMessages.push_back(newMessage);
 }
 
 void MessageHub::Update()
 {
-	if (cachedMessages.size() <= 0) { return; } //no messages in list, we do not need to do anything
+	for (BaseMessage* msg : queuedMessages)
+	{
+		cachedMessages.push_back(msg);
+	}
+	queuedMessages.clear();
+
+	if (cachedMessages.empty()) { return; } //no messages in list, we do not need to do anything
 
 	for (BaseMessage* msg : cachedMessages)
 	{
 		if (!msg) { continue; }
-
-		if (msg->GetRecievers().size() <= 0)
+		if (msg->GetRecievers().empty())
 		{
 			for (auto it = MessageRecievers.begin(); it != MessageRecievers.end(); ++it)
 			{
 				std::string RecieverGroup = it->first;
 				IMessageReciever* Reciever = it->second;
 
-				if (!Reciever || RecieverGroup != msg->GetTargetID()) { continue; }
-				std::cout << RecieverGroup << ", " << msg->GetTargetID() << std::endl;
-				Reciever->HandleMessage(msg);
+				for (std::string name : msg->GetTargetIDs())
+				{
+					if (!Reciever || RecieverGroup != name) { continue; }
+					Reciever->HandleMessage(msg);
+				}
 			}
 		}
 		else

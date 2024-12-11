@@ -16,6 +16,14 @@ GameStateManager::~GameStateManager()
 
 void GameStateManager::Destroy()
 {
+	std::map<std::string, GameState*>::iterator it, end;
+	end = gameStateMap.end();
+	for (it = gameStateMap.begin(); it != end; ++it)
+	{
+		it->second->Destroy();
+		delete it->second;
+	}
+
 	// Set the handlers to CGameState to nullptr
 	currentState = nullptr;
 	nextState = nullptr;
@@ -23,12 +31,6 @@ void GameStateManager::Destroy()
 	pausedState = nullptr;
 
 	// Delete all scenes stored and empty the entire map
-	std::map<std::string, GameState*>::iterator it, end;
-	end = gameStateMap.end();
-	for (it = gameStateMap.begin(); it != end; ++it)
-	{
-		delete it->second;
-	}
 	// Clear the map
 	gameStateMap.clear();
 }

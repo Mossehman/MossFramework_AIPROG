@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "GameState.h"
 
 GameState::GameState(std::string gameStateName)
 {
@@ -19,3 +20,10 @@ int GameState::HandleMessage(BaseMessage* msg)
 {
     return 0;
 }
+
+std::vector<GameObject*> GameState::GetGameObjectList()
+{
+    return this->GameObjectList;
+}
+
+

@@ -26,5 +26,7 @@ public:
 
 	// Inherited via IMessageReciever
 	virtual int HandleMessage(BaseMessage* msg) override;
+
+	std::vector<GameObject*> GetGameObjectList();
 };
 

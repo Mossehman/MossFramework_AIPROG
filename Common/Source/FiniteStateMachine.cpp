@@ -1,15 +1,19 @@
 
 #include "FiniteStateMachine.h"
+#include <iostream>
 
 void FiniteStateMachine::Update(float dt)
 {
+
 	if (NextState)
 	{
 		if (CurrentState) { CurrentState->OnExit(); }
 		CurrentState = NextState;
 		CurrentState->OnEnter();
+		NextState = nullptr;
 	}
-
+	
+	if (!CurrentState) { return; }
 	CurrentState->Update(dt);
 }
 
@@ -27,12 +31,12 @@ bool FiniteStateMachine::SetCurrState(std::string stateName)
 
 void FiniteStateMachine::AddState(std::string name, FiniteState* state)
 {
-	if (States.count(name) <= 0) { return; }
+	if (States.count(name) > 0) { return; }
 	States.insert(std::pair<std::string, FiniteState*>(name, state));
 
-	if (CurrentState == nullptr) //check if any state has been initialised as the current state yet
+	if (this->NextState == nullptr) //check if any state has been initialised as the current state yet
 	{
-		CurrentState = state; //initialise the newly added state as the current state if current state is null
+		SetCurrState(state); //initialise the newly added state as the current state if current state is null
 	}
 
 	state->Init(this);
@@ -49,6 +53,19 @@ void FiniteStateMachine::RemoveState(std::string name)
 FiniteState* FiniteStateMachine::GetCurrState()
 {
 	return CurrentState;
+}
+
+std::string FiniteStateMachine::GetCurrStateName()
+{
+	if (!CurrentState) { return std::string(); }
+	for (auto it = States.begin(); it != States.end(); ++it)
+	{
+		if (it->second == CurrentState)
+		{
+			return it->first;
+		}
+	}
+	return std::string();
 }
 
 FiniteStateMachine::FiniteStateMachine(EntityAI2D* attachedEntity)

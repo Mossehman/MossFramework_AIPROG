@@ -13,6 +13,42 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\EntityDataInitialisers">
+      <UniqueIdentifier>{e39b61e8-6810-4f85-904b-0c315cb937ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EntityDataInitialisers">
+      <UniqueIdentifier>{003f3f68-567a-4138-ac0c-b31c9292ead9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Finite States">
+      <UniqueIdentifier>{3b311257-b483-4714-887b-ac2fc6738764}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Finite States">
+      <UniqueIdentifier>{f4f4b3ba-d1ea-4b46-b37e-0bc254cf6936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Testing">
+      <UniqueIdentifier>{0f3c4038-0764-4e05-81a7-8e0d8f3736ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Testing">
+      <UniqueIdentifier>{80d1fd0e-fbb7-4169-92ba-21c54e8b6e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Messages">
+      <UniqueIdentifier>{c0c85c0e-c600-42fc-a6f9-d275ff507f44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Messages">
+      <UniqueIdentifier>{f48f911a-d56d-4beb-b68e-887fd4766b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills">
+      <UniqueIdentifier>{27d498dc-1136-4cd4-956f-1defacaddebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Base">
+      <UniqueIdentifier>{36e15e7d-f048-4b5b-b20b-a89f7f5bbe17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills">
+      <UniqueIdentifier>{83a66f7b-9248-4521-b791-9173165aa445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\BaseSkill">
+      <UniqueIdentifier>{aa3469f5-745d-4fac-b209-944c5e4f8ce8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,13 +60,121 @@
     <ClCompile Include="GameStateAI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestLevel.cpp">
+    <ClCompile Include="LOLEntity.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TankInitialiser.cpp">
+      <Filter>Source Files\EntityDataInitialisers</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="DashSkill.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="ChampionSkills.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="TetherSkill.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLevel.cpp">
+      <Filter>Source Files\Testing</Filter>
     </ClCompile>
     <ClCompile Include="TestEntity.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Testing</Filter>
     </ClCompile>
     <ClCompile Include="..\Common\Source\TestMessage.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="TestState.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="TestState2.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgGetUnits.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseSkill.cpp">
+      <Filter>Source Files\Skills\BaseSkill</Filter>
+    </ClCompile>
+    <ClCompile Include="IDamageable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileSkill.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgGetUnitsInRange.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="RetreatState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="StunnedState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportingState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackTurretState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgLane.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="InitLaneState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgHelp.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="TurretIdleState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgSpawn.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgGameOver.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="TurretDamagedState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="InhibitorTurretDeadState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgDied.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgGetRespawnTime.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="RespawnState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCDeadState.cpp">
+      <Filter>Source Files\Finite States</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgDestroy.cpp">
+      <Filter>Source Files\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgGetEntityCount.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,13 +191,133 @@
     <ClInclude Include="NodePassabilityAI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestLevel.h">
+    <ClInclude Include="BaseInitialiser.h">
+      <Filter>Header Files\EntityDataInitialisers</Filter>
+    </ClInclude>
+    <ClInclude Include="LOLEntity.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TankInitialiser.h">
+      <Filter>Header Files\EntityDataInitialisers</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="DashSkill.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="ChampionSkills.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="TetherSkill.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="TestLevel.h">
+      <Filter>Header Files\Testing</Filter>
     </ClInclude>
     <ClInclude Include="TestEntity.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="TestState.h">
+      <Filter>Header Files\Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="TestState2.h">
+      <Filter>Header Files\Testing</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\Source\TestMessage.h">
+      <Filter>Header Files\Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseSkill.h">
+      <Filter>Header Files\Skills\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SetupSkill.h">
+      <Filter>Header Files\Skills\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgGetUnits.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageTypes.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="IDamageable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileSkill.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgGetUnitsInRange.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="RetreatState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="StunnedState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackTurretState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityTypes.h">
+      <Filter>Header Files\EntityDataInitialisers</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgLane.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="InitLaneState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgHelp.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretIdleState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgSpawn.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgGameOver.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="InhibitorTurretDeadState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretDamagedState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgDied.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgGetRespawnTime.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="RespawnState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCDeadState.h">
+      <Filter>Header Files\Finite States</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgDestroy.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="MsgGetEntityCount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,15 @@
+#pragma once
+
+enum ENTITY_CLASSES {
+	MAIN_TURRET = 0,
+	TURRET,
+	MINION,
+
+	UNIT,
+	ROGUE,
+	HEALER,
+	FIGHTER,
+	ARTIFICER,
+	SNIPER,
+	NUM_TYPES
+};

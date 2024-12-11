@@ -316,7 +316,10 @@ void BaseLevel::Render(glm::ivec2 CameraTile, glm::ivec2 RenderDistance)
 		for (int x = std::max(CameraTile.y - RenderDistance.y, 0); x < std::min(CameraTile.x + RenderDistance.x, (int)MapSizeX); x++)
 		{
 			if (tilemap[y][x]->tileID == AIR_ID) { continue; } //do not render air tiles
-			tilemap[y][x]->Render();
+			if (textureMap.count(tilemap[y][x]->tileID) > 0)
+			{
+				tilemap[y][x]->Render();
+			}
 		}
 	}
 }
@@ -355,6 +358,22 @@ int BaseLevel::GetMapY(void)
 std::vector<std::vector<Tile*>>& BaseLevel::GetTilemap(void)
 {
 	return this->tilemap;
+}
+
+std::vector<glm::vec2> BaseLevel::GetTilesWithID(int IDToFind)
+{
+	std::vector<glm::vec2> tilePositions = std::vector<glm::vec2>();
+
+	for (int y = 0; y < MapSizeY; y++)
+	{
+		for (int x = 0; x < MapSizeX; x++)
+		{
+			if (tilemap[y][x]->tileID != IDToFind) { continue; }
+			tilePositions.push_back(tilemap[y][x]->getPosition());
+		}
+	}
+
+	return tilePositions;
 }
 
 void BaseLevel::ClearMap()

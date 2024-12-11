@@ -7,7 +7,7 @@ class FiniteStateMachine;
 class FiniteState
 {
 public:
-	void Init(FiniteStateMachine* stateMachine);
+	virtual void Init(FiniteStateMachine* stateMachine);
 
 	virtual void OnEnter() {}
 	virtual void Update(float dt) = 0;

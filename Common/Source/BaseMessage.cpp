@@ -5,27 +5,25 @@ int BaseMessage::GetMessageType(void)
 {
 	return MessageType;
 }
-
-BaseMessage::BaseMessage(std::string TargetID, int MessageType, bool deleteImmediate)
+ 
+BaseMessage::BaseMessage(std::initializer_list<std::string> TargetID, int MessageType, bool deleteImmediate) : TargetIDs(TargetID)
 {
-	this->TargetID = TargetID;
 	this->MessageType = MessageType;
 	this->deleteImmediate = deleteImmediate;
 }
 
-BaseMessage::BaseMessage(std::vector<IMessageReciever*> specificRecievers, int MessageType, bool deleteImmediate)
+BaseMessage::BaseMessage(std::vector<IMessageReciever*> specificRecievers, int MessageType, bool deleteImmediate) : specificRecievers(specificRecievers)
 {
-	this->specificRecievers = specificRecievers;
 	this->MessageType = MessageType;
 	this->deleteImmediate = deleteImmediate;
 }
 
-std::vector<IMessageReciever*>& BaseMessage::GetRecievers()
+std::vector<IMessageReciever*> BaseMessage::GetRecievers()
 {
-	return specificRecievers;
+	return this->specificRecievers;
 }
 
-std::string BaseMessage::GetTargetID(void)
+std::vector<std::string> BaseMessage::GetTargetIDs(void)
 {
-	return this->TargetID;
+	return this->TargetIDs;
 }

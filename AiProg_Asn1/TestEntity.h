@@ -4,7 +4,7 @@
 class TestEntity : public EntityAI2D
 {
 public:
-	void MoveAlongPath() override;
+	void MoveAlongPath(float dt) override;
 	virtual int HandleMessage(BaseMessage* message) override;
 
 };

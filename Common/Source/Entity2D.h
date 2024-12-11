@@ -28,7 +28,7 @@ protected:
 	glm::vec2 hitboxSize;
 	glm::vec2 hitboxOffset;
 
-	int health;
+	
 	bool toDestroy;
 
 

@@ -15,7 +15,6 @@ Entity2D::Entity2D(glm::vec2 pos, glm::vec2 rot, glm::vec2 scl)
 	rotation = rot;
 	scale = scl;
 
-	health = 100;
 	toDestroy = false;
 
 	self_position = glm::vec2(0, 0);
@@ -23,6 +22,7 @@ Entity2D::Entity2D(glm::vec2 pos, glm::vec2 rot, glm::vec2 scl)
 	self_scale = glm::vec2(1, 1);
 
 	textureID = 0;
+	cachedScale = scl;
 }
 
 void Entity2D::Init(std::vector<GameObject*>& objList, int currentLevel, bool isGravity, bool isPhysics, bool checkTileCollisions, bool entityCollision)
@@ -51,10 +51,6 @@ void Entity2D::Init(std::vector<GameObject*>& objList, int currentLevel, bool is
 void Entity2D::Update(double dt)
 {
 	if (currentLevel != Map2D::GetInstance()->GetCurrentLevel() && !updateInBackend) { return; }
-	if (this->health <= 0)
-	{
-		toDestroy = true;
-	}
 
 	checkMinMaxPos();
 	doGravity(gravityValue);
@@ -405,7 +401,8 @@ void Entity2D::checkPosUpdate()
 
 bool Entity2D::checkEntityCollision(Entity2D* entityToCheck)
 {
-	if (!entityToCheck || entityToCheck == this || !entityCollision) { return false; }
+	//if (!entityToCheck || entityToCheck == this || !entityCollision) { return false; }
+	if (entityToCheck == this) { return false; }
 
 	glm::vec2 AABBminA, AABBmaxA, AABBminB, AABBmaxB;
 
@@ -472,16 +469,6 @@ void Entity2D::resolveEntityCollision(Entity2D* entityToCheck)
 			isGrounded = true;
 		}
 	}
-}
-
-void Entity2D::setHealth(unsigned int health)
-{
-	this->health = health;
-}
-
-unsigned int Entity2D::getHealth(void)
-{
-	return health;
 }
 
 void Entity2D::setHitboxSize(glm::vec2 hitboxSize)
