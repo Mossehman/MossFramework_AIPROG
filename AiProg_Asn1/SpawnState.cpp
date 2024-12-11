@@ -86,11 +86,11 @@ void SpawnState::Update(float dt)
 
 		if (attachedEntity->Team == 1)
 		{
-			minions[i]->SetTexture("Image/Minion_Red.png");
+			minions[i]->SetTexture("Image/Soldier_Red.png");
 		}
 		else
 		{
-			minions[i]->SetTexture("Image/Minion_Blue.png");
+			minions[i]->SetTexture("Image/Soldier_Blue.png");
 		}
 		minions[i]->isAlive = true;
 		spawnedMinions++;

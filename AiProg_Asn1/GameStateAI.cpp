@@ -43,11 +43,15 @@
 
 #include "EntityTypes.h"
 #include <random>
+#include "GameStateManager.h"
+#include "RespawnState.h"
+
+#define SUDDEN_DEATH_TIME 200
 
 
 bool GameStateAI::Init()
 {
-    RenderParameters::GetInstance()->Init(glm::vec4(0.f, 0.f, 1.f, 0.8f), "Shader//comg.vertexshader", "Shader//comg.fragmentshader");
+    RenderParameters::GetInstance()->Init(glm::vec4(0.f, 0.f, 0.3f, 0.8f), "Shader//comg.vertexshader", "Shader//comg.fragmentshader");
     camera.Init(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     camera.ToClamp = false;
      
@@ -87,7 +91,7 @@ bool GameStateAI::Update(double dt)
         respawnTime += 15.0f;
     }
 
-    if (timeElapsed > 360)
+    if (timeElapsed > SUDDEN_DEATH_TIME)
     {
         MessageHub::GetInstance()->SendMsg(new MsgDestroy({ "TowersTop", "TowersMid", "TowersBot" }));
     }
@@ -96,21 +100,22 @@ bool GameStateAI::Update(double dt)
     {
         GameObjectList[i]->Update(dt);
         GameObjectList[i]->UpdateAnimations(dt);
+        
     }
 
     MessageHub::GetInstance()->Update();
 
     if (CKeyboardController::GetInstance()->IsKeyDown('C'))
     {
-        speedMultiplier += 0.1f;
+        GameStateManager::GetInstance()->speedMultiplier += 0.1f;
     }
     else if (CKeyboardController::GetInstance()->IsKeyDown('V'))
     {
-        speedMultiplier -= 0.1f;
+        GameStateManager::GetInstance()->speedMultiplier -= 0.1f;
     }
 
-    if (speedMultiplier > 10) { speedMultiplier = 10; }
-    else if (speedMultiplier < 1) { speedMultiplier = 1; }
+    if (GameStateManager::GetInstance()->speedMultiplier > 10) { GameStateManager::GetInstance()->speedMultiplier = 10; }
+    else if (GameStateManager::GetInstance()->speedMultiplier < 1) { GameStateManager::GetInstance()->speedMultiplier = 1; }
 
     return true;
 }
@@ -139,8 +144,24 @@ void GameStateAI::Render()
     RenderTextOnScreen(textMesh, ss.str(), Color(0, 1, 0), 3, 50, 10);
 
     ss.str("");
-    ss << "SpeedMul: " << speedMultiplier;
+    ss << "SpeedMul: " << GameStateManager::GetInstance()->speedMultiplier;
     RenderTextOnScreen(textMesh, ss.str(), Color(0, 1, 0), 3, 50, 14);
+
+    ss.str("");
+    ss << "Elapsed time: " << timeElapsed;
+    RenderTextOnScreen(textMesh, ss.str(), Color(0, 1, 0), 3, 50, 18);
+
+    if (timeElapsed > SUDDEN_DEATH_TIME)
+    {
+        RenderTextOnScreen(textMesh, "Sudden death!", Color(1, 0, 0), 3, 50, 22);
+    }
+    else
+    {
+        float timeToSuddenDeath = SUDDEN_DEATH_TIME - timeElapsed;
+        ss.str("");
+        ss << "Time to Sudden Death: " << timeToSuddenDeath;
+        RenderTextOnScreen(textMesh, ss.str(), Color(0, 1, 0), 3, 50, 22);
+    }
 
 }
 
@@ -185,6 +206,7 @@ void GameStateAI::GenerateTurrets(int tileID, std::string laneID, int team)
         Turret->GetFSM()->AddState("Attack", new AttackState());
         Turret->GetFSM()->AddState("Damaged", new TurretDamagedState());
         Turret->GetFSM()->AddState("Dead", new NPCDeadState());
+        Turret->CanRegenHP = false;
         Turret->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
 
         Turret->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
@@ -218,6 +240,7 @@ void GameStateAI::TurretsInit()
         InhibitorTurret->GetFSM()->AddState("Damaged", new TurretDamagedState());
         InhibitorTurret->GetFSM()->AddState("Dead", new InhibitorTurretDeadState());
         InhibitorTurret->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
+        InhibitorTurret->CanRegenHP = false;
 
         InhibitorTurret->TeamStrengthModifier = 1.5f;
         InhibitorTurret->MaxHealth = 500;
@@ -288,6 +311,7 @@ void GameStateAI::EntitiesInit()
         Champion->GetFSM()->AddState("Retreat", new RetreatState());
         Champion->GetFSM()->AddState("Damaged", new StunnedState());
         Champion->GetFSM()->AddState("Dead", new DeadState());
+        Champion->GetFSM()->AddState("Respawn", new RespawnState());
         Champion->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
         //Champion->AddSkill(new DashSkill({ MOVEMENT }));
 
@@ -350,6 +374,7 @@ void GameStateAI::EntitiesInit()
         Champion->GetFSM()->AddState("Retreat", new RetreatState());
         Champion->GetFSM()->AddState("Damaged", new StunnedState());
         Champion->GetFSM()->AddState("Dead", new DeadState());
+        Champion->GetFSM()->AddState("Respawn", new RespawnState());
         Champion->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
 
         Champion->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);

@@ -60,7 +60,7 @@ void MoveState::Update(float dt)
 
 		if (!foundEnemy) { return; }
 
-		if (TeamStrength * 1.4f >= OpposingTeamStrength) //TODO: Change 1.5 to an agression float value
+		if (TeamStrength * 1.4f >= OpposingTeamStrength || glm::distance2(attachedEntity->getPosition(), attachedEntity->spawnPos) <= 120.0f * 120.0f) //TODO: Change 1.5 to an agression float value
 		{
 			this->stateMachine->SetCurrState("Chase");
 		}

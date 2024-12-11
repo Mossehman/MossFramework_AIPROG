@@ -61,7 +61,7 @@ bool GameStateManager::Update(double dt)
 	
 	if (currentState)
 	{
-		if (!currentState->Update(dt)) { return false; }
+		if (!currentState->Update(dt * speedMultiplier)) { return false; }
 		else if (pausedState) { pausedState->Update(dt); }
 	}
 

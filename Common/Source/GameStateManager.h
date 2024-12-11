@@ -2,6 +2,7 @@
 #include <map>
 #include "GameState.h"
 #include "DesignPatterns/SingletonTemplate.h"
+
 class GameStateManager: public SingletonTemplate<GameStateManager>
 {
 	friend SingletonTemplate<GameStateManager>;
@@ -14,6 +15,8 @@ protected:
 	GameState *currentState, *previousState, *nextState, *pausedState;
 
 public:
+	float speedMultiplier = 1.0f;
+
 	void Destroy();
 	bool Update(double dt);
 	void Render();
