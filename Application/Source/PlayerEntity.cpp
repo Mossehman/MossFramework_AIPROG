@@ -29,10 +29,6 @@ void PlayerEntity::handleKeyPress(double dt)
 void PlayerEntity::Update(double dt)
 {
 	handleKeyPress(dt);
-	if (this->health <= 0)
-	{
-		toDestroy = true;
-	}
 
 	checkMinMaxPos(); 
 	doGravity(gravityValue);

@@ -54,9 +54,9 @@ protected:
 	glm::vec2 Team2SpawnPos;
 	Camera camera;
 
-	bool pauseSim = false;
+	bool pauseSim = true;
 	
-	void CameraControls(float sensitivity = 1.0f);
+	void CameraControls(float dt, float sensitivity = 1000.0f);
 
 	void GenerateTurrets(int tileID, std::string laneID, int team);
 	void TurretsInit();

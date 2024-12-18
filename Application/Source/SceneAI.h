@@ -15,7 +15,7 @@ public:
 
 private:
 
-	Map2D* newMap = Map2D::GetInstance(NUM_LEVELS);
+	Map2D* newMap = Map2D::GetInstance();
 
 	std::vector<Entity2D> entityList;
 	Camera camera;

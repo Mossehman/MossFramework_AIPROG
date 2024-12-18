@@ -61,8 +61,6 @@ void SpawnState::Update(float dt)
 		if (spawnedMinions >= NumMinionsToSpawn) { break; }
 		if (!minions[i]) { continue; }
 		if (minions[i]->isAlive) { continue; }
-
-		std::cout << spawnedMinions << ", " << NumMinionsToSpawn << std::endl;
  
 		float randomYOffset = dis(gen) * Map2D::GetInstance()->GetLevel()->GetTileSize().y;
 

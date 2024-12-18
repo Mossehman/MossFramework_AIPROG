@@ -1,5 +1,6 @@
 #include "ApplicationAI.h"
 #include "SceneAI.h"
+#include "SceneCell.h"
 #include "SceneTilemap.h"
 #include "PlayState.h"
 #include "MenuState.h"
@@ -7,9 +8,9 @@
 
 void ApplicationAI::OnInit()
 {
-	//GameStateManager::GetInstance()->AddNewState("PlayState", new PlayState(new SceneTilemap(), "PlayState"));
-	//GameStateManager::GetInstance()->AddNewState("MenuState", new MenuState());
-	//GameStateManager::GetInstance()->SetCurrentState("MenuState");
+	GameStateManager::GetInstance()->AddNewState("PlayState", new PlayState(new SceneCell(), "PlayState"));
+	GameStateManager::GetInstance()->AddNewState("MenuState", new MenuState());
+	GameStateManager::GetInstance()->SetCurrentState("MenuState");
 }
 
 void ApplicationAI::OnRun()

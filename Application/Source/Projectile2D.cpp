@@ -6,7 +6,7 @@ void Projectile2D::damageEntity(Entity2D* entity)
 {
 	if (checkEntityCollision(entity))
 	{
-		entity->setHealth(entity->getHealth() - damage);
+		//entity->setHealth(entity->getHealth() - damage);
 		toDestroy = true;
 	}
 }
@@ -24,7 +24,7 @@ void Projectile2D::splashDamage(std::vector<Entity2D*> entities)
 			continue;
 		}
 
-		entities[i]->setHealth(entities[i]->getHealth() - explosionDamage);
+		//entities[i]->setHealth(entities[i]->getHealth() - explosionDamage);
 		entities[i]->setForce(glm::normalize(entities[i]->getPosition() - this->position) * explosionForce);
 	}
 

@@ -15,7 +15,6 @@ void RespawnState::Update(float dt)
 	respawnTime -= dt;
 	if (respawnTime <= 0)
 	{
-		std::cout << "Respawned!" << std::endl;
 		attachedEntity->setPosition(attachedEntity->spawnPos);
 		attachedEntity->health = attachedEntity->MaxHealth;
 		attachedEntity->isAlive = true;

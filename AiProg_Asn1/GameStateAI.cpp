@@ -69,15 +69,19 @@ bool GameStateAI::Init()
 
 bool GameStateAI::Update(double dt)
 {
-    if (pauseSim) { return true; }
 
-    timeElapsed += dt;
-    CameraControls(4.0f);
+    if (CKeyboardController::GetInstance()->IsKeyDown('Q'))
+    {
+        pauseSim = false;
+    }
+
+    CameraControls(dt, 400.0f);
     camera.Update(dt);
 
+    if (pauseSim) { return true; }
     FPS = 1 / dt;
-    NumRed = 0;
-    MsgGetEntityCount* newMsg = new MsgGetEntityCount({ "Unit" }, UNIT, 1);
+    timeElapsed += dt;
+    //MsgGetEntityCount* newMsg = new MsgGetEntityCount({ "Unit" }, UNIT, 1);
 
     //for (GameObject* obj : GameObjectList)
     //{
@@ -114,7 +118,7 @@ bool GameStateAI::Update(double dt)
         GameStateManager::GetInstance()->speedMultiplier -= 0.1f;
     }
 
-    if (GameStateManager::GetInstance()->speedMultiplier > 10) { GameStateManager::GetInstance()->speedMultiplier = 10; }
+    if (GameStateManager::GetInstance()->speedMultiplier > 2.5) { GameStateManager::GetInstance()->speedMultiplier = 2.5; }
     else if (GameStateManager::GetInstance()->speedMultiplier < 1) { GameStateManager::GetInstance()->speedMultiplier = 1; }
 
     return true;
@@ -313,6 +317,7 @@ void GameStateAI::EntitiesInit()
         Champion->GetFSM()->AddState("Dead", new DeadState());
         Champion->GetFSM()->AddState("Respawn", new RespawnState());
         Champion->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
+        Champion->AddSkill(new DashSkill({ MOVEMENT }));
         //Champion->AddSkill(new DashSkill({ MOVEMENT }));
 
         Champion->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
@@ -376,6 +381,7 @@ void GameStateAI::EntitiesInit()
         Champion->GetFSM()->AddState("Dead", new DeadState());
         Champion->GetFSM()->AddState("Respawn", new RespawnState());
         Champion->AddSkill(new ProjectileSkill({ ATTACK }, OPPOSING_TEAMS));
+        Champion->AddSkill(new DashSkill({ MOVEMENT }));
 
         Champion->Init(GameObjectList, Map2D::GetInstance()->GetCurrentLevel(), false, false, false, false);
         Champion->InitAStar();
@@ -478,14 +484,14 @@ void GameStateAI::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, 
 
 }
 
-void GameStateAI::CameraControls(float sensitivity)
+void GameStateAI::CameraControls(float dt, float sensitivity)
 {
     if (CMouseController::GetInstance()->IsButtonPressed(0))
     {
-        camera.position.x -= CMouseController::GetInstance()->GetMouseDeltaX() * sensitivity;
-        camera.target.x -= CMouseController::GetInstance()->GetMouseDeltaX() * sensitivity;
-        camera.position.y -= CMouseController::GetInstance()->GetMouseDeltaY() * sensitivity;
-        camera.target.y -= CMouseController::GetInstance()->GetMouseDeltaY() * sensitivity;
+        camera.position.x -= CMouseController::GetInstance()->GetMouseDeltaX() * sensitivity * dt;
+        camera.target.x -= CMouseController::GetInstance()->GetMouseDeltaX() * sensitivity * dt;
+        camera.position.y -= CMouseController::GetInstance()->GetMouseDeltaY() * sensitivity * dt;
+        camera.target.y -= CMouseController::GetInstance()->GetMouseDeltaY() * sensitivity * dt;
     }
 
     camera.zoomVal -= CMouseController::GetInstance()->GetMouseScrollStatus(CMouseController::GetInstance()->SCROLL_TYPE_YOFFSET) * 0.1f;
