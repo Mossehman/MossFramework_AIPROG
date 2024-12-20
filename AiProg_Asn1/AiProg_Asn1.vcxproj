@@ -26,13 +26,14 @@
     <ClCompile Include="BaseSkill.cpp" />
     <ClCompile Include="ChaseState.cpp" />
     <ClCompile Include="DeadState.cpp" />
+    <ClCompile Include="GameStateAI.cpp" />
+    <ClCompile Include="GameStateCell.cpp" />
     <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="InhibitorTurretDeadState.cpp" />
     <ClCompile Include="InitLaneState.cpp" />
     <ClCompile Include="LOLEntity.cpp" />
     <ClCompile Include="ChampionSkills.cpp" />
     <ClCompile Include="DashSkill.cpp" />
-    <ClCompile Include="GameStateAI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="MsgDestroy.cpp" />
@@ -72,6 +73,7 @@
     <ClInclude Include="ChaseState.h" />
     <ClInclude Include="DeadState.h" />
     <ClInclude Include="EntityTypes.h" />
+    <ClInclude Include="GameStateCell.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="InhibitorTurretDeadState.h" />
     <ClInclude Include="InitLaneState.h" />
@@ -94,6 +96,7 @@
     <ClInclude Include="MsgSpawn.h" />
     <ClInclude Include="NodePassabilityAI.h" />
     <ClInclude Include="NPCDeadState.h" />
+    <ClInclude Include="ParticleVar.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileSkill.h" />
     <ClInclude Include="RespawnState.h" />

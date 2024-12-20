@@ -57,9 +57,6 @@
     <ClCompile Include="Application_AIPROG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameStateAI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LOLEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -175,6 +172,12 @@
       <Filter>Source Files\Messages</Filter>
     </ClCompile>
     <ClCompile Include="MsgGetEntityCount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateCell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -318,6 +321,12 @@
       <Filter>Header Files\Messages</Filter>
     </ClInclude>
     <ClInclude Include="MsgGetEntityCount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateCell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleVar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

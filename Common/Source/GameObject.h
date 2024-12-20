@@ -27,7 +27,6 @@ class GameObject : public IMessageReciever
 {
 protected:
 	//each gameObject must have these 3 parameters
-	glm::vec2 position;
 	glm::vec2 rotation;
 	glm::vec2 scale;
 
@@ -67,6 +66,7 @@ protected:
 
 
 public:
+	glm::vec2 position;
 	int currentLevel;
 	unsigned int textureID;
 
@@ -108,6 +108,8 @@ public:
 	int GetCurrentAnimationFrame(void);
 
 	AnimatedSpriteParam* GetCurrentAnimationParam(void);
+
+	glm::vec2 vel;
 
 
 
