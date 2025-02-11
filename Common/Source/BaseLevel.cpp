@@ -16,6 +16,11 @@ void BaseLevel::BindTexture(unsigned int ID, const char* textureFile)
 	textureMap.insert(std::pair<int, int>(ID, TextureID));
 }
 
+void BaseLevel::SetTileCost(unsigned int ID, int cost)
+{
+	tileCosts.insert(std::pair<int, int>(ID, cost));
+}
+
 void BaseLevel::BindPassability(unsigned int ID, int isPassable)
 {
 	passabilityMap.insert(std::pair<int, int>(ID, isPassable));
@@ -61,21 +66,24 @@ void BaseLevel::PerlinNoise2D(int width, int height, float* seed, int octaves, f
 
 			for (int o = 0; o < octaves; o++)
 			{
-				int Pitch = width >> o;
-				if (Pitch == 0) { break; }
+				int PitchX = width >> o;
+				int PitchY = height >> o;
+				if (PitchX == 0 || PitchY == 0) { break; }
 
-				int FirstSampleX = (x / Pitch) * Pitch;
-				int FirstSampleY = (y / Pitch) * Pitch;
+				int FirstSampleX = (x / PitchX) * PitchX;
+				int FirstSampleY = (y / PitchY) * PitchY;
 
-				int SecondSampleX = (FirstSampleX + Pitch) % width;
-				int SecondSampleY = (FirstSampleY + Pitch) % height;
+				int SecondSampleX = (FirstSampleX + PitchX) % width;
+				int SecondSampleY = (FirstSampleY + PitchY) % height;
 
-				float BlendX = (float)(x - FirstSampleX) / (float)Pitch;
-				float BlendY = (float)(y - FirstSampleY) / (float)Pitch;
+				float BlendX = (float)(x - FirstSampleX) / (float)PitchX;
+				float BlendY = (float)(y - FirstSampleY) / (float)PitchY;
 
-				float SampleT = (1.0f - BlendX) * seed[FirstSampleY * width + FirstSampleX] + BlendX * seed[FirstSampleY * width + SecondSampleX];
-				float SampleB = (1.0f - BlendX) * seed[SecondSampleY * width + FirstSampleX] + BlendX * seed[SecondSampleY * width + SecondSampleX];
-
+				float SampleT = (1.0f - BlendX) * seed[FirstSampleY * width + FirstSampleX]
+					+ BlendX * seed[FirstSampleY * width + SecondSampleX];
+				float SampleB = (1.0f - BlendX) * seed[SecondSampleY * width + FirstSampleX]
+					+ BlendX * seed[SecondSampleY * width + SecondSampleX];
+				
 				Noise += (BlendY * (SampleB - SampleT) + SampleT) * Scale;
 				Accumulation += Scale;
 				Scale = Scale / bias;
@@ -84,6 +92,7 @@ void BaseLevel::PerlinNoise2D(int width, int height, float* seed, int octaves, f
 		}
 	}
 }
+
 
 
 
@@ -100,6 +109,7 @@ void BaseLevel::GenerateSeed(std::vector<float>& seed, unsigned int count, bool 
 
 void BaseLevel::GeneratePerlinMap(std::vector<std::vector<int>> firstMap, std::vector<std::vector<int>> otherMap)
 {
+	srand(static_cast<unsigned int>(time(nullptr)));
 	std::vector<std::vector<int>> mapToUse;
 	tilemap.resize(MapSizeY);
 	mapToUse.resize(MapSizeY);
@@ -270,6 +280,8 @@ BaseLevel::BaseLevel(unsigned int MapX, unsigned int MapY, glm::vec2 TileSize, P
 		noise2D = Generate2DPerlinMap(Config2D);
 	}
 
+	std::cout << "AAAAAAA: " << noise2D.size() << std::endl;
+
 	GeneratePerlinMap(noise1D, noise2D);
 	
 }
@@ -290,6 +302,11 @@ void BaseLevel::Init()
 			else
 			{
 				tilemap[y][x]->Passability = 0;
+			}
+
+			if (!tileCosts.empty() && tileCosts.count(tilemap[y][x]->tileID) > 0)
+			{
+				tilemap[y][x]->cost = tileCosts.at(tilemap[y][x]->tileID);
 			}
 		
 			tilemap[y][x]->setPosition(glm::vec2(x * tileSize.x, -y * tileSize.y));

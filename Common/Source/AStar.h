@@ -6,6 +6,13 @@
 struct PathNode {
 	glm::vec2 Position;
 	std::vector<int> NeighbouringNodesIndex;
+	float weight = 1.0f;
+
+	float localGoal = 0.0f;
+	float globalGoal;
+	bool hasChecked;
+	int cost;
+	PathNode* Parent;
 
 	int Passability; // Use an ENUM for this as opposed to actual numerical values
 

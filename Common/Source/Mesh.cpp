@@ -53,7 +53,7 @@ void Mesh::Render(float opacityValue)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Position));
 
 	if (textureID > 0) 
-		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color) + sizeof(Vector3)));
+		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Position) + sizeof(Color) + sizeof(Vector3))); 
 
 	GLint opacityLocation = glGetUniformLocation(RenderParameters::GetInstance()->m_programID, "opacity");
 	if (opacityLocation != -1)  // Make sure the uniform exists in the shader

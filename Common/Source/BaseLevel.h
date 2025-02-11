@@ -31,6 +31,7 @@ protected:
 	unsigned int MapSizeY;
 
 	std::map<int, int> textureMap;
+	std::map<int, int> tileCosts;
 	std::map<int, bool> passabilityMap;
 
 	glm::vec2 tileSize;
@@ -47,6 +48,8 @@ protected:
 	/// <param name="ID"> - The tileID we want to bind the texture to</param>
 	/// <param name="textureFile"> - The file path of the texture file</param>
 	void BindTexture(unsigned int ID, const char* textureFile);
+
+	void SetTileCost(unsigned int ID, int cost);
 
 	/// <summary>
 	/// Binds a boolean variable to a tileID for Pathfinding and Collision

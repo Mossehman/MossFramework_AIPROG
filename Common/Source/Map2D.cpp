@@ -1,6 +1,7 @@
 #include "Map2D.h"
 #include <fstream>
 #include <sstream>
+#include <list>
 #include "ImageLoader.h"
 
 
@@ -61,10 +62,11 @@ void Map2D::SetMapInfo(unsigned int row, unsigned int column, unsigned int newTi
 glm::ivec2 Map2D::PosToTilePos(glm::vec2 position, int mode)
 {
     glm::ivec2 returnValue;
+    glm::vec2 tileSize = Map2D::GetInstance()->GetLevel()->GetTileSize();
     if (mode == 0)
     {
-        returnValue.x = (int)(position.x / GetLevel()->GetTileSize().x);
-        returnValue.y = -1 * (int)(position.y / GetLevel()->GetTileSize().y);
+        returnValue.x = (int)((position.x)/ GetLevel()->GetTileSize().x);
+        returnValue.y = -1 * (int)((position.y) / GetLevel()->GetTileSize().y);
     }
     else if (mode < 0)
     {
@@ -127,18 +129,18 @@ int Map2D::GetCurrentLevel(void)
 
 void Map2D::PrintMapData(int level)
 {
-    std::cout << "printing map..." << std::endl;
-
-
-    for (int y = 0; y < GetLevel(level)->GetMapY(); y++)
-    {
-        for (int x = 0; x < GetLevel(level)->GetMapX(); x++)
-        {
-            std::cout << GetLevel(level)->GetTilemap()[y][x]->tileID << ", ";
-        }
-        
-        std::cout << "\n";
-    }
+    //std::cout << "printing map..." << std::endl;
+    //
+    //
+    //for (int y = 0; y < GetLevel(level)->GetMapY(); y++)
+    //{
+    //    for (int x = 0; x < GetLevel(level)->GetMapX(); x++)
+    //    {
+    //        std::cout << GetLevel(level)->GetTilemap()[y][x]->tileID << ", ";
+    //    }
+    //    
+    //    std::cout << "\n";
+    //}
 }
 
 void Map2D::GenerateNodes()
@@ -186,6 +188,99 @@ BaseLevel* Map2D::GetLevel(int levelID)
     if (Levels.count(levelID) <= 0) { return nullptr; }
 
     return Levels.at(levelID);
+}
+
+std::vector<glm::vec2> Map2D::GetPath(glm::vec2 startPos, glm::vec2 endPos, bool doCollisions, bool doWeighting)
+{
+    int mapWidth = Levels.at(currentLevel)->GetMapX();
+    int mapHeight = Levels.at(currentLevel)->GetMapY();
+
+    for (int y = 0; y < mapHeight; y++)
+    {
+        for (int x = 0; x < mapWidth; x++)
+        {
+            //convert the 2 dimensional array indexes into an index in 1 dimension
+            int index = Map2D::GetInstance()->GetLevel()->GetMapX() * y + x;
+
+            //reset the pathdata and node values
+            AStarNodes->GetNodes()[index]->hasChecked = false;
+            AStarNodes->GetNodes()[index]->globalGoal = std::numeric_limits<float>::max();
+            AStarNodes->GetNodes()[index]->localGoal = std::numeric_limits<float>::max();
+            AStarNodes->GetNodes()[index]->Parent = nullptr;
+        }
+    }
+
+    int startIndex = (int)PosToTilePos(startPos).y * mapWidth + (int)PosToTilePos(startPos).x;
+    int endIndex = (int)PosToTilePos(endPos).y * mapWidth + (int)PosToTilePos(endPos).x;
+
+    PathNode* startNode = AStarNodes->GetNodes()[startIndex];
+    PathNode* endNode = AStarNodes->GetNodes()[endIndex];
+
+    PathNode* currentNode = startNode;
+
+    auto distanceBetweenNodes = [](PathNode* a, PathNode* b)
+    {
+        return ((a->Position.x - b->Position.x) * (a->Position.x - b->Position.x) + (a->Position.y - b->Position.y) * (a->Position.y - b->Position.y));
+    };
+
+    auto heuristic = [distanceBetweenNodes](PathNode* a, PathNode* b, float weightingValue = 1.0f, bool weight = true)
+    {
+        float w = weightingValue;
+        if (!weight) { w = 1.0f; }
+        return distanceBetweenNodes(a, b) * w * w;
+    };
+
+    startNode->localGoal = 0.0f;
+    startNode->globalGoal = heuristic(startNode, endNode, endNode->weight, doWeighting);
+
+    std::list<PathNode*> uncheckedNodes;
+    uncheckedNodes.push_back(currentNode);
+
+    while (!uncheckedNodes.empty() && currentNode != endNode)
+    {
+        uncheckedNodes.sort([&](PathNode* lhs, PathNode* rhs) { return lhs->globalGoal < rhs->globalGoal; });
+        while (!uncheckedNodes.empty() && uncheckedNodes.front()->hasChecked)
+        {
+            uncheckedNodes.pop_front();
+        }
+
+        if (uncheckedNodes.empty()) { break; }
+
+        currentNode = uncheckedNodes.front();
+        currentNode->hasChecked = true;
+
+        for (int neighbouringNodes : currentNode->NeighbouringNodesIndex)
+        {
+            if (!AStarNodes->GetNodes()[neighbouringNodes]->hasChecked && (AStarNodes->GetNodes()[neighbouringNodes]->Passability == 0 || !doCollisions))
+            {
+                uncheckedNodes.push_back(AStarNodes->GetNodes()[neighbouringNodes]);
+            }
+
+            float w = AStarNodes->GetNodes()[neighbouringNodes]->weight;
+            if (!doWeighting)
+            {
+                w = 1.0f;
+            }
+            float lowerGoalCheck = currentNode->localGoal + distanceBetweenNodes(currentNode, AStarNodes->GetNodes()[neighbouringNodes]) * w * w;
+            if (lowerGoalCheck < AStarNodes->GetNodes()[neighbouringNodes]->localGoal)
+            {
+                AStarNodes->GetNodes()[neighbouringNodes]->Parent = currentNode;
+                AStarNodes->GetNodes()[neighbouringNodes]->localGoal = lowerGoalCheck;
+                AStarNodes->GetNodes()[neighbouringNodes]->globalGoal = heuristic(AStarNodes->GetNodes()[neighbouringNodes], endNode, AStarNodes->GetNodes()[neighbouringNodes]->weight, doWeighting);
+            }
+        }
+    }
+    std::vector<glm::vec2> waypoints;
+    PathNode* node = endNode;
+
+    while (node->Parent != nullptr)
+    {
+        waypoints.push_back(glm::vec2(node->Position.x, node->Position.y));
+        node = node->Parent;
+    }
+    //waypoints.push_back(startPos);
+
+    return waypoints;
 }
 
 Map2D::~Map2D()

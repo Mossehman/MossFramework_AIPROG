@@ -6,6 +6,7 @@ class Tile : public GameObject
 public:
 	unsigned int tileID;
 	int Passability = 0;
+	int cost;
 	bool isDangerous = false;
 
 	Tile(int tileIndex, glm::vec2 pos = glm::vec2(0, 0), glm::vec2 rot = glm::vec2(0, 0), glm::vec2 scl = glm::vec2(0, 0))
@@ -15,6 +16,7 @@ public:
 		rotation = rot;
 		scale = scl;
 		Passability = 0;
+		cost = 1;
 		isDangerous = false;
 	}
 };

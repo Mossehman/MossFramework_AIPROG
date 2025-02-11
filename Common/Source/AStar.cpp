@@ -31,13 +31,19 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
 
             newNode->Position.x = x * tileSize.x;
             newNode->Position.y = y * tileSize.y * -1;
-            newNode->Passability = Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->Passability;
-            std::cout << Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->Passability;
+            newNode->Passability = /*0;*/ Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->Passability;
+            newNode->cost = /*0;*/ Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->cost;
+            if (Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->Passability == 1)
+            {
+                newNode->weight = 999;
+            }
+            else
+            {
+                newNode->weight = 1;
+            }
 
             Nodes.push_back(newNode);
         }
-
-        std::cout << std::endl;
     }
 
     for (int x = xStart; x < xEnd; x++)

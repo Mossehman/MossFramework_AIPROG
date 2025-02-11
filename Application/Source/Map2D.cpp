@@ -448,18 +448,18 @@ int Map2D::GetCurrentLevel(void)
 
 void Map2D::printMapData(int level)
 {
-    std::cout << "printing map..." << std::endl;
-
-
-    for (int y = 0; y < mapSizeY[level]; y++)
-    {
-        for (int x = 0; x < mapSizeX[level]; x++)
-        {
-            std::cout << tileMaps[level][y][x]->tileID << ", ";
-        }
-        
-        std::cout << "\n";
-    }
+    //std::cout << "printing map..." << std::endl;
+    //
+    //
+    //for (int y = 0; y < mapSizeY[level]; y++)
+    //{
+    //    for (int x = 0; x < mapSizeX[level]; x++)
+    //    {
+    //        std::cout << tileMaps[level][y][x]->tileID << ", ";
+    //    }
+    //    
+    //    std::cout << "\n";
+    //}
 }
 
 void Map2D::SetTextureToID(unsigned int ID, const char* textureName)

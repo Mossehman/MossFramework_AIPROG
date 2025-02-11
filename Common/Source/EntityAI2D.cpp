@@ -53,7 +53,7 @@ void EntityAI2D::SolveAStar()
 	//lambda functions to calculate the distance between 2 nodes and return the heuristic for calculating weightage
 	auto distanceBetweenNodes = [](PathNode* a, PathNode* b, float nextNodeWeight)
 	{
-		return ((a->Position.x - b->Position.x) * (a->Position.x - b->Position.x) + (a->Position.y - b->Position.y) * (a->Position.y - b->Position.y)) * nextNodeWeight; 
+		return ((a->Position.x - b->Position.x) * (a->Position.x - b->Position.x) + (a->Position.y - b->Position.y) * (a->Position.y - b->Position.y)) * nextNodeWeight;
 	};
 
 	auto heuristic = [distanceBetweenNodes](PathNode* a, PathNode* b, float nextNodeWeight)

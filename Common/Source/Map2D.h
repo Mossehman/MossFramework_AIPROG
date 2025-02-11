@@ -75,6 +75,8 @@ public:
 	void AddLevel(int levelID, BaseLevel* newLevel, Mesh* tileMesh = MeshBuilder::GenerateQuad("Tile", Color(1, 1, 1)));
 	BaseLevel* GetLevel(int levelID = -1);
 
+	std::vector<glm::vec2> GetPath(glm::vec2 startPos, glm::vec2 endPos, bool doCollisions = true, bool doWeighting = true);
+
 private:
 	int currentLevel;
 	int maxLevels;
