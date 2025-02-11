@@ -209,9 +209,9 @@ std::vector<glm::vec2> Map2D::GetPath(glm::vec2 startPos, glm::vec2 endPos, bool
             AStarNodes->GetNodes()[index]->Parent = nullptr;
         }
     }
-
-    int startIndex = (int)PosToTilePos(startPos).y * mapWidth + (int)PosToTilePos(startPos).x;
-    int endIndex = (int)PosToTilePos(endPos).y * mapWidth + (int)PosToTilePos(endPos).x;
+    glm::vec2 tileSize = GetLevel()->GetTileSize();
+    int startIndex = PosToTilePos(startPos + (glm::vec2(tileSize.x, -tileSize.y) * 0.5f)).y * mapWidth + PosToTilePos(startPos + (glm::vec2(tileSize.x, -tileSize.y) * 0.5f)).x;
+    int endIndex = PosToTilePos(endPos + (glm::vec2(tileSize.x, -tileSize.y) * 0.5f)).y * mapWidth + PosToTilePos(endPos + (glm::vec2(tileSize.x, -tileSize.y) * 0.5f)).x;
 
     PathNode* startNode = AStarNodes->GetNodes()[startIndex];
     PathNode* endNode = AStarNodes->GetNodes()[endIndex];

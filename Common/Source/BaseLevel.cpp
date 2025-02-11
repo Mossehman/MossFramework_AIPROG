@@ -18,7 +18,7 @@ void BaseLevel::BindTexture(unsigned int ID, const char* textureFile)
 
 void BaseLevel::SetTileCost(unsigned int ID, int cost)
 {
-	tileCosts.insert(std::pair<int, int>(ID, cost));
+	tileCosts.insert(std::pair<int, int>(ID, cost + 1));
 }
 
 void BaseLevel::BindPassability(unsigned int ID, int isPassable)

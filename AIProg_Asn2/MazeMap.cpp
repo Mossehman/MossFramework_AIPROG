@@ -7,7 +7,6 @@ void MazeMap::NoiseToTiles2D(int width, int height, const float* Input, std::vec
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             float tileID = (Input[y * width + x] * 12.0f);
-			std::cout << tileID << std::endl;
 
 			if (tileID >= 3.5 && tileID <= 4.5)
 			{
@@ -41,11 +40,18 @@ void MazeMap::InitTiles()
 
 	BindTexture(3, "Image/sand.tga");
 	BindPassability(3, 0);
-	SetTileCost(4, 2);
+	SetTileCost(3, 2);
 
 	BindTexture(4, "Image/water.png");
 	BindPassability(4, 0);
 	SetTileCost(4, 3);
+
+	BindTexture(5, "Image/lava.png");
+	BindPassability(5, 0);
+	SetTileCost(5, 50);
+
+	BindTexture(6, "Image/DD_elevator.png");
+	BindPassability(6, 0);
 }
 
 void MazeMap::GeneratePerlinMap(std::vector<std::vector<int>> firstMap, std::vector<std::vector<int>> otherMap)
@@ -79,6 +85,9 @@ void MazeMap::InitialiseSpawn(glm::vec2 startPos, float minPercentageAir)
 		int AStarIndex = startingTileIndex.y * MapSizeX + startingTileIndex.x;
 		Map2D::GetInstance()->GetAStar()->GetNodes()[AStarIndex]->weight = 1.0f;
 	}
+
+	tilemap[MapSizeY - 1][MapSizeX - 1]->tileID = 6;
+	tilemap[MapSizeY - 1][MapSizeX - 1]->Passability = 0;
 	
 	for (int y = 0; y < MapSizeY; y++)
 	{
@@ -108,6 +117,87 @@ void MazeMap::InitialiseSpawn(glm::vec2 startPos, float minPercentageAir)
 	}
 
 	Init();
+	Map2D::GetInstance()->GenerateNodes();
+}
+
+void MazeMap::ResetTiles()
+{
+	for (auto it = modifiedTiles.begin(); it != modifiedTiles.end(); ++it)
+	{
+		glm::ivec2 tileCoord = it->first;
+		int ID = it->second;
+
+		tilemap[tileCoord.y][tileCoord.x]->tileID = ID;
+	}
+	modifiedTiles.clear();
+
+	Init();
+	Map2D::GetInstance()->GenerateNodes();
+}
+
+void MazeMap::LavaEvent()
+{
+	std::srand(std::time(nullptr));
+	std::vector<glm::vec2> grassTiles = GetTilesWithID(2);
+	for (int i = 0; i < std::min(150, (int)grassTiles.size()); i++)
+	{
+		int randomIndex = std::rand() % grassTiles.size();
+		glm::vec2 randomTile = grassTiles[randomIndex];
+		glm::ivec2 grassTileIndex = Map2D::GetInstance()->PosToTilePos(randomTile);
+
+		tilemap[grassTileIndex.y][grassTileIndex.x]->tileID = 5;
+		modifiedTiles.insert({ grassTileIndex, 2 });
+	}
+
+	Init();
+	Map2D::GetInstance()->GenerateNodes();
+}
+
+void MazeMap::WaterEvent()
+{
+	std::vector<glm::vec2> waterTiles = GetTilesWithID(4);
+	for (int i = 0; i < waterTiles.size(); i++)
+	{
+		glm::ivec2 waterTileIndex = Map2D::GetInstance()->PosToTilePos(waterTiles[i]);
+		if (waterTileIndex.y > 0 && tilemap[waterTileIndex.y - 1][waterTileIndex.x]->Passability == 0)
+		{
+			modifiedTiles.insert({ glm::ivec2(waterTileIndex.x, waterTileIndex.y - 1), tilemap[waterTileIndex.y - 1][waterTileIndex.x]->tileID });
+			tilemap[waterTileIndex.y - 1][waterTileIndex.x]->tileID = 4;
+		}
+		if (waterTileIndex.y < MapSizeY - 1 && tilemap[waterTileIndex.y + 1][waterTileIndex.x]->Passability == 0)
+		{
+			modifiedTiles.insert({ glm::ivec2(waterTileIndex.x, waterTileIndex.y + 1), tilemap[waterTileIndex.y + 1][waterTileIndex.x]->tileID });
+			tilemap[waterTileIndex.y + 1][waterTileIndex.x]->tileID = 4;
+		}
+		if (waterTileIndex.x > 0 && tilemap[waterTileIndex.y][waterTileIndex.x - 1]->Passability == 0)
+		{
+			modifiedTiles.insert({ glm::ivec2(waterTileIndex.x - 1, waterTileIndex.y), tilemap[waterTileIndex.y][waterTileIndex.x - 1]->tileID });
+			tilemap[waterTileIndex.y][waterTileIndex.x - 1]->tileID = 4;
+		}
+		if (waterTileIndex.x < MapSizeX - 1 && tilemap[waterTileIndex.y][waterTileIndex.x + 1]->Passability == 0)
+		{
+			modifiedTiles.insert({ glm::ivec2(waterTileIndex.x + 1, waterTileIndex.y), tilemap[waterTileIndex.y][waterTileIndex.x + 1]->tileID });
+			tilemap[waterTileIndex.y][waterTileIndex.x + 1]->tileID = 4;
+		}
+	}
+
+	Init();
+	Map2D::GetInstance()->GenerateNodes();
+}
+
+void MazeMap::Drought()
+{
+	std::vector<glm::vec2> waterTiles = GetTilesWithID(4);
+	for (int i = 0; i < waterTiles.size(); i++)
+	{
+		glm::ivec2 waterTileIndex = Map2D::GetInstance()->PosToTilePos(waterTiles[i]);
+		modifiedTiles.insert({ glm::ivec2(waterTileIndex.x, waterTileIndex.y), tilemap[waterTileIndex.y][waterTileIndex.x]->tileID });
+
+		tilemap[waterTileIndex.y][waterTileIndex.x]->tileID = 3;
+	}
+
+	Init();
+	Map2D::GetInstance()->GenerateNodes();
 }
 
 void MazeMap::Floodfill(glm::ivec2 startIndex, std::vector<glm::ivec2>& reachableTiles)

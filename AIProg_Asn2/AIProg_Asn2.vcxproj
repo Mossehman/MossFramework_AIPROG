@@ -20,20 +20,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application_DungeonDelve.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameStateDungeon.cpp" />
+    <ClCompile Include="GameStateWin.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MazeMap.cpp" />
     <ClCompile Include="MazeTile.cpp" />
     <ClCompile Include="MazeTilemap.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ScaredEnemy.cpp" />
+    <ClCompile Include="TurnManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application_DungeonDelve.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GameStateDungeon.h" />
+    <ClInclude Include="GameStateWin.h" />
+    <ClInclude Include="ivec2Compare.h" />
     <ClInclude Include="MazeMap.h" />
     <ClInclude Include="MazeTile.h" />
     <ClInclude Include="MazeTilemap.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ScaredEnemy.h" />
+    <ClInclude Include="TurnBasedEntity.h" />
+    <ClInclude Include="TurnManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

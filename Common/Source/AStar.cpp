@@ -39,7 +39,7 @@ void AStar::Init(int xEnd, int yEnd, int xStart, int yStart)
             }
             else
             {
-                newNode->weight = 1;
+                newNode->weight = Map2D::GetInstance()->GetLevel()->GetTilemap()[y][x]->cost;
             }
 
             Nodes.push_back(newNode);

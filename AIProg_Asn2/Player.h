@@ -1,36 +1,30 @@
 #pragma once
 #include <GameObject.h>
+#include "TurnBasedEntity.h"
 #include <list>
 #include <set>
+#include "ivec2Compare.h"
 
-struct ivec2Compare {
-    bool operator()(const glm::ivec2& a, const glm::ivec2& b) const {
-        if (a.x < b.x) {
-            return true;
-        }
-        if (a.x > b.x) {
-            return false;
-        }
-        return a.y < b.y;
-    }
-};
-
-class Player : public GameObject
+class Player : public GameObject, public TurnBasedEntity
 {
+private:
+    bool startedMoving = false;
+
 public:
-	int movementRange = 5;
+    int health = 5;
 	std::vector<GameObject*> highlightTiles;
     std::set<glm::ivec2, ivec2Compare> walkableAreas;
 
-    std::vector<glm::vec2> path;
-
-	void OnTurnStart();
-	void OnMovementStart(glm::vec2 destination);
+	void OnTurnStart() override;
+	void OnMovementStart(glm::vec2 destination) override;
+	void OnTurnEnd() override;
 
     void RenderTiles();
     void RenderPath(Color color);
 
     void Update(double dt) override;
+
+    int HandleMessage(BaseMessage* msg) override;
 };
 
 
