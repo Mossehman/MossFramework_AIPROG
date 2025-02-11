@@ -27,8 +27,9 @@ bool GameStateDungeon::Init()
 
 	player = new Player();
 	player->setPosition(glm::vec2(0, 0));
-	player->setScale(glm::vec2(10, 10));
-	player->SetMesh(MeshBuilder::GenerateQuad("tile", Color(0, 0, 1)));
+	player->setScale(glm::vec2(15, 15));
+	player->SetMesh(MeshBuilder::GenerateQuad("tile", Color(1, 1, 1)));
+	player->SetTexture("Image/DD_player_1.png");
 	player->movementRange = 5;
 
 	std::vector<glm::vec2> spawnableTiles = map->GetTilesWithID(2);
@@ -39,16 +40,18 @@ bool GameStateDungeon::Init()
 		{
 			enemies[i] = new Enemy();
 			enemies[i]->setScale(glm::vec2(10, 10));
-			enemies[i]->SetMesh(MeshBuilder::GenerateQuad("tile", Color(1, 0, 0)));
+			enemies[i]->SetMesh(MeshBuilder::GenerateQuad("tile", Color(1, 1, 1)));
 			enemies[i]->visionRange = 5;
+			enemies[i]->SetTexture("Image/DD_chaser.png");
 		}
 		else
 		{
 			enemies[i] = new ScaredEnemy();
 			enemies[i]->setScale(glm::vec2(10, 10));
-			enemies[i]->SetMesh(MeshBuilder::GenerateQuad("tile", Color(1, 0, 1)));
+			enemies[i]->SetMesh(MeshBuilder::GenerateQuad("tile", Color(1, 1, 1)));
 			enemies[i]->movementRange = 5;
 			enemies[i]->visionRange = 2;
+			enemies[i]->SetTexture("Image/DD_lurker.png");
 		}
 		int randomIndex = std::rand() % spawnableTiles.size();
 		glm::vec2 randomTile = spawnableTiles[randomIndex];
