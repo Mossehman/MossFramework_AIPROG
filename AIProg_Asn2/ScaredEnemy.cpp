@@ -14,6 +14,7 @@ glm::vec2 ScaredEnemy::GetDestination()
 	{
 		for (int j = 0; j < EnemyManager::GetInstance()->enemies.size(); j++)
 		{
+			if (EnemyManager::GetInstance()->enemies[j] == this) { continue; }
 			glm::ivec2 enemyTile = Map2D::GetInstance()->PosToTilePos(EnemyManager::GetInstance()->enemies[j]->getPosition());
 			if (enemyTile.x == visionTiles[i].x && enemyTile.y == visionTiles[i].y)
 			{
