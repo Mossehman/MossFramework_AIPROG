@@ -40,6 +40,10 @@ void TurnManager::NextTurn()
 			map->Drought();
 			currentEvent = "Drought";
 		}
+		else
+		{
+			currentEvent = "None";
+		}
 	}
 
 	if (turnIDs.count(turnOrder) == 0) { return; }

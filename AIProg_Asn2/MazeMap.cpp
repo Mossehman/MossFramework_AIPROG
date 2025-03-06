@@ -8,16 +8,16 @@ void MazeMap::NoiseToTiles2D(int width, int height, const float* Input, std::vec
         for (int x = 0; x < width; x++) {
             float tileID = (Input[y * width + x] * 12.0f);
 
-			if (tileID >= 3.5 && tileID <= 4.5)
+			if (tileID >= 3 && tileID <= 4.5)
 			{
 				noiseMap[y][x] = 4; //place grass
 			}
-            else if (tileID >= 4 && tileID <= 5)
+            else if (tileID >= 4 && tileID <= 5.5)
             {
                 noiseMap[y][x] = 3; //place grass
             }
 
-			else if (tileID >= 5 && tileID <= 7)
+			else if (tileID >= 5.5 && tileID <= 7.5)
 			{
 				noiseMap[y][x] = 2; //place sand
 			}
